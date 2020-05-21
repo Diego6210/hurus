@@ -28,7 +28,7 @@ export class ProjectComponent implements OnInit {
     this.Proyectos = [{
       id:1,
       nombre:'nose',
-      Path: '/dataObject/1'
+      Path: '/project/1'
     }];
     this.dataSource = new MatTableDataSource(this.Proyectos);
     this.dataSource.paginator = this.paginator;

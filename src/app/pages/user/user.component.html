@@ -42,8 +42,7 @@
               </div>
             </div>
             <div class=" row">
-              <div [ngClass]="{'col-md-4' : permisosUsuario == 1,
-                               'col-md-6' : permisosUsuario != 1}" class="pl-md-1">
+              <div class="pl-md-1">
                 <div class=" form-group">
                   <label> Nombre: </label>
                   <input
@@ -54,8 +53,7 @@
                   />
                 </div>
               </div>
-              <div [ngClass]="{'col-md-4' : permisosUsuario == 1,
-                               'col-md-6' : permisosUsuario != 1}" class="pl-md-1">
+              <div  class="pl-md-1">
                 <div class=" form-group">
                   <label> Apellidos: </label>
                   <input
@@ -66,7 +64,7 @@
                   />
                 </div>
               </div>
-              <div *ngIf="permisosUsuario == 1" class="col-md-4">
+              <div class="col-md-4">
                 <div>
                   <label style="color: white;">Tipo de usuario:</label>
                   <select [(ngModel)]="id" (change)="capturar()"  class="form-control" id="exampleFormControlSelect1">
@@ -160,7 +158,7 @@
               <br>
               <br>
               <label for="">Cambiar Foto</label><br>
-              <input (change)="onChange($event,$event.target.files)" accept="image/*"  type="file" name="archivo" id="archivo" style="color: transparent;" value=""/>
+              <input (change)="onChange($event,$event.target.files)" accept="image/*"  type="file" name="archivo" id="archivo"  value=""/>
             </a>
             <br><br>
             <h5 class=" title">{{Nombre}} {{Apellidos}}</h5>

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
-import { DialogAccountComponent } from 'src/app/components/dialog-account/dialog-account.component';
 
 declare const google: any;
 interface Marker {
@@ -26,6 +25,32 @@ export class DataObjectComponent implements OnInit {
   contactSice:number = 0;
   contacts:any = [];
 
+  Nombre:string;
+
+  Descripcion:string;
+  Latitud:string;
+  Longitud:string;
+  dialogCorreo:string;
+  dialogPassword:string;
+  dialogUrl:string;
+  //public hostUrl: string = 'https://127.0.0.1:8090';
+  //public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
+
+  /*public ajaxSettings: object = {
+        url: this.hostUrl + '/',
+        getImageUrl: this.hostUrl + '/GetImage/',
+        uploadUrl: this.hostUrl + '/Upload/',
+        downloadUrl: this.hostUrl + '/Download/'
+  };*/ 
+
+  public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
+  public ajaxSettings: object = {
+        url: this.hostUrl + 'api/FileManager/FileOperations',
+        getImageUrl: this.hostUrl + 'api/FileManager/GetImage',
+        uploadUrl: this.hostUrl + 'api/FileManager/Upload',
+        downloadUrl: this.hostUrl + 'api/FileManager/Download'
+  }; 
+
   constructor(
     public dialog: MatDialog,
     private modalService: NgbModal,
@@ -44,14 +69,37 @@ export class DataObjectComponent implements OnInit {
 
   addAccount(){
 
-    const dialogRef = this.dialog.open(DialogAccountComponent, {
-      width: '300px'
+      this.accounts.push({
+        Url: this.dialogUrl,
+        Correo: this.dialogCorreo,
+        Password: this.dialogPassword
+      });
+      this.dialogUrl = '';
+      this.dialogCorreo = '';
+      this.dialogPassword = '';
+      
+      this.accountSice = this.accounts.length;
+      this.modalService.dismissAll();
+  }
+
+  opendAccount(modalCuenta){
+
+    this.modalService.open(modalCuenta, {ariaLabelledBy: 'modal-basic-title'});    
+  }
+
+  addLocation(){
+
+    this.locations.push({
+      Long: this.Longitud,
+      Latitude: this.Latitud,
+      Descripcion: this.Descripcion
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      //alert('The dialog was closed' + result);
-    });
     
+    this.Longitud = '';
+    this.Latitud = '';
+    this.Descripcion = '';
+    this.locattionSice = this.locations.length;
   }
 
 

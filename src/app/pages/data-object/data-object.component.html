@@ -6,84 +6,81 @@
             <div class=" card-header"><h5 class=" title">Datos de Objetivo</h5><hr></div>
             <div class=" card-body">
 
-
+                <h4>Datos personales</h4>
                 <div class="row">
-
-                    <div class="col-md-6">
-                        <h4>Imagen del Objetivo</h4>
-                        <div class="col-md-5">
-                            <input type="file" name="userImage" data-default-file="/assets/img/default-avatar.png" class="dropify text-center center-block file-upload" data-allowed-file-extensions="jpg png jpeg">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="">Nombre:</label>
+                            <input [(ngModel)]="Nombre" type="text" class="form-control" placeholder="Ingresar Nombre" value="">
                         </div>
                     </div>
-
-                    <div class="col-md-6">
-                        <h4>Datos personales</h4>
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <label for="">Nombre:</label>
-                                <input type="text" class="form-control" placeholder="Ingresar Nombre" value="" style="background-color:#fff;color:#555;">
-                            </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="">Fecha de nacimiento:</label>
+                            <input type="date" class="form-control"value="" >
                         </div>
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <label for="">Fecha de nacimiento:</label>
-                                <input type="date" class="form-control"value="" style="background-color:#fff;color:#555;">
-                            </div>
-                        </div>
-                        <div class="col-md-10">
-                            <div class="form-group">
-                                <label for="">Empresa:</label>
-                                <input type="text" class="form-control" placeholder="Ingresar Nombre" value="" style="background-color:#fff;color:#555;">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Estado Civil:</label>
-                                <div class="md-radio-list">
-                                    <div class="md-radio">
-                                        <input type="radio" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="md-radiobtn">
-                                        <label for="checkboxEstado">
-                                            <span> </span>
-                                            <span class="check"> </span>
-                                            <span class="box"></span> Soltero
-                                        </label>
-                                    </div>
-                                    <div class="md-radio">
-                                        <input type="radio" id="checkboxEstado1" name="checkboxEstado" value=" Casado" class="md-radiobtn">
-                                        <label for="checkboxEstado1">
-                                            <span></span>
-                                            <span class="check"></span>
-                                            <span class="box"></span> Casado
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Genero:</label>
-                                <div class="md-radio-list">
-                                    <div class="md-radio">
-                                        <input type="radio" id="checkbox2_1" name="checkboxSex" value="Masculino" class="md-radiobtn">
-                                        <label for="checkbox2_1">
-                                            <span></span>
-                                            <span class="check"></span>
-                                            <span class="box"></span> Masculino
-                                        </label>
-                                    </div>
-                                    <div class="md-radio">
-                                        <input type="radio" id="checkbox2_2" name="checkboxSex" value="Femenino" class="md-radiobtn">
-                                        <label for="checkbox2_2">
-                                            <span></span>
-                                            <span class="check"></span>
-                                            <span class="box"></span> Femenino
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="">Empresa:</label>
+                            <input type="text" class="form-control" placeholder="Ingresar Nombre" value="">
                         </div>
                     </div>
                 </div>
+                <br>
+
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Estado Civil:</label>
+                            <div class="md-radio-list">
+                                <div class="md-radio">
+                                    <input type="radio" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="md-radiobtn">
+                                    <label for="checkboxEstado">
+                                        <span> </span>
+                                        <span class="check"> </span>
+                                        <span class="box"></span> Soltero
+                                    </label>
+                                </div>
+                                <div class="md-radio">
+                                    <input type="radio" id="checkboxEstado1" name="checkboxEstado" value=" Casado" class="md-radiobtn">
+                                    <label for="checkboxEstado1">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> Casado
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Genero:</label>
+                            <div class="md-radio-list">
+                                <div class="md-radio">
+                                    <input type="radio" id="checkbox2_1" name="checkboxSex" value="Masculino" class="md-radiobtn">
+                                    <label for="checkbox2_1">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> Masculino
+                                    </label>
+                                </div>
+                                <div class="md-radio">
+                                    <input type="radio" id="checkbox2_2" name="checkboxSex" value="Femenino" class="md-radiobtn">
+                                    <label for="checkbox2_2">
+                                        <span></span>
+                                        <span class="check"></span>
+                                        <span class="box"></span> Femenino
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+
                 <input type="hidden" id="idUG" name="id" value="Id">
                 <input type="submit" class="btn btn-success" value="Guardar">                  
                 
@@ -91,6 +88,28 @@
         </div>
       </div>
     </div>
+
+    <div class=" row">
+        <div class=" col-lg-12">
+            <div class=" card card-chart">
+                <div class=" card-header"><h5 class=" title">Imagen del Objetivo</h5><hr></div>
+                <div class=" card-body">
+                    <div class="row">
+    
+                        
+                            <div class="col-md-12">
+    
+                                <ejs-filemanager id='filemanager' [ajaxSettings]='ajaxSettings' [allowDragAndDrop]='true'>
+                                </ejs-filemanager>
+    
+                            </div>
+                            
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+
 
     <div class=" row">
         <div class=" col-lg-6">
@@ -104,7 +123,7 @@
 								<tr>
 									<th>Img</th>
 									<th>Nombre</th>
-									<th class="text-center">Ver Perfil</th>
+									<th>Ver Perfil</th>
 								</tr>
                             </thead>
                             <tbody class=" text-primary" *ngIf="contactSice > 0">
@@ -137,7 +156,7 @@
         </div>
         <div class=" col-lg-6">
             <div class=" card card-chart">
-                <div class=" card-header"><h5 class=" title">Cuentas  <button class="btn btn-info btn-sm" style="float:left; float: right;" mat-raised-button (click)="addAccount()" type="submit">Añadir</button></h5><hr></div>
+                <div class=" card-header"><h5 class=" title">Cuentas  <button class="btn btn-info btn-sm" style="float:left; float: right;" mat-raised-button (click)="opendAccount(modalCuenta)" type="submit">Añadir</button></h5><hr></div>
                 <div class=" card-body">
                     <div class="table-responsive ps">
 						<table class="table tablesorter " id="">
@@ -152,7 +171,7 @@
                                 <tr *ngFor="let account of accounts">
                                     <td>{{account.Url}}</td>
 									<td>{{account.Correo}}</td>
-									<td class="text-center">{{account.Password}}</td>
+									<td>{{account.Password}}</td>
                                 </tr>
                             </tbody>
                             <tbody *ngIf="accountSice == 0">
@@ -167,7 +186,7 @@
         </div>
     </div>
 
-    <div class=" row">
+    <!--<div class=" row">
         <div class=" col-lg-6">
             <div class=" card card-chart">
                 <div class=" card-header"><h5 class=" title">Subir Archivos</h5><hr></div>
@@ -186,7 +205,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <div class=" row">
         <div class=" col-lg-6">
@@ -196,16 +215,15 @@
                     <div class="table-responsive ps">
 						<div class="row">
 							<div class="col-12">
-								<form class="form-ajax" data-url="target/addlocate">
+								<form class="form-ajax">
 									<label>Longitud</label>
-									<input class="form-control" type="text" name="long" value="">
+									<input [(ngModel)]="Longitud" class="form-control" type="text" name="long" value="">
 									<label>Latitud</label>
-									<input type="hidden" name="id" value="<?=$id?>">
-									<input  class="form-control" type="text" name="lat" value="">
+									<input [(ngModel)]="Latitud" class="form-control" type="text" name="lat" value="">
 									<label>Descripcion</label>
-									<textarea  class="form-control" name="desc" rows="8" cols="80"></textarea>
+									<textarea [(ngModel)]="Descripcion" class="form-control" name="desc" rows="8" cols="80"></textarea>
 									<br>
-									<input type="submit" class="btn btn-sm btn-primary btn-simple active " name="" value="Añadir">
+									<input type="submit" (click)="addLocation()" class="btn btn-sm btn-primary btn-simple active " name="" value="Añadir">
 								</form>
 							</div>
 						</div>
@@ -224,14 +242,14 @@
 								<tr>
 									<th>Latitud</th>
 									<th>Longitud</th>
-									<th class="text-center">Descripción</th>
+									<th>Descripción</th>
 								</tr>
 							</thead>
 							<tbody *ngIf="locattionSice > 0">
                                 <tr *ngFor="let location of locations">
                                     <td>{{location.Latitude}}</td>
                                     <td>{{location.Long}}</td>
-                                    <td class="text-center">{{location.Descripcion}}</td>
+                                    <td>{{location.Descripcion}}</td>
                                 </tr>
                             </tbody>
                             <tbody *ngIf="locattionSice == 0">
@@ -254,3 +272,24 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #modalCuenta let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" style="color: white;">Cuenta</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span style="color: red;" aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body ">
+        <label >URL</label><br>
+        <input  [(ngModel)]="dialogUrl" class="form-control"><br>
+        <label >Correo</label><br>
+        <input   [(ngModel)]="dialogCorreo" type="email"  class="form-control"><br>
+        <label >Password</label><br>
+        <input  [(ngModel)]="dialogPassword"  class="form-control">
+          </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-info " (click)="addAccount()">Crear</button>
+    </div>
+  </ng-template>

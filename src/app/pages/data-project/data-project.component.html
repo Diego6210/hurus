@@ -1,0 +1,60 @@
+<div class=" content">
+    <div class=" row">
+      <div class=" col-md-12">
+        <div class=" card">
+            <div class=" card-header"><h4 class=" title">Proyecto: {{nameProject}}</h4><hr></div>
+            <div class=" card-body">
+                <h5>Lista de objetivos</h5>
+
+                <button class="btn btn-fill btn-danger btn-sm " style="float:left; float: right;"  [routerLink]="['/newObject']"><i class="far fa-file"></i> Reporte</button>
+                <button class="btn btn-fill btn-info btn-sm " style="float:left; float: right;"  [routerLink]="['/newObject']"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
+                <button class="btn btn-fill btn-success btn-sm " style="float:left; float: right;"  [routerLink]="['/newObject']"><i class="fas fa-map"></i> Mapa de Objetivos</button>
+                <button class="btn btn-fill btn-warning  btn-sm " style="float:left; float: right;"  [routerLink]="['/newObject']"><i class="fas fa-tags"></i> Tags</button>
+
+                <br><br>  <br>          
+                <!-- Search form -->
+                <div class="md-form mt-0">
+                <input  (keyup)="filtrar($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
+                </div>
+
+                <div class="mat-elevation-z8 table-responsive">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table  " matSort #tabla1>
+                
+                    <ng-container matColumnDef="Img">
+                    <th mat-header-cell *matHeaderCellDef> IMAGEN </th>
+                    <td mat-cell *matCellDef="let usuarios"><img src="{{usuarios.Img}}" height="auto" alt="user" class="rounded-circle"></td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+                    <td mat-cell *matCellDef="let usuarios"> {{usuarios.Nombre}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="FechaNacimiento">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DE NACIMIENTO </th>
+                    <td mat-cell *matCellDef="let usuarios"> {{usuarios.FechaNacimiento}} </td>
+                    </ng-container>
+                
+                    <ng-container matColumnDef="Tags">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TAGS </th>
+                    <td mat-cell *matCellDef="let usuarios"> {{usuarios.Tags}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="Acciones">
+                    <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                    <td mat-cell *matCellDef="let usuarios">
+                        <button [routerLink]="[usuarios.Path]" (click)="finds(usuarios.Id)" class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i class=" tim-icons icon-zoom-split"></i></button>
+                        <button (click)="Delet(usuarios.id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete" type="button" aria-describedby="tooltip-143"><i class=" tim-icons icon-trash-simple"></i></button>
+                    </td>
+                    </ng-container>
+                
+                    <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnas"></tr>
+                    <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnas;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

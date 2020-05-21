@@ -70,6 +70,8 @@
     "@angular/platform-browser-dynamic": "9.0.5",
     "@angular/router": "9.0.5",
     "@ng-bootstrap/ng-bootstrap": "6.0.0",
+    "@syncfusion/ej2": "^18.1.53",
+    "@syncfusion/ej2-angular-filemanager": "^18.1.53",
     "angular-datatables": "^9.0.1",
     "body-parser": "^1.19.0",
     "chart.js": "2.8.0",

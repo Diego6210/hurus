@@ -9,6 +9,9 @@ import * as $ from "jquery"
 })
 export class LoginComponent implements OnInit {
 
+  Password:string;
+  Username:string;
+  
   constructor(
     private router: Router
   ) { }

@@ -30,15 +30,13 @@ import { ObjectComponent } from './pages/object/object.component';
 import { ProjectComponent } from './pages/project/project.component';
 import { DataObjectComponent } from './pages/data-object/data-object.component';
 import { NewObjectComponent } from './pages/new-object/new-object.component';
-import { DialogAccountComponent } from './components/dialog-account/dialog-account.component';
 import { MatButtonModule } from '@angular/material/button';
-
+import { FileManagerAllModule } from '@syncfusion/ej2-angular-filemanager';
+import { DataProjectComponent } from './pages/data-project/data-project.component';
 
 @NgModule({
 
-  entryComponents:[
-    DialogAccountComponent
-  ],
+  entryComponents:[],
   imports: [
     BrowserAnimationsModule,
     MatTableModule,
@@ -55,9 +53,10 @@ import { MatButtonModule } from '@angular/material/button';
     AppRoutingModule,
     WebcamModule,
     DataTablesModule,
+    FileManagerAllModule,
     ToastrModule.forRoot()
   ],
-  declarations: [AppComponent, AdminLayoutComponent, LoginComponent, UsersComponent, Page404Component, ManifestComponent, ObjectComponent, ProjectComponent, DataObjectComponent, NewObjectComponent],
+  declarations: [AppComponent, AdminLayoutComponent, LoginComponent, UsersComponent, Page404Component, ManifestComponent, ObjectComponent, ProjectComponent, DataObjectComponent, NewObjectComponent, DataProjectComponent],
   providers: [ServerService],
   bootstrap: [AppComponent]
 })

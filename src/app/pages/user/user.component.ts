@@ -13,7 +13,7 @@ export class UserComponent implements OnInit {
   
   }
 
-  imgdefault: string = '';
+  imgdefault: string = '/assets/img/default-avatar.png';
   cheange = false;
   Username:string;
   Apellidos:string;
