@@ -22,7 +22,7 @@
   left: 0;
   right: 90px;
   margin: auto;
-  width: 100px;
+  width: 220px;
   color: white;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -30,7 +30,7 @@
   padding: 20px 70px;
   top: 200px;
   bottom: 0;
-  height: 70px;
+  height: 110px;
   opacity: 0;
 }
 .contentLogin .authent p {

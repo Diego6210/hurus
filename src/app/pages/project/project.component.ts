@@ -24,6 +24,18 @@ export class ProjectComponent implements OnInit {
 
   }
 
+  Agregar(){
+
+  }
+
+  Delet(id){
+
+  }
+
+  openLg(content){
+    
+  }
+
   getDataFromSource() {
     this.Proyectos = [{
       id:1,

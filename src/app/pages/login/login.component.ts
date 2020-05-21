@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as $ from "jquery"
+import { LocalStorageService } from 'src/app/service/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   Username:string;
   
   constructor(
+    private localStorange:LocalStorageService,
     private router: Router
   ) { }
 
@@ -27,7 +29,6 @@ export class LoginComponent implements OnInit {
         $(".authent").show().animate({
           right: -320
         }, {
-          easing: 'easeOutQuint',
           duration: 600,
           queue: false
         });
@@ -42,7 +43,6 @@ export class LoginComponent implements OnInit {
         $(".authent").show().animate({
           right: 90
         }, {
-          easing: 'easeOutQuint',
           duration: 600,
           queue: false
         });
@@ -66,16 +66,16 @@ export class LoginComponent implements OnInit {
         }, 300);*/
       
        //si todo sale bien
-      setTimeout(function() {
-        $('.login').removeClass('test')
-        $('.login div').fadeOut(123);
-      }, 250);
-      setTimeout(function() {
-        $('.success').fadeIn();
-      }, 300);
-      setTimeout(function() {
-        this.router.navigateByUrl('dashboard');
-      }, 2000);
+        setTimeout(function() {
+          $('.login').removeClass('test')
+          $('.login div').fadeOut(123);
+        }, 250);
+        setTimeout(function() {
+          $('.success').fadeIn();
+        }, 300);
+        setTimeout(function() {
+          location.href='#/dashboard';
+        }, 2000);
       
 
         /*$.post(ajaxurl + '/login', {
@@ -164,9 +164,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+
+    this.localStorange.setStorage('userInfo',this.Username);
+    /*
     setTimeout(()=>{
       this.router.navigateByUrl('dashboard');
-    }, 2500);
+    }, 4500);*/
   }
 
 

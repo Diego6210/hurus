@@ -35,7 +35,7 @@ export class ObjectComponent implements OnInit {
 
   getDataFromSource() {
     this.Usuarios = [{
-      Img:'/assets/img/mike.jpg',
+      Img:'assets/img/mike.jpg',
       Nombre:'Diego',
       FechaNacimiento:'11-06-1912',
       Tags:'diego',

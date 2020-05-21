@@ -38,6 +38,10 @@ export class DataProjectComponent implements OnInit {
 
   }
 
+  Delet(id){
+
+  }
+
   getDataFromSource() {
     this.Usuarios = [{
       Img:'/assets/img/mike.jpg',

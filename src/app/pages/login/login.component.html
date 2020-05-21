@@ -2,7 +2,7 @@
 
   <div class="fullscreen-bg">
     <video loop [muted]="true" muted autoplay poster="img/videoframe.jpg" class="fullscreen-bg__video">
-        <source src="/assets/img/vid.mp4" type="video/mp4">
+        <source src="assets/img/vid.mp4" type="video/mp4">
     </video>
   </div>
 
@@ -14,7 +14,7 @@
       <div class='login_fields'>
           <div class='login_fields__user'>
               <div class='icon'>
-                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/user_icon_copy.png'>
+                <i class="fas fa-user" style="color: white;"></i>
               </div>
               <input [(ngModel)]="Username" id="Username" placeholder='Username' type='text'>
               <div class='validation'>
@@ -23,7 +23,7 @@
           </div>
           <div class='login_fields__password'>
               <div class='icon'>
-                <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png'>
+                <i class="fas fa-lock" style="color: white;"></i>
               </div>
               <input [(ngModel)]="Password" id="Password" placeholder='Password' type='password'>
               <div class='validation'>
@@ -53,7 +53,7 @@
       </div>
       
   </div>
-  <div class='authent'>
+  <div id="authent" class='authent'>
       <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/puff.svg'>
       <p>Autenticando...</p>
   </div>

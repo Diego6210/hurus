@@ -3,6 +3,7 @@ import { ROUTES } from "../sidebar/sidebar.component";
 import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { LocalStorageService } from 'src/app/service/local-storage.service';
 
 @Component({
   selector: "app-navbar",
@@ -22,6 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     location: Location,
+    private localStorange:LocalStorageService,
     private element: ElementRef,
     private router: Router,
     private modalService: NgbModal
@@ -33,6 +35,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   logOut(){
 
+    this.localStorange.cleaStorage();
     this.router.navigateByUrl('login');
 
   }
