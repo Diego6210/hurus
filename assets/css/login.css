@@ -39,10 +39,11 @@
 }
 .contentLogin .success {
   display: none;
-  color: #d5d8e2;
+  color: #edf0f8;
 }
 .contentLogin .success p {
-  font-size: 14px;
+  font-size: 17px;
+  color: #afb3bb;;
 }
 
 .contentLogin .failed {
@@ -50,7 +51,8 @@
   color: #d5d8e2;
 }
 .contentLogin .failed p {
-  font-size: 14px;
+  font-size: 17px;
+  color: #afb3bb;;
 }
 
 .contentLogin p {
@@ -154,13 +156,13 @@
   position: relative;
   top: 35px;
   left: 0;
-  width: 80%;
+  width: 85%;
   right: 0;
   margin: auto;
 }
 .contentLogin .login_fields__submit .forgot {
   float: right;
-  font-size: 10px;
+  font-size: 14px;
   margin-top: 11px;
   text-decoration: underline;
 }

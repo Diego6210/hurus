@@ -1,6 +1,6 @@
 .main-panel {
   &, &[data="red"]{
-    border-color: $info;
+    border-color: $danger-states;
   }
 
   .content {
@@ -38,7 +38,7 @@
 
 .sidebar, .off-canvas-sidebar{
   &, &[data="blue"]{
-    @include linear-gradient($info-states, $info);
+    @include linear-gradient($danger-states, $danger-states);
   }
   &[data="primary"]{
     @include linear-gradient($info-states, $info);
