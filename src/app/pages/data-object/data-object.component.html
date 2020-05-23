@@ -1,7 +1,7 @@
 
 <div class=" content">
     <div class=" row">
-      <div class=" col-md-12">
+      <div class=" col-md-8">
         <div class=" card">
             <div class=" card-header"><h5 class=" title">Datos de Objetivo</h5><hr></div>
             <div class=" card-body">
@@ -14,13 +14,13 @@
                             <input [(ngModel)]="Nombre" type="text" class="form-control" placeholder="Ingresar Nombre" value="">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Fecha de nacimiento:</label>
                             <input type="date" class="form-control"value="" >
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Empresa:</label>
                             <input type="text" class="form-control" placeholder="Ingresar Nombre" value="">
@@ -34,20 +34,16 @@
                         <div class="form-group">
                             <label>Estado Civil:</label>
                             <div class="md-radio-list">
-                                <div class="md-radio">
-                                    <input type="radio" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="md-radiobtn">
-                                    <label for="checkboxEstado">
-                                        <span> </span>
-                                        <span class="check"> </span>
-                                        <span class="box"></span> Soltero
+                                <div class="md-radio form-check">
+                                    <label for="checkboxEstado"  class="form-check-label">
+                                        <input type="radio" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="form-check-input md-radiobtn">
+                                        Soltero
                                     </label>
                                 </div>
-                                <div class="md-radio">
-                                    <input type="radio" id="checkboxEstado1" name="checkboxEstado" value=" Casado" class="md-radiobtn">
-                                    <label for="checkboxEstado1">
-                                        <span></span>
-                                        <span class="check"></span>
-                                        <span class="box"></span> Casado
+                                <div class="md-radio form-check">
+                                    <label for="checkboxEstado1"  class="form-check-label">
+                                        <input type="radio" id="checkboxEstado1" name="checkboxEstado" value=" Casado" class="form-check-input md-radiobtn">
+                                        Casado
                                     </label>
                                 </div>
                             </div>
@@ -58,27 +54,23 @@
                         <div class="form-group">
                             <label>Genero:</label>
                             <div class="md-radio-list">
-                                <div class="md-radio">
-                                    <input type="radio" id="checkbox2_1" name="checkboxSex" value="Masculino" class="md-radiobtn">
-                                    <label for="checkbox2_1">
-                                        <span></span>
-                                        <span class="check"></span>
-                                        <span class="box"></span> Masculino
+                                <div class="md-radio form-check">
+                                    <label for="checkbox2_1" class="form-check-label">
+                                        <input type="radio" id="checkbox2_1" name="checkboxSex" value="Masculino" class="form-check-input md-radiobtn">
+                                        Masculino
                                     </label>
                                 </div>
-                                <div class="md-radio">
-                                    <input type="radio" id="checkbox2_2" name="checkboxSex" value="Femenino" class="md-radiobtn">
-                                    <label for="checkbox2_2">
-                                        <span></span>
-                                        <span class="check"></span>
-                                        <span class="box"></span> Femenino
+                                <div class="md-radio form-check">
+                                    <label for="checkbox2_2" class="form-check-label">
+                                        <input type="radio" id="checkbox2_2" name="checkboxSex" value="Femenino" class="form-check-input md-radiobtn">
+                                        Femenino
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
-                </div>
+                </div><br>
 
 
                 <input type="hidden" id="idUG" name="id" value="Id">
@@ -87,6 +79,36 @@
             </div>
         </div>
       </div>
+
+    
+        <div class=" col-md-4">
+            <div class=" card card-user">
+            <form action="" (ngSubmit)="onSubmit()">
+                <div class=" card-body">
+                <p class=" card-text"></p>
+                <div class=" author">
+                    <div class=" block block-one"></div>
+                    <div class=" block block-two"></div>
+                <div class=" block block-three"></div>
+                <div class=" block block-four"></div>
+                <a>
+                    <img alt="..." class=" avatar" src="{{imgdefault}}" />
+                    <br>
+                    <br>
+                    <span class="btn btn-primary btn-sm btn-file">
+                    <label for="" style="color: white;">Cambiar Foto</label><br>
+                    <input (change)="onChange($event,$event.target.files)" accept="image/*"  type="file" name="archivo" id="archivo"  value=""/>
+                    </span>
+                </a>
+                </div>
+            </div>
+            <div *ngIf="cheange" class=" card-footer">
+                <input   class=" btn btn-fill btn-primary" type="submit" value='Guardar'>
+            </div>
+            
+            </form>
+            </div>
+        </div>
     </div>
 
     <div class=" row">
@@ -99,8 +121,7 @@
                         
                             <div class="col-md-12">
     
-                                <ejs-filemanager id='filemanager' [ajaxSettings]='ajaxSettings' [allowDragAndDrop]='true'>
-                                </ejs-filemanager>
+                                <ejs-filemanager id='filemanager' [ajaxSettings]='ajaxSettings' [allowDragAndDrop]='true'></ejs-filemanager>
     
                             </div>
                             
@@ -278,7 +299,7 @@
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title" style="color: white;">Cuenta</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span style="color: red;" aria-hidden="true">×</span>
+        <span style="color: red;" aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body ">
@@ -288,8 +309,40 @@
         <input   [(ngModel)]="dialogCorreo" type="email"  class="form-control"><br>
         <label >Password</label><br>
         <input  [(ngModel)]="dialogPassword"  class="form-control">
-          </div>
+    </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-info " (click)="addAccount()">Crear</button>
     </div>
   </ng-template>
+
+  <style>  
+    input{
+        background-color : rgb(53, 54, 77)  !important;  
+    }
+  
+    select,input{
+        background-color : rgb(53, 54, 77)  !important;  
+    }
+  
+    .btn-file {
+    position: relative;
+    overflow: hidden;
+    }
+  
+    .btn-file input[type=file] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 100%;
+      min-height: 100%;
+      font-size: 100px;
+      text-align: right;
+      filter: alpha(opacity=0);
+      opacity: 0;
+      outline: none;
+      background: white;
+      cursor: inherit;
+      display: block;
+  }
+    
+  </style>

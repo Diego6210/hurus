@@ -33,6 +33,9 @@ import { NewObjectComponent } from './pages/new-object/new-object.component';
 import { MatButtonModule } from '@angular/material/button';
 import { FileManagerAllModule } from '@syncfusion/ej2-angular-filemanager';
 import { DataProjectComponent } from './pages/data-project/data-project.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import {MatIconModule} from '@angular/material/icon';
+import { PruebasComponent } from './pages/pruebas/pruebas.component';
 
 @NgModule({
 
@@ -44,6 +47,8 @@ import { DataProjectComponent } from './pages/data-project/data-project.componen
     MatSortModule,
     MatDialogModule,
     MatButtonModule,
+    MatStepperModule,
+    MatIconModule,
     FormsModule,
     BrowserModule,
     HttpClientModule,
@@ -56,7 +61,7 @@ import { DataProjectComponent } from './pages/data-project/data-project.componen
     FileManagerAllModule,
     ToastrModule.forRoot()
   ],
-  declarations: [AppComponent, AdminLayoutComponent, LoginComponent, UsersComponent, Page404Component, ManifestComponent, ObjectComponent, ProjectComponent, DataObjectComponent, NewObjectComponent, DataProjectComponent],
+  declarations: [AppComponent, AdminLayoutComponent, LoginComponent, UsersComponent, Page404Component, ManifestComponent, ObjectComponent, ProjectComponent, DataObjectComponent, NewObjectComponent, DataProjectComponent, PruebasComponent],
   providers: [ServerService],
   bootstrap: [AppComponent]
 })

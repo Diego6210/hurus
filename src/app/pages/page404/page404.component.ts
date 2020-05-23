@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./page404.component.scss']
 })
 export class Page404Component implements OnInit {
-  mensaje: string ='';
 
   constructor() { }
 

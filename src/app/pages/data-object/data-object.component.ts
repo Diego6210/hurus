@@ -26,6 +26,14 @@ export class DataObjectComponent implements OnInit {
   contacts:any = [];
 
   Nombre:string;
+  Username:string;
+  imgdefault: string = 'assets/img/default-avatar.png';
+  cheange = false;
+  
+  IMG:string;
+  formData = new FormData();
+  id = 0;
+  idTipoUsuario;
 
   Descripcion:string;
   Latitud:string;
@@ -33,15 +41,7 @@ export class DataObjectComponent implements OnInit {
   dialogCorreo:string;
   dialogPassword:string;
   dialogUrl:string;
-  //public hostUrl: string = 'https://127.0.0.1:8090';
-  //public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
-
-  /*public ajaxSettings: object = {
-        url: this.hostUrl + '/',
-        getImageUrl: this.hostUrl + '/GetImage/',
-        uploadUrl: this.hostUrl + '/Upload/',
-        downloadUrl: this.hostUrl + '/Download/'
-  };*/ 
+  
 
   public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
   public ajaxSettings: object = {
@@ -86,6 +86,36 @@ export class DataObjectComponent implements OnInit {
 
     this.modalService.open(modalCuenta, {ariaLabelledBy: 'modal-basic-title'});    
   }
+
+  onChange($event,Archivo: FileList){
+    
+    var estencion = Archivo[0].name.split('.', 2)
+    this.IMG = this.Username+'.'+estencion[1];
+
+    if ($event.target.files) {
+      var reader = new FileReader();
+
+      reader.onload = ($event:any) => {
+        this.imgdefault = $event.target.result;
+      }
+      this.cheange = true;
+      reader.readAsDataURL($event.target.files[0]);
+      
+
+      this.formData.delete('archivo');
+      this.formData.append('archivo', Archivo[0]);
+
+    }
+  }
+
+  capturar() {
+    this.idTipoUsuario = this.id;
+  }
+  
+  onSubmit() {
+    //this.server.uploadFile(this.formData,this.Username).subscribe((data) =>{ console.log(data)});
+    this.cheange = false;
+  }  
 
   addLocation(){
 

@@ -14,7 +14,7 @@ export class ProjectComponent implements OnInit {
   dataSource = null;
   
   Proyectos:any = [];
-  columnas: string[] = ['proyecto', 'acciones'];
+  columnas: string[] = ['proyecto', 'tag','acciones'];
   
   ngOnInit(): void {
     this.getDataFromSource();
@@ -40,6 +40,7 @@ export class ProjectComponent implements OnInit {
     this.Proyectos = [{
       id:1,
       nombre:'nose',
+      tag:'tag',
       Path: '/project/1'
     }];
     this.dataSource = new MatTableDataSource(this.Proyectos);

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-manifest',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManifestComponent implements OnInit {
 
+  nombreAplicacion:string;
+
   constructor() { }
 
   ngOnInit(): void {
+    this.nombreAplicacion = environment.nombreAplicacion;
   }
 
 }

@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
       }, 300);
       setTimeout(function() {
         $(".authent").show().animate({
-          right: -320
+          right: -20 // -320
         }, {
           duration: 600,
           queue: false
@@ -56,16 +56,20 @@ export class LoginComponent implements OnInit {
         $('.login').removeClass('testtwo');
 
         //si da error
-        /*setTimeout(function() {
+        /*
+        setTimeout(function() {
           $('.login').removeClass('test')
           $('.login div').fadeOut(123);
+          $(".authent").hide();
         }, 250);
         setTimeout(function() {
           $('.failed').fadeIn();
           $('.button_try').fadeIn();
-        }, 300);*/
+        }, 300);
+        */
       
        //si todo sale bien
+        ///*
         setTimeout(function() {
           $('.login').removeClass('test')
           $('.login div').fadeOut(123);
@@ -76,7 +80,7 @@ export class LoginComponent implements OnInit {
         setTimeout(function() {
           location.href='#/dashboard';
         }, 2000);
-      
+        //*/
 
         /*$.post(ajaxurl + '/login', {
           user: $('#Username').val(),

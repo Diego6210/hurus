@@ -4,9 +4,9 @@
 
 export const environment = {
   production: false,
-  server: 'https://app-serversocket.herokuapp.com/',
-  nombreEmpresa: 'ss',
-  nombreAplicacion: 'Hydra'
+  server: 'https://34c2f331.ngrok.io/',
+  nombreEmpresa: 'Nombre de la empresa',
+  nombreAplicacion: 'Horus'
 };
 
 /*

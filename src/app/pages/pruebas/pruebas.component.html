@@ -1,0 +1,49 @@
+<div class=" content">
+    <div class=" row">
+      <div class=" col-md-12">
+        <div class=" card">
+            <div class=" card-header">
+                <h4 class=" title">Objetivos</h4>
+                <hr>
+            </div>
+            <div class=" card-body">
+                <mat-horizontal-stepper>
+                    <ng-template matStepperIcon="edit">
+                        <mat-icon></mat-icon>
+                      </ng-template>
+                    <mat-step label="uni">
+                        <p>1</p>
+
+                    </mat-step>
+
+                    <mat-step label="dos">
+                        <p>2</p>
+                    </mat-step>
+
+                    <mat-step label="tres">
+                        <p>3</p>
+                    </mat-step>
+                
+                </mat-horizontal-stepper>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .mat-step, .mat-step-icon-state-number, .mat-step-icon-selected{
+        margin-top: 16px;
+        background-color : rgb(53, 54, 77);
+        color: yellow;
+    }
+    
+    .mat-stepper-horizontal{
+        margin-top: 8px;
+        background-color : rgb(53, 54, 77);
+    }
+
+    ::ng-deep .mat-step-header .mat-step-icon-selected {
+        background-color: red; 
+    }
+    
+</style>

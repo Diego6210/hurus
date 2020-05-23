@@ -14,4 +14,14 @@ export class ServerService {
   uploadFile(archivo,user) {
     return this.http.post(`${this.URL}upload/${user}`, archivo);
   }
+
+
+  signin(email,password){
+
+    //const formData = new FormData();
+    //formData.append('email', email);
+    //formData.append('password', password);
+
+    return this.http.post(`${this.URL}signin/`, {'password': password,'email': email});
+  }
 }
