@@ -4,10 +4,12 @@
         <div class=" card">
             <div class=" card-header"><h4 class=" title">Proyecto: {{nameProject}}</h4><hr></div>
             <div class=" card-body">
-                <h5>Lista de objetivos</h5>
+                <h5>Descripión: {{descripcionProyecto}}</h5>
 
                 <button class="btn btn-fill btn-info btn-sm " style="float:left; float: right;"  [routerLink]="['/newObject']"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
-            <!--<button class="btn btn-fill btn-danger btn-sm " style="float:left; float: right;"  ><i class="far fa-file"></i> Reporte</button>
+                <button class="btn btn-fill btn-warning  btn-sm " style="float:left; float: right;" (click)="openModaltags(tags)" ><i class="fas fa-tags"></i> Tags</button>
+
+                <!--<button class="btn btn-fill btn-danger btn-sm " style="float:left; float: right;"  ><i class="far fa-file"></i> Reporte</button>
                 <button class="btn btn-fill btn-success btn-sm " style="float:left; float: right;"  ><i class="fas fa-map"></i> Mapa de Objetivos</button>
                 <button class="btn btn-fill btn-warning  btn-sm " style="float:left; float: right;" ><i class="fas fa-tags"></i> Tags</button>
             -->
@@ -18,7 +20,7 @@
                         <mat-icon></mat-icon>
                       </ng-template>
                     
-                    <mat-step label="Objetivos">
+                    <mat-step color="warn" label="Objetivos">
 
                         <!-- Search form -->
                     <div class="md-form mt-0">
@@ -34,17 +36,12 @@
                             </ng-container>
                         
                             <ng-container matColumnDef="Nombre">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> PERFIL </th>
                             <td mat-cell *matCellDef="let usuarios"> {{usuarios.Nombre}} </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="FechaNacimiento">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> FECHA DE NACIMIENTO </th>
-                            <td mat-cell *matCellDef="let usuarios"> {{usuarios.FechaNacimiento}} </td>
                             </ng-container>
                         
                             <ng-container matColumnDef="Tags">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> TAGS </th>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> TARGEST </th>
                             <td mat-cell *matCellDef="let usuarios"> {{usuarios.Tags}} </td>
                             </ng-container>
 
@@ -64,20 +61,32 @@
 
                     </mat-step>
 
-                    <mat-step label="Reportes">
+                    <mat-step color="warn" label="Reportes">
 
                         
                         <div class=" row">
 
                             <div class=" col-md-5">
                                 <label >Nombre del Reporte</label><br>
-                                <input class="form-control"><br>
+                                <input type="text" class="form-control"><br>
                                 <label >Descripción</label><br>
-                                <input   type="email"  class="form-control">
+                                <input type="text"  class="form-control">
                                 <br>
-                                <ejs-filemanager id='filemanager' [ajaxSettings]='ajaxSettings' [allowDragAndDrop]='true'></ejs-filemanager>
+                                
+
+                                <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
+                                    <input hidden type="file" accept="application/pdf" #fileInput (change)="uploadFile($event.target.files)">
+                                </div>
+                                <div  class="files-list" *ngFor="let file of files;let i= index">
+                                    <p> {{ file }} </p>
+                                    <button class="delete-file" (click)="deleteAttachment(i)">
+                                        <i style="color: red;" class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
                                 <br>
-        
+                                <div class=" card-footer">
+                                    <input class=" btn btn-fill btn-primary" type="submit" value='Guardar Cambios'>
+                                </div>
                             </div>
 
                             <div class=" col-md-7">
@@ -127,7 +136,12 @@
                             </div>
                         </mat-step>
 
-                    <mat-step label="Involucrados">
+                    <mat-step color="warn" label="Involucrados">
+                        <br>
+                        <button class="btn btn-fill btn-info  btn-sm " style="float:left; float: right;" (click)="openModal(content)" > Agregar Involucrados</button>
+
+                        <br><br>
+
                         <!-- Search form -->
                         <div class="md-form mt-0">
                         <input  (keyup)="filtrarIn($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
@@ -168,6 +182,49 @@
     </div>
 </div>
 
+
+<ng-template #content let-modal class=" form-control-modal">
+    <div class="modal-header">
+      <h4 style="color: #ffffff;" class="modal-title">Agregar Involucrado</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span style="color: red;" aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <div>
+            <label style="color: white;">Usuarios:</label>
+            <select [(ngModel)]="id" (change)="capturar()"  class="form-control" id="exampleFormControlSelect1">
+              <option value="0">Selecione un usuario</option>
+              <option *ngFor="let Usuario of Usuario" value="{{Usuario.Id}}">{{Usuario.Descripcion}}</option>
+            </select>
+          </div>
+    </div>
+    <div class="modal-footer">
+      <br><br>
+      <button type="button" class="btn btn-fill btn-info " (click)="Agregar()">Agregar</button>
+      </div>
+  </ng-template>
+
+  <ng-template #tags let-modal class=" form-control-modal">
+    <div class="modal-header">
+      <h4 style="color: #ffffff;" class="modal-title">Crear Tags: <i [ngStyle]="{color: tagsModal}">{{nombreModal}}</i></h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span style="color: red;" aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <label>Nombre</label><br>
+        <input   [(ngModel)]="nombreModal" type="text"  class="form-control"><br>
+
+        <label>Tag</label><br>
+        <input type="color" [(ngModel)]="tagsModal"  class="form-control">
+    </div>
+    <div class="modal-footer">
+      <br><br>
+      <button type="button" class="btn btn-fill btn-info " (click)="AgregarTags()">Agregar</button>
+      </div>
+  </ng-template>
+
 <style>
 
     #filemanager{
@@ -192,5 +249,67 @@
     ::ng-deep .mat-step-header .mat-step-icon-selected {
         background-color: red; 
     }
+
+    .btn-file {
+    position: relative;
+    overflow: hidden;
+    }
+  
+    .btn-file input[type=file] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 100%;
+      min-height: 100%;
+      font-size: 100px;
+      text-align: right;
+      filter: alpha(opacity=0);
+      opacity: 0;
+      outline: none;
+      background: white;
+      cursor: inherit;
+      display: block;
+  }
+
+  .uploadfilecontainer {
+    background-image: url("assets/img/upload-cloud.png");
+    background-repeat: no-repeat;
+    background-size: 100px;
+    background-position: center;
+    height: 200px;
+    width: 80%;
+    margin: 20px auto;
+    border: 2px dashed #1C8ADB;
+    border-radius: 10px;
+}
+
+.uploadfilecontainer:hover {
+    cursor: pointer;
+    background-color: #9ecbec !important;
+    opacity: 0.8;
+}
+
+.files-list {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 10px auto;
+    background: rgb(53, 54, 77);
+    border: 1px dashed;
+    border-radius: 12px;
+    padding: 5px;
+    color: #1c8adb;
+}
+
+.files-list .delete-file {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.files-list .delete-file img {
+    width: 30px;
+}
+    
     
 </style>

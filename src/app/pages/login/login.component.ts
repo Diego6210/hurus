@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as $ from "jquery"
 import { LocalStorageService } from 'src/app/service/local-storage.service';
+import { environment } from 'src/environments/environment';
+import { ServerService } from 'src/app/service/server.service';
 
 @Component({
   selector: 'app-login',
@@ -12,110 +14,16 @@ export class LoginComponent implements OnInit {
 
   Password:string;
   Username:string;
-  
+  nombreAplicacion:string;
+
   constructor(
     private localStorange:LocalStorageService,
-    private router: Router
+    private router: Router,
+    private server: ServerService
   ) { }
 
   ngOnInit(): void {
-    $('input[type="submit"]').click(function() {
-      
-      $('.login').addClass('test')
-      setTimeout(function() {
-        $('.login').addClass('testtwo')
-      }, 300);
-      setTimeout(function() {
-        $(".authent").show().animate({
-          right: -20 // -320
-        }, {
-          duration: 600,
-          queue: false
-        });
-        $(".authent").animate({
-          opacity: 1
-        }, {
-          duration: 200,
-          queue: false
-        }).addClass('visible');
-      }, 500);
-      setTimeout(function() {
-        $(".authent").show().animate({
-          right: 90
-        }, {
-          duration: 600,
-          queue: false
-        });
-        $(".authent").animate({
-          opacity: 0
-        }, {
-          duration: 200,
-          queue: false
-        }).addClass('visible');
-
-        $('.login').removeClass('testtwo');
-
-        //si da error
-        /*
-        setTimeout(function() {
-          $('.login').removeClass('test')
-          $('.login div').fadeOut(123);
-          $(".authent").hide();
-        }, 250);
-        setTimeout(function() {
-          $('.failed').fadeIn();
-          $('.button_try').fadeIn();
-        }, 300);
-        */
-      
-       //si todo sale bien
-        ///*
-        setTimeout(function() {
-          $('.login').removeClass('test')
-          $('.login div').fadeOut(123);
-        }, 250);
-        setTimeout(function() {
-          $('.success').fadeIn();
-        }, 300);
-        setTimeout(function() {
-          location.href='#/dashboard';
-        }, 2000);
-        //*/
-
-        /*$.post(ajaxurl + '/login', {
-          user: $('#Username').val(),
-          password: $('#Password').val()
-        }).then(function(res) {
-          if (res.error) {
-            setTimeout(function() {
-              $('.login').removeClass('test')
-              $('.login div').fadeOut(123);
-            }, 250);
-            setTimeout(function() {
-              $('.failed').fadeIn();
-              $('.button_try').fadeIn();
-            }, 300);
-          } else {
-            setTimeout(function() {
-              $('.login').removeClass('test')
-              $('.login div').fadeOut(123);
-            }, 250);
-            setTimeout(function() {
-              $('.success').fadeIn();
-            }, 300);
-            setTimeout(function() {
-              location.href=res.url;
-            }, 2000);
-        
-          }
-        
-        
-        }).fail(function() {
-          swal('Error', 'Error al conectarse con el servidor', 'error');
-        });*/
-      }, 2500);
-    });
-
+    this.nombreAplicacion = environment.nombreAplicacion;
 
     $('.button_try').click(function() {
       setTimeout(function() {
@@ -169,7 +77,90 @@ export class LoginComponent implements OnInit {
 
   login(){
 
-    this.localStorange.setStorage('userInfo',this.Username);
+    var estatus = false;
+
+    this.server.signin(this.Username,this.Password).subscribe((data) => {
+
+      this.localStorange.setStorage('token',data['token']);
+
+      let fecha = new Date();
+      fecha.setSeconds(1800);
+      this.localStorange.setStorage('expira',fecha.getTime().toString());
+
+
+
+      estatus = true;
+      if(data['token'] != '')
+        estatus = false
+    });
+
+    /*this.server.proyect().subscribe((data) => {
+      console.log(data);
+    })*/
+
+    $('.login').addClass('test')
+      setTimeout(function() {
+        $('.login').addClass('testtwo')
+      }, 300);
+      setTimeout(function() {
+        $(".authent").show().animate({
+          right: -20 // -320
+        }, {
+          duration: 600,
+          queue: false
+        });
+        $(".authent").animate({
+          opacity: 1
+        }, {
+          duration: 200,
+          queue: false
+        }).addClass('visible');
+      }, 500);
+
+
+      setTimeout(function() {
+        $(".authent").show().animate({
+          right: 90
+        }, {
+          duration: 600,
+          queue: false
+        });
+        $(".authent").animate({
+          opacity: 0
+        }, {
+          duration: 200,
+          queue: false
+        }).addClass('visible');
+
+        $('.login').removeClass('testtwo');
+
+        if(estatus){
+          setTimeout(function() {
+            $('.login').removeClass('test')
+            $('.login div').fadeOut(123);
+          }, 250);
+          setTimeout(function() {
+            $('.success').fadeIn();
+          }, 300);
+          setTimeout(function() {
+            location.href='#/dashboard';
+          }, 2000);
+        }else{
+          $(".authent").hide();
+          setTimeout(function() {
+            $('.login').removeClass('test')
+            $('.login div').fadeOut(123);
+          }, 250);
+          setTimeout(function() {
+            $('.failed').fadeIn();
+            $('.button_try').fadeIn();
+          }, 300);
+
+        }
+
+      }, 2500);
+
+        this.localStorange.setStorage('userInfo',this.Username);
     /*
     setTimeout(()=>{
       this.router.navigateByUrl('dashboard');

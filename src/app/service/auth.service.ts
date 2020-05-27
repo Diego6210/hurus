@@ -16,14 +16,22 @@ export class AuthService implements CanActivate  {
 
   isAuthenticated() : Boolean {
 
-    /*this.server.signin('admin','123').subscribe((res) => {
-      alert(res)
-      console.log(res)
-    })*/
+    let token = this.localStorange.getStorage('token');
+    
+    const expirafecha = Number(this.localStorange.getStorage('expira'));
+    const expiraDate = new Date();
+    expiraDate.setTime(expirafecha)
 
-    let userData = this.localStorange.getStorage('userInfo');
-    console.log(userData);
-    if(userData != null || userData != undefined){
+    console.log(expirafecha);
+
+    console.log(expiraDate.setTime(expirafecha));
+    let expira = false; 
+    
+    if(expiraDate > new Date())
+      expira = true;    
+
+
+    if(token != null || token != undefined || expira ){
       return true;
     }
 

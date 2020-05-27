@@ -20,7 +20,7 @@ export class ObjectComponent implements OnInit {
   private url: string = environment.server+'imagen/';
   
   Usuarios:any = [];
-  columnas: string[] = ['Img', 'Nombre', 'FechaNacimiento','Tags', 'Acciones'];
+  columnas: string[] = ['Img', 'Nombre', 'Tags', 'Acciones'];
 
 
   constructor() { }

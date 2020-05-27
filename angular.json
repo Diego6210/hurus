@@ -32,11 +32,13 @@
               "node_modules/ngx-toastr/toastr.css",
               "src/assets/scss/black-dashboard.scss",
               "src/assets/css/nucleo-icons.css",
-              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css",
+              "node_modules/dropify/dist/css/dropify.css"
             ],
             "scripts": [
               "node_modules/datatables.net/js/jquery.dataTables.js",
-              "node_modules/jquery/dist/jquery.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/dropify/dist/js/dropify.js"
             ],
             "es5BrowserSupport": true
           },

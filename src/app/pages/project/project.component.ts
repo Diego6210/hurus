@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-project',
   templateUrl: './project.component.html',
@@ -14,8 +15,17 @@ export class ProjectComponent implements OnInit {
   dataSource = null;
   
   Proyectos:any = [];
-  columnas: string[] = ['proyecto', 'tag','acciones'];
+  columnas: string[] = ['proyecto', 'descripcion', 'tag','acciones'];
   
+  tagsModal: string;
+  descripcionModal: string;
+  nombreModal: string;
+
+  constructor(
+    private modalService: NgbModal
+  ) {    
+  }
+
   ngOnInit(): void {
     this.getDataFromSource();
   }
@@ -26,6 +36,17 @@ export class ProjectComponent implements OnInit {
 
   Agregar(){
 
+    this.Proyectos.push({
+      id:1,
+      nombre: this.nombreModal,
+      descripcion: this.descripcionModal,
+      tag: this.tagsModal,
+      Path: '/project/2'
+    });
+
+    this.getDataFromSource();
+
+    this.modalService.dismissAll();
   }
 
   Delet(id){
@@ -33,13 +54,15 @@ export class ProjectComponent implements OnInit {
   }
 
   openLg(content){
-    
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});    
+
   }
 
   getDataFromSource() {
     this.Proyectos = [{
       id:1,
       nombre:'nose',
+      descripcion:'PROYECTO',
       tag:'tag',
       Path: '/project/1'
     }];
