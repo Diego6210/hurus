@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from './local-storage.service';
 
@@ -14,11 +14,13 @@ const httpOptions = {
 export class ServerService {
 
   private URL: string = environment.server;
-  
+  private token:string;
   constructor(
     private http: HttpClient,
     private localStorange:LocalStorageService
-  ) { }
+  ) { 
+    this.token = this.localStorange.getStorage('token');
+  }
 
   uploadFile(archivo,user) {
     return this.http.post(`${this.URL}upload/${user}`, archivo);
@@ -30,31 +32,81 @@ export class ServerService {
     urlSearchParams.append('email', email);
     urlSearchParams.append('password', password);
 
-    //let headers = new HttpHeaders();
-    //headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');{headers: headers}
-    
     return this.http.post(`${this.URL}login/`,urlSearchParams.toString(),httpOptions);
   }
-  
-  getCustomHeaders(): HttpHeaders {
-    const headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('token', this.localStorange.getStorage('token'));
-    return headers;
+
+  getProyect(){
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}proyect/`,urlSearchParams.toString(), httpOptions );
   }
 
-  proyect(){
-/*
-    let headers = new HttpHeaders();
-    //headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
-    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-    headers = headers.append( 'token',  this.localStorange.getStorage('token'));*/
+  setProyecto(name,description,tag){
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('name', name);
+    urlSearchParams.append('description', description);
+    urlSearchParams.append('tag', tag);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
+    return this.http.post(`${this.URL}proyect/add/`,urlSearchParams.toString(),httpOptions);
+  }
 
-    const header = new HttpHeaders()
-    .set('Content-Type', "application/json; charset=utf-8")
-    .set('token', this.localStorange.getStorage('token'));
+  setDeletProyecto(id){
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}proyect/add/`,urlSearchParams.toString(),httpOptions);
+  }
+
+  getDataProyect(id){
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
     
-    return this.http.post(`${this.URL}proyect/`,null,{headers: this.getCustomHeaders()});
+    return this.http.post(`${this.URL}proyect/find/`,urlSearchParams.toString(), httpOptions );
   }
+
+  getProyectTarget(id){
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+    
+    return this.http.post(`${this.URL}target/`,urlSearchParams.toString(), httpOptions );
+  }
+
+  getDataTargetFind(id){
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/find`,urlSearchParams.toString(), httpOptions );
+  }
+
+  getTarget(){
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+    
+    return this.http.post(`${this.URL}target/`,urlSearchParams.toString(), httpOptions );
+  }
+
+
+  setTargetAdd(name, date, bussines, civil_state, sex,proyect, targets, account, tags, location){
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('name', name);
+    urlSearchParams.append('date', date);
+    urlSearchParams.append('bussines', bussines);
+    urlSearchParams.append('civil_state', civil_state);
+    urlSearchParams.append('sex', sex);
+    urlSearchParams.append('proyect', proyect);
+    urlSearchParams.append('targets', targets);
+    urlSearchParams.append('account', account);
+    urlSearchParams.append('tags', tags);
+    urlSearchParams.append('location', location);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/add/`,urlSearchParams.toString(),httpOptions);
+  }
+  
 }

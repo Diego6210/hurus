@@ -16,18 +16,18 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="">Fecha de nacimiento:</label>
-                            <input type="date" class="form-control"value="" >
+                            <label  for="">Fecha de nacimiento:</label>
+                            <input [(ngModel)]="fecha" type="date" class="form-control"value="" >
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="">Empresa:</label>
-                            <input type="text" class="form-control" placeholder="Ingresar Nombre" value="">
+                            <input  [(ngModel)]="Empresa" type="text" class="form-control" placeholder="Ingresar Nombre" value="">
                         </div>
                     </div>
                 </div>
-                <br>
+                <br><p>
 
                 <div class="row">
                     <div class="col-md-3">
@@ -36,13 +36,13 @@
                             <div class="md-radio-list">
                                 <div class="md-radio form-check">
                                     <label for="checkboxEstado"  class="form-check-label">
-                                        <input type="radio" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="form-check-input md-radiobtn">
+                                        <input type="radio" [(ngModel)]="estadoSelected" (change)="onItemChangeEstado(0)" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="form-check-input md-radiobtn">
                                         Soltero
                                     </label>
                                 </div>
                                 <div class="md-radio form-check">
                                     <label for="checkboxEstado1"  class="form-check-label">
-                                        <input type="radio" id="checkboxEstado1" name="checkboxEstado" value=" Casado" class="form-check-input md-radiobtn">
+                                        <input type="radio" [(ngModel)]="estadoSelected" (change)="onItemChangeEstado(1)"  id="checkboxEstado1" name="checkboxEstado" value=" Casado" class="form-check-input md-radiobtn">
                                         Casado
                                     </label>
                                 </div>
@@ -56,13 +56,13 @@
                             <div class="md-radio-list">
                                 <div class="md-radio form-check">
                                     <label for="checkbox2_1" class="form-check-label">
-                                        <input type="radio" id="checkbox2_1" name="checkboxSex" value="Masculino" class="form-check-input md-radiobtn">
+                                        <input type="radio" [(ngModel)]="sexSelected"(change)="onItemChangeSex(0)" id="checkbox2_1" name="checkboxSex" value="Masculino" class="form-check-input md-radiobtn">
                                         Masculino
                                     </label>
                                 </div>
                                 <div class="md-radio form-check">
                                     <label for="checkbox2_2" class="form-check-label">
-                                        <input type="radio" id="checkbox2_2" name="checkboxSex" value="Femenino" class="form-check-input md-radiobtn">
+                                        <input type="radio" [(ngModel)]="sexSelected"(change)="onItemChangeSex(1)" id="checkbox2_2" name="checkboxSex" value="Femenino" class="form-check-input md-radiobtn">
                                         Femenino
                                     </label>
                                 </div>
@@ -70,12 +70,7 @@
                         </div>
                     </div>
                     
-                </div><br>
-
-
-                <input type="hidden" id="idUG" name="id" value="Id">
-                <input type="submit" class="btn btn-success" value="Guardar">                  
-                
+                </div><br>            
             </div>
         </div>
       </div>
@@ -114,7 +109,7 @@
     <div class=" row">
         <div class=" col-lg-6">
             <div class=" card card-chart">
-                <div class=" card-header"><h5 class=" title">Contactos</h5><hr></div>
+                <div class=" card-header"><h5 class=" title">Contactos <button class="btn btn-info btn-sm" style="float:left; float: right;" (click)="contactos(contacto)" type="submit">Añadir</button></h5><hr></div>
                 <div class=" card-body">
                     
                     <div class="table-responsive ps">
@@ -243,13 +238,13 @@
             </div>
         </div>
     </div>
-    <!--<div class=" row">
+    <div class=" row">
         <div class=" col-md-12">
             <div class=" card card-chart">
-                <div class=" card-body"><button class="btn btn-fill btn-success  btn-sm" >Guardar</button></div>
+                <div class=" card-body"><div class="col text-center"><button (click)="GuardarDatos()" class="btn btn-fill btn-success  btn-sm" >Guardar</button></div></div>
             </div>
         </div>
-    </div>-->
+    </div>
 </div>
 
 
@@ -273,6 +268,27 @@
     </div>
   </ng-template>
 
+
+  
+  <ng-template #contacto let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" style="color: white;">Cuenta</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span style="color: red;" aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body ">
+        <label >URL</label><br>
+        <input  [(ngModel)]="dialogUrl" class="form-control"><br>
+        <label >Correo</label><br>
+        <input   [(ngModel)]="dialogCorreo" type="email"  class="form-control"><br>
+        <label >Password</label><br>
+        <input  [(ngModel)]="dialogPassword"  class="form-control">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-info " (click)="addAccount()">Crear</button>
+    </div>
+  </ng-template>
   <style>  
     input{
         background-color : rgb(53, 54, 77)  !important;  

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
+import { ServerService } from 'src/app/service/server.service';
 
 declare const google: any;
 interface Marker {
@@ -26,6 +27,11 @@ export class DataObjectComponent implements OnInit {
   contacts:any = [];
 
   Nombre:string;
+  fecha: Date;
+  Empresa:string;
+  sexSelected;
+  estadoSelected;
+
   Username:string;
   imgdefault: string = 'assets/img/default-avatar.png';
   cheange = false;
@@ -54,17 +60,45 @@ export class DataObjectComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private modalService: NgbModal,
-    private routeActive: ActivatedRoute
+    private routeActive: ActivatedRoute,
+    private server: ServerService
   ) {    
-    this.locattionSice = this.locations.length;
-    this.accountSice = this.accounts.length;
-    this.contactSice = this.contacts.length;
-    //alert(this.routeActive.snapshot.params.id)
   }
 
   ngOnInit(): void {
     this.map();
     
+    this.locattionSice = this.locations.length;
+    this.accountSice = this.accounts.length;
+    this.contactSice = this.contacts.length;
+    //alert(this.routeActive.snapshot.params.id)
+
+    this.server.getDataTargetFind(this.routeActive.snapshot.params.id).subscribe((data) => {
+//      console.log(data);
+
+      this.Empresa = data['data']['bussines'];
+      this.fecha = data['data']['date'];
+      this.Nombre= data['data']['name'];/*
+civil_state: true
+date: "1999-04-16"
+location: "[object Object]"
+proyect: "5ed073a549cfa836d849c9d5"
+tags: "[object Object],[object Object]"
+targets: "[object Object]"*/
+    });
+  }
+
+  contactos(contacto){
+    this.modalService.open(contacto, {ariaLabelledBy: 'modal-basic-title'});    
+
+  }
+  
+  onItemChangeEstado(item){
+
+  }
+
+  onItemChangeSex(item){
+
   }
 
   addAccount(){

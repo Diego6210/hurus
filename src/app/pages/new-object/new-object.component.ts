@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig} from '@angular/material/dialog';
+import { ServerService } from 'src/app/service/server.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-new-object',
@@ -20,6 +22,11 @@ export class NewObjectComponent implements OnInit {
   contacts:any = [];
 
   Nombre:string;
+  fecha: Date;
+  Empresa:string;
+  sexSelected;
+  estadoSelected;
+
   Username:string;
   imgdefault: string = 'assets/img/default-avatar.png';
   cheange = false;
@@ -35,6 +42,8 @@ export class NewObjectComponent implements OnInit {
   dialogCorreo:string;
   dialogPassword:string;
   dialogUrl:string;
+
+  idProyect:string;
   
 
   public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
@@ -48,17 +57,34 @@ export class NewObjectComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private modalService: NgbModal,
-    private routeActive: ActivatedRoute
+    private routeActive: ActivatedRoute,
+    private server: ServerService
   ) {    
-    this.locattionSice = this.locations.length;
-    this.accountSice = this.accounts.length;
-    this.contactSice = this.contacts.length;
-    //alert(this.routeActive.snapshot.params.id)
+    
   }
 
   ngOnInit(): void {
-    
-    
+    this.locattionSice = this.locations.length;
+    this.accountSice = this.accounts.length;
+    this.contactSice = this.contacts.length;
+    if(this.routeActive.snapshot.params.id != undefined){
+      //alert(this.routeActive.snapshot.params.id)
+      this.idProyect = this.routeActive.snapshot.params.id;
+    }
+  }
+
+  
+  contactos(contacto){
+    this.modalService.open(contacto, {ariaLabelledBy: 'modal-basic-title'});    
+
+  }
+
+  onItemChangeEstado(item){
+
+  }
+
+  onItemChangeSex(item){
+
   }
 
   addAccount(){
@@ -118,12 +144,43 @@ export class NewObjectComponent implements OnInit {
       Latitude: this.Latitud,
       Descripcion: this.Descripcion
     });
-
     
     this.Longitud = '';
     this.Latitud = '';
     this.Descripcion = '';
     this.locattionSice = this.locations.length;
+  }
+
+
+  GuardarDatos(){
+
+    var sexo = true;
+    var civilstatus = true;
+    if(this.sexSelected =='Masculino')
+      sexo = false;
+
+    if(this.estadoSelected =='Soltero')
+      sexo = false;
+
+
+    let tags =[{tag:"TGP",tagcolor:"#0f0f0f"}];
+    let targets = [{}];
+    this.server.setTargetAdd(this.Nombre,this.fecha,this.Empresa,civilstatus,sexo,this.idProyect,targets,tags,this.accounts, this.locations).subscribe((data) => {
+      console.log(data);
+
+      if(!data['err']){
+        Swal.fire({
+          icon: 'success',
+          text:data['message']
+        });
+      }else{
+        Swal.fire({
+          icon: 'error',
+          text: data['message']
+        });
+      }
+    });
+
   }
 
 

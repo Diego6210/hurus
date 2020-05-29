@@ -22,9 +22,9 @@ export class AuthService implements CanActivate  {
     const expiraDate = new Date();
     expiraDate.setTime(expirafecha)
 
-    console.log(expirafecha);
+    //console.log(expirafecha);
 
-    console.log(expiraDate.setTime(expirafecha));
+    //console.log(expiraDate.setTime(expirafecha));
     let expira = false; 
     
     if(expiraDate > new Date())

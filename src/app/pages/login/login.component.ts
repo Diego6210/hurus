@@ -89,14 +89,11 @@ export class LoginComponent implements OnInit {
 
 
 
-      estatus = true;
       if(data['token'] != '')
-        estatus = false
+        estatus = true;
+        //estatus = false
     });
 
-    /*this.server.proyect().subscribe((data) => {
-      console.log(data);
-    })*/
 
     $('.login').addClass('test')
       setTimeout(function() {

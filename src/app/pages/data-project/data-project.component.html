@@ -6,7 +6,7 @@
             <div class=" card-body">
                 <h5>Descripión: {{descripcionProyecto}}</h5>
 
-                <button class="btn btn-fill btn-info btn-sm " style="float:left; float: right;"  [routerLink]="['/newObject']"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
+                <button class="btn btn-fill btn-info btn-sm " style="float:left; float: right;" (click)="open(nuevoUsuario)"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
                 <button class="btn btn-fill btn-warning  btn-sm " style="float:left; float: right;" (click)="openModaltags(tags)" ><i class="fas fa-tags"></i> Tags</button>
 
                 <!--<button class="btn btn-fill btn-danger btn-sm " style="float:left; float: right;"  ><i class="far fa-file"></i> Reporte</button>
@@ -36,13 +36,13 @@
                             </ng-container>
                         
                             <ng-container matColumnDef="Nombre">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> PERFIL </th>
-                            <td mat-cell *matCellDef="let usuarios"> {{usuarios.Nombre}} </td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> TARGET </th>
+                            <td mat-cell *matCellDef="let usuarios"> {{usuarios.name}} </td>
                             </ng-container>
                         
                             <ng-container matColumnDef="Tags">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> TARGEST </th>
-                            <td mat-cell *matCellDef="let usuarios"> {{usuarios.Tags}} </td>
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> PERFIL </th>
+                            <td mat-cell *matCellDef="let usuarios"> {{usuarios.tag}} </td>
                             </ng-container>
 
                             <ng-container matColumnDef="Acciones">
@@ -222,6 +222,37 @@
     <div class="modal-footer">
       <br><br>
       <button type="button" class="btn btn-fill btn-info " (click)="AgregarTags()">Agregar</button>
+      </div>
+  </ng-template>
+
+
+  
+<ng-template #nuevoUsuario let-modal class=" form-control-modal">
+    <div class="modal-header">
+      <h4 style="color: #ffffff;" class="modal-title">Crar nuevo tag  </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span style="color: red;" aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <div class="row">
+        <div class="col-md-12">
+          <label class=" justify-content-center text-center">Descripcion</label><br>
+          <a class=" justify-content-center text-center" style="color: rgb(184, 99, 245);" (click)="route()">Nuevo objetivo</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <label class=" justify-content-center text-center">Tomar uno Existente</label><br>
+          <input  [(ngModel)]="usuarioModal" placeholder='Buscar Usuario' class="form-control"><br>
+        </div>
+      </div>
+    
+    </div>
+    <div class="modal-footer">
+      <br><br>
+      <button type="button" class="btn btn-fill btn-info " (click)="modal.dismiss('Cross click')">Close</button>
       </div>
   </ng-template>
 

@@ -18,6 +18,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "object", component: ObjectComponent, canActivate : [AuthService]  },
   { path: "manifest", component: ManifestComponent, canActivate : [AuthService]  },
   { path: "newObject", component: NewObjectComponent, canActivate : [AuthService]  },
+  { path: "newObject/:id", component: NewObjectComponent, canActivate : [AuthService]  },
   { path: "dataObject/:id", component: DataObjectComponent, canActivate : [AuthService]  },
   { path: "project/:id", component: DataProjectComponent, canActivate : [AuthService]  },
   { path: "project", component: ProjectComponent, canActivate : [AuthService]  },

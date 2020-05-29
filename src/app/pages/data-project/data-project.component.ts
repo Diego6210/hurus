@@ -5,8 +5,9 @@ import Swal from 'sweetalert2'
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ServerService } from 'src/app/service/server.service';
 
 @Component({
   selector: 'app-data-project',
@@ -42,6 +43,7 @@ export class DataProjectComponent implements OnInit {
   
   tagsModal: string;
   nombreModal: string;
+  usuarioModal:string;
 
 
   public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
@@ -54,20 +56,32 @@ export class DataProjectComponent implements OnInit {
 
   constructor(    
     private routeActive: ActivatedRoute,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private router: Router,
+    private server: ServerService
   ) { }
 
   ngOnInit(): void {
     this.getDataFromSource();
     this.getDataFromSourceR();
     this.getDataFromSourceIn();
-    this.nameProject = this.routeActive.snapshot.params.id;
+
+    this.server.getDataProyect(this.routeActive.snapshot.params.id).subscribe((data) => {
+
+      this.nameProject = data['data']['name'];
+      this.descripcionProyecto = data['data']['description'];
+    });
+  }
+
+  route(){
+    this.modalService.dismissAll();
+    this.router.navigateByUrl('newObject/'+this.routeActive.snapshot.params.id);
   }
 
   capturar() {
     this.idUsuario = this.id;
   }
-  
+
   openModal(content){
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});    
 
@@ -80,6 +94,10 @@ export class DataProjectComponent implements OnInit {
   AgregarTags(){
     
     this.modalService.dismissAll();
+  }
+
+  open(content){
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});    
   }
 
   Agregar(){
@@ -96,39 +114,30 @@ export class DataProjectComponent implements OnInit {
   }
 
   getDataFromSource() {
-    this.Usuarios = [
-      {
-        Img:'assets/img/mike.jpg',
-        Nombre:'Diego',
-        FechaNacimiento:'11-06-1912',
-        Tags:'diego',
-        Path: '/dataObject/1'
-      },
-      {
-        Img:'assets/img/logo-hydra.png',
-        Nombre:'julio',
-        FechaNacimiento:'12-06-2000',
-        Tags:'julio',
-        Path: '/dataObject/2'
-      },
-      {
-        Img:'assets/img/videoframe.png',
-        Nombre:'memo',
-        FechaNacimiento:'11-07-2010',
-        Tags:'memo',
-        Path: '/dataObject/3'
-      },
-      {
-        Img:'assets/img/default-avatar.png',
-        Nombre:'chuya',
-        FechaNacimiento:'11-09-2012',
-        Tags:'chuya',
-        Path: '/dataObject/4'
+    
+    this.Usuarios = [];
+    this.server.getProyectTarget(this.routeActive.snapshot.params.id).subscribe((data) => {
+
+      for(let i = 0; i < data['list'].length; i++){
+        this.Usuarios.push({
+          Img:'assets/img/default-avatar.png',
+          'name': data['list'][i]['name'],
+          'targets': data['list'][i]['targets'],
+          'tag': data['list'][i]['tags'],
+          'id': data['list'][i]['_id'],
+          'Path': '/dataObject/' +  data['list'][i]['_id']
+
+        });
       }
-    ];
-    this.dataSource = new MatTableDataSource(this.Usuarios);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
+      console.log(data);
+
+      this.dataSource = new MatTableDataSource(this.Usuarios);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+
+
   } 
 
   filtrar(event: Event) {
