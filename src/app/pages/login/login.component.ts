@@ -91,7 +91,6 @@ export class LoginComponent implements OnInit {
 
       if(data['token'] != '')
         estatus = true;
-        //estatus = false
     });
 
 
@@ -158,10 +157,6 @@ export class LoginComponent implements OnInit {
       }, 2500);
 
         this.localStorange.setStorage('userInfo',this.Username);
-    /*
-    setTimeout(()=>{
-      this.router.navigateByUrl('dashboard');
-    }, 4500);*/
   }
 
 

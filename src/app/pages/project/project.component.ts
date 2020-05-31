@@ -35,10 +35,7 @@ export class ProjectComponent implements OnInit {
     this.getDataFromSource();
   }
 
-  finds(id){
-
-  }
-
+  
   Agregar(){
 
     this.server.setProyecto(this.nombreModal,this.descripcionModal,this.tagsModal).subscribe((data) => {
@@ -94,10 +91,6 @@ export class ProjectComponent implements OnInit {
 
   openLg(content){
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});    
-  }
-
-  route(){
-
   }
 
   getDataFromSource() {

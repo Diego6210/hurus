@@ -8,11 +8,6 @@
 
                 <button class="btn btn-fill btn-info btn-sm " style="float:left; float: right;" (click)="open(nuevoUsuario)"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
                 <button class="btn btn-fill btn-warning  btn-sm " style="float:left; float: right;" (click)="openModaltags(tags)" ><i class="fas fa-tags"></i> Tags</button>
-
-                <!--<button class="btn btn-fill btn-danger btn-sm " style="float:left; float: right;"  ><i class="far fa-file"></i> Reporte</button>
-                <button class="btn btn-fill btn-success btn-sm " style="float:left; float: right;"  ><i class="fas fa-map"></i> Mapa de Objetivos</button>
-                <button class="btn btn-fill btn-warning  btn-sm " style="float:left; float: right;" ><i class="fas fa-tags"></i> Tags</button>
-            -->
                 <br><br>  <br>  
                 
                 <mat-horizontal-stepper style="width: 100%;">
@@ -123,10 +118,10 @@
                                         <ng-container matColumnDef="Acciones">
                                         <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
                                         <td mat-cell *matCellDef="let reportes">
-                                            <button [routerLink]="[reportes.Path]" (click)="finds(reportes.Id)" class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i class=" tim-icons icon-cloud-download-93"></i></button>
+                                            <a href="{{reportes.documento}}" download="" (click)="finds(reportes.Id)" class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i class=" tim-icons icon-cloud-download-93"></i></a>
                                         </td>
                                         </ng-container>
-                                    
+                                        
                                         <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnasR"></tr>
                                         <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnasR"></tr>
                                     </table>

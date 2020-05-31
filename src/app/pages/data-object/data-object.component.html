@@ -36,13 +36,13 @@
                             <div class="md-radio-list">
                                 <div class="md-radio form-check">
                                     <label for="checkboxEstado"  class="form-check-label">
-                                        <input  [(ngModel)]="estadoSelected" (change)="onItemChangeEstado(0)" type="radio" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="form-check-input md-radiobtn">
+                                        <input  [checked]="estado != 'Casado'" [(ngModel)]="estadoSelected" (change)="onItemChangeEstado(0)" type="radio" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="form-check-input md-radiobtn">
                                         Soltero
                                     </label>
                                 </div>
                                 <div class="md-radio form-check">
                                     <label for="checkboxEstado1"  class="form-check-label">
-                                        <input  [(ngModel)]="estadoSelected" (change)="onItemChangeEstado(1)" type="radio" id="checkboxEstado1" name="checkboxEstado" value=" Casado" class="form-check-input md-radiobtn">
+                                        <input  [checked]="estado == 'Casado'" [(ngModel)]="estadoSelected" (change)="onItemChangeEstado(1)" type="radio" id="checkboxEstado1" name="checkboxEstado" value=" Casado" class="form-check-input md-radiobtn">
                                         Casado
                                     </label>
                                 </div>
@@ -56,13 +56,13 @@
                             <div class="md-radio-list">
                                 <div class="md-radio form-check">
                                     <label for="checkbox2_1" class="form-check-label">
-                                        <input type="radio" [(ngModel)]="sexSelected"(change)="onItemChangeSex(0)"  id="checkbox2_1" name="checkboxSex" value="Masculino" class="form-check-input md-radiobtn">
+                                        <input type="radio" [checked]="sex != 'Femenino'"[(ngModel)]="sexSelected"(change)="onItemChangeSex(0)"  id="checkbox2_1" name="checkboxSex" value="Masculino" class="form-check-input md-radiobtn">
                                         Masculino
                                     </label>
                                 </div>
                                 <div class="md-radio form-check">
                                     <label for="checkbox2_2" class="form-check-label">
-                                        <input type="radio" [(ngModel)]="sexSelected"(change)="onItemChangeSex(1)"  id="checkbox2_2" name="checkboxSex" value="Femenino" class="form-check-input md-radiobtn">
+                                        <input type="radio" [checked]="sex == 'Femenino'" [(ngModel)]="sexSelected"(change)="onItemChangeSex(1)"  id="checkbox2_2" name="checkboxSex" value="Femenino" class="form-check-input md-radiobtn">
                                         Femenino
                                     </label>
                                 </div>
@@ -323,12 +323,11 @@
       </button>
     </div>
     <div class="modal-body ">
-        <label >URL</label><br>
-        <input  [(ngModel)]="dialogUrl" class="form-control"><br>
-        <label >Correo</label><br>
-        <input   [(ngModel)]="dialogCorreo" type="email"  class="form-control"><br>
-        <label >Password</label><br>
-        <input  [(ngModel)]="dialogPassword"  class="form-control">
+
+        
+        <label class=" justify-content-center text-center">Buscar cuenta</label><br>
+        <input  [(ngModel)]="usuarioModal" placeholder='Buscar Usuario' class="form-control"><br>
+
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-info " (click)="addAccount()">Crear</button>

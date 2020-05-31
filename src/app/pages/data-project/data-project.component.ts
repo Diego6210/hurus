@@ -119,6 +119,8 @@ export class DataProjectComponent implements OnInit {
     this.server.getProyectTarget(this.routeActive.snapshot.params.id).subscribe((data) => {
 
       for(let i = 0; i < data['list'].length; i++){
+        console.log(data['list'][i]['targets']);
+        console.log(data['list'][i]['tags']);
         this.Usuarios.push({
           Img:'assets/img/default-avatar.png',
           'name': data['list'][i]['name'],
@@ -130,7 +132,7 @@ export class DataProjectComponent implements OnInit {
         });
       }
 
-      console.log(data);
+      //console.log(data);
 
       this.dataSource = new MatTableDataSource(this.Usuarios);
       this.dataSource.paginator = this.paginator;
@@ -157,20 +159,23 @@ export class DataProjectComponent implements OnInit {
         Nombre: 'reporte 1',
         Descripcion: 'descripcion 1',
         Subio: 'benito',
-        Descargas: 1
+        Descargas: 1,
+        'documento': 'assets/img/videoframe.png'
       },{
         Id: 2,
         Nombre: 'reporte 2',
         Descripcion: 'descripcion 2',
         Subio: 'benito',
-        Descargas: 2
+        Descargas: 2,
+        'documento': 'assets/img/videoframe.png'
       },
       {
         Id: 3,
         Nombre: 'reporte 3',
         Descripcion: 'descripcion 3',
         Subio: 'jose',
-        Descargas: 3
+        Descargas: 3,
+        'documento': 'assets/img/videoframe.png'
       },
     ];
     

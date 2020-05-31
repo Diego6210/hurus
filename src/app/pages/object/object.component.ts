@@ -45,10 +45,6 @@ export class ObjectComponent implements OnInit {
     this.router.navigateByUrl('newObject/');
   }
 
-  finds(id){
-
-  }
-
   getDataFromSource() {
     
     this.server.getTarget().subscribe((data) => {

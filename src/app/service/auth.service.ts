@@ -18,20 +18,21 @@ export class AuthService implements CanActivate  {
 
     let token = this.localStorange.getStorage('token');
     
-    const expirafecha = Number(this.localStorange.getStorage('expira'));
-    const expiraDate = new Date();
-    expiraDate.setTime(expirafecha)
+    let expirafecha = Number(this.localStorange.getStorage('expira'));
+    let expiraDate = new Date();
+    let feha = new Date();
 
-    //console.log(expirafecha);
+    expiraDate.setSeconds(expirafecha);
+    feha.setSeconds(0);
 
-    //console.log(expiraDate.setTime(expirafecha));
-    let expira = false; 
-    
-    if(expiraDate > new Date())
-      expira = true;    
+    console.log(expiraDate + ' - '+ feha);
+    let expira = false;  
 
+    if(expirafecha > Number(feha)){
+      expira = true;      
+    }
 
-    if(token != null || token != undefined || expira ){
+    if(token != null || token != undefined){
       return true;
     }
 

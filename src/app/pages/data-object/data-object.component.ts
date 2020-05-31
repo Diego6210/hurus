@@ -47,7 +47,9 @@ export class DataObjectComponent implements OnInit {
   dialogCorreo:string;
   dialogPassword:string;
   dialogUrl:string;
-  
+  usuarioModal:string;
+  sex:string;
+  estado:string;
 
   public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
   public ajaxSettings: object = {
@@ -74,13 +76,23 @@ export class DataObjectComponent implements OnInit {
     //alert(this.routeActive.snapshot.params.id)
 
     this.server.getDataTargetFind(this.routeActive.snapshot.params.id).subscribe((data) => {
-//      console.log(data);
+      //console.log(data);
+      if(data['data']['sex'] != false){
+        this.sex = 'Femenino';
+      }
 
+      if(data['data']['civil_state']){
+        this.estado = 'Casado';
+        this.estado = data['data']['civil_state'];
+
+      }
+
+      this.estado = data['data']['civil_state'];
       this.Empresa = data['data']['bussines'];
       this.fecha = data['data']['date'];
       this.Nombre= data['data']['name'];/*
 civil_state: true
-date: "1999-04-16"
+date: "1999-04-16"sex
 location: "[object Object]"
 proyect: "5ed073a549cfa836d849c9d5"
 tags: "[object Object],[object Object]"
@@ -147,7 +159,7 @@ targets: "[object Object]"*/
   }
   
   onSubmit() {
-    //this.server.uploadFile(this.formData,this.Username).subscribe((data) =>{ console.log(data)});
+    this.server.uploadFile(this.formData,this.Username).subscribe((data) =>{ console.log(data)});
     this.cheange = false;
   }  
 

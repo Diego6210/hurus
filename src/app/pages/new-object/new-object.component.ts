@@ -45,7 +45,8 @@ export class NewObjectComponent implements OnInit {
 
   idProyect:string;
   
-
+  usuarioModal:string;
+  
   public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
   public ajaxSettings: object = {
         url: this.hostUrl + 'api/FileManager/FileOperations',
@@ -68,7 +69,6 @@ export class NewObjectComponent implements OnInit {
     this.accountSice = this.accounts.length;
     this.contactSice = this.contacts.length;
     if(this.routeActive.snapshot.params.id != undefined){
-      //alert(this.routeActive.snapshot.params.id)
       this.idProyect = this.routeActive.snapshot.params.id;
     }
   }
@@ -133,7 +133,7 @@ export class NewObjectComponent implements OnInit {
   }
   
   onSubmit() {
-    //this.server.uploadFile(this.formData,this.Username).subscribe((data) =>{ console.log(data)});
+    this.server.uploadFile(this.formData,this.Username).subscribe((data) =>{ console.log(data)});
     this.cheange = false;
   }  
 
@@ -154,19 +154,11 @@ export class NewObjectComponent implements OnInit {
 
   GuardarDatos(){
 
-    var sexo = true;
-    var civilstatus = true;
-    if(this.sexSelected =='Masculino')
-      sexo = false;
-
-    if(this.estadoSelected =='Soltero')
-      sexo = false;
-
-
+//alert(this.sexSelected+' - '+this.estadoSelected);
     let tags =[{tag:"TGP",tagcolor:"#0f0f0f"}];
     let targets = [{}];
-    this.server.setTargetAdd(this.Nombre,this.fecha,this.Empresa,civilstatus,sexo,this.idProyect,targets,tags,this.accounts, this.locations).subscribe((data) => {
-      console.log(data);
+    this.server.setTargetAdd(this.Nombre,this.fecha,this.Empresa,this.estadoSelected,this.sexSelected,this.idProyect,JSON.stringify(targets),JSON.stringify(tags),JSON.stringify(this.accounts), JSON.stringify(this.locations)).subscribe((data) => {
+      //console.log(data);
 
       if(!data['err']){
         Swal.fire({
