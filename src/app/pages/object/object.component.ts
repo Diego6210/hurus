@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ServerService } from 'src/app/service/server.service';
 import Swal from 'sweetalert2'
 import { MatPaginator } from '@angular/material/paginator';
@@ -16,15 +16,15 @@ import { Router } from '@angular/router';
 })
 export class ObjectComponent implements OnInit {
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   dataSource = null;
-  private url: string = environment.server+'imagen/';
-  
-  Usuarios:any = [];
+  private url: string = environment.server + 'imagen/';
+
+  Usuarios: any = [];
   columnas: string[] = ['Img', 'Nombre', 'Tags', 'Acciones'];
 
-  usuarioModal:string;
+  usuarioModal: string;
 
   constructor(
     private modalService: NgbModal,
@@ -36,41 +36,39 @@ export class ObjectComponent implements OnInit {
     this.getDataFromSource();
   }
 
-  open(content){
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});    
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  route(){
+  route() {
     this.modalService.dismissAll();
     this.router.navigateByUrl('newObject/');
   }
 
   getDataFromSource() {
-    
+
     this.server.getTarget().subscribe((data) => {
 
-      for(let i = 0; i < data['list'].length; i++){
+      for (let i = 0; i < data['list'].length; i++) {
         this.Usuarios.push({
-          Img:'assets/img/default-avatar.png',
+          Img: 'assets/img/default-avatar.png',
           'name': data['list'][i]['name'],
           'targets': data['list'][i]['targets'],
           'tag': data['list'][i]['tags'],
           'id': data['list'][i]['_id'],
-          'Path': '/dataObject/' +  data['list'][i]['_id']
+          'Path': '/dataObject/' + data['list'][i]['_id']
         });
       }
-      
+
       this.dataSource = new MatTableDataSource(this.Usuarios);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-
-    
-  } 
+  }
 
   filtrar(event: Event) {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLowerCase();
-  } 
+  }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,43 +14,43 @@ import Swal from 'sweetalert2'
   styleUrls: ['./project.component.scss']
 })
 export class ProjectComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   dataSource = null;
-  
-  Proyectos:any = [];
-  columnas: string[] = ['proyecto', 'descripcion', 'tag','acciones'];
-  
+
+  Proyectos: any = [];
+  columnas: string[] = ['proyecto', 'descripcion', 'tag', 'acciones'];
+
   tagsModal: string;
   descripcionModal: string;
   nombreModal: string;
-  
+
   constructor(
     private modalService: NgbModal,
     private server: ServerService
-  ) {    
+  ) {
   }
 
   ngOnInit(): void {
     this.getDataFromSource();
   }
 
-  
-  Agregar(){
 
-    this.server.setProyecto(this.nombreModal,this.descripcionModal,this.tagsModal).subscribe((data) => {
-      
-      if(!data['err']){
+  Agregar() {
+
+    this.server.setProyecto(this.nombreModal, this.descripcionModal, this.tagsModal).subscribe((data) => {
+
+      if (!data['err']) {
         Swal.fire({
           icon: 'success',
-          text:data['message']
+          text: data['message']
         });
         this.nombreModal = '';
-        this.descripcionModal= '';
-        this.tagsModal= '';
+        this.descripcionModal = '';
+        this.tagsModal = '';
         this.getDataFromSource();
         this.modalService.dismissAll();
-      }else{
+      } else {
         Swal.fire({
           icon: 'error',
           text: data['message']
@@ -60,8 +60,8 @@ export class ProjectComponent implements OnInit {
     });
 
   }
-  
-  Delet(_id){
+
+  Delet(_id) {
     Swal.fire({
       title: 'Desea eliminar el proyecto?',
       text: "¡No podrás revertir esto!",
@@ -69,7 +69,7 @@ export class ProjectComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       confirmButtonColor: '#3085d6',
-      cancelButtonText:'Cancelar',
+      cancelButtonText: 'Cancelar',
       cancelButtonColor: '#d33'
     }).then((result) => {
       if (result.value) {
@@ -89,8 +89,8 @@ export class ProjectComponent implements OnInit {
     })
   }
 
-  openLg(content){
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'});    
+  openLg(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
   getDataFromSource() {
@@ -98,14 +98,14 @@ export class ProjectComponent implements OnInit {
     this.Proyectos = [];
 
     this.server.getProyect().subscribe((data) => {
-      for(let i = 0; i < data['list'].length; i++){
+      for (let i = 0; i < data['list'].length; i++) {
         this.Proyectos.push({
           'description': data['list'][i]['description'],
           'name': data['list'][i]['name'],
           'owner': data['list'][i]['owner'],
           'tag': data['list'][i]['tag'],
           'id': data['list'][i]['_id'],
-          'Path': '/project/' +  data['list'][i]['_id']
+          'Path': '/project/' + data['list'][i]['_id']
 
         });
       }
@@ -114,10 +114,10 @@ export class ProjectComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
-  } 
+  }
 
   filtrar(event: Event) {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLowerCase();
-  } 
+  }
 }

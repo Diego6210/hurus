@@ -1,57 +1,64 @@
 <div class=" content">
-    <div class=" row">
-      <div class=" col-md-12">
-        <div class=" card">
-            <div class=" card-header"><h4 class=" title">Objetivos</h4><hr></div>
-            <div class=" card-body">
-                <h5>Lista de objetivos infectados</h5>
-
-                <button class="btn btn-fill btn-info mb-2 mr-2" style="float:left; float: right;" (click)="open(nuevoUsuario)"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
-
-                <br><br>            
-                <!-- Search form -->
-                <div class="md-form mt-0">
-                <input  (keyup)="filtrar($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
-                </div>
-
-                <div class="mat-elevation-z8 table-responsive">
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table  " matSort #tabla1>
-                
-                    <ng-container matColumnDef="Img">
-                    <th mat-header-cell *matHeaderCellDef> IMAGEN </th>
-                    <td mat-cell *matCellDef="let usuarios"><img src="{{usuarios.Img}}" height="auto" alt="user" class="rounded-circle"></td>
-                    </ng-container>
-                
-                    <ng-container matColumnDef="Nombre">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PERFIL </th>
-                    <td mat-cell *matCellDef="let usuarios"> {{usuarios.name}} </td>
-                    </ng-container>
-                
-                    <ng-container matColumnDef="Tags">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TARGETS </th>
-                    <td mat-cell *matCellDef="let usuarios"> {{usuarios.tag}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="Acciones">
-                    <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
-                    <td mat-cell *matCellDef="let usuarios">
-                        <button [routerLink]="[usuarios.Path]" class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i class=" tim-icons icon-zoom-split"></i></button>
-                    </td>
-                    </ng-container>
-                
-                    <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnas"></tr>
-                    <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnas;"></tr>
-                </table>
-                <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
-                </div>
-
-            </div>
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class=" title">Objetivos</h4>
+          <hr>
         </div>
+        <div class=" card-body">
+          <h5>Lista de objetivos infectados</h5>
+
+          <button class="btn btn-fill btn-info mb-2 mr-2" style="float:left; float: right;"
+            (click)="open(nuevoUsuario)"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
+
+          <br><br>
+          <!-- Search form -->
+          <div class="md-form mt-0">
+            <input (keyup)="filtrar($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
+          </div>
+
+          <div class="mat-elevation-z8 table-responsive">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table  " matSort #tabla1>
+
+              <ng-container matColumnDef="Img">
+                <th mat-header-cell *matHeaderCellDef> IMAGEN </th>
+                <td mat-cell *matCellDef="let usuarios"><img src="{{usuarios.Img}}" height="auto" alt="user"
+                    class="rounded-circle"></td>
+              </ng-container>
+
+              <ng-container matColumnDef="Nombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> PERFIL </th>
+                <td mat-cell *matCellDef="let usuarios"> {{usuarios.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Tags">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> TARGETS </th>
+                <td mat-cell *matCellDef="let usuarios"> {{usuarios.tag}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Acciones">
+                <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+                <td mat-cell *matCellDef="let usuarios">
+                  <button [routerLink]="[usuarios.Path]" class=" btn btn-success btn-link btn-sm btn-icon"
+                    tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i
+                      class=" tim-icons icon-zoom-split"></i></button>
+                </td>
+              </ng-container>
+
+              <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnas"></tr>
+              <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnas;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+          </div>
+
+        </div>
+      </div>
     </div>
-</div>
-<ng-template #nuevoUsuario let-modal class=" form-control-modal">
+  </div>
+  <ng-template #nuevoUsuario let-modal class=" form-control-modal">
     <div class="modal-header">
-      <h4 style="color: #ffffff;" class="modal-title">Crar nuevo tag  </h4>
+      <h4 style="color: #ffffff;" class="modal-title">Crar nuevo tag </h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span style="color: red;" aria-hidden="true">&times;</span>
       </button>
@@ -61,26 +68,27 @@
       <div class="row">
         <div class="col-md-12">
           <label class=" justify-content-center text-center">Descripcion</label><br>
-          <a class=" justify-content-center text-center" style="color: rgb(184, 99, 245);cursor: default" (click)="route()">Nuevo objetivo</a>
+          <a class=" justify-content-center text-center" style="color: rgb(184, 99, 245);cursor: default"
+            (click)="route()">Nuevo objetivo</a>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
           <label class=" justify-content-center text-center">Tomar uno Existente</label><br>
-          <input  [(ngModel)]="usuarioModal" placeholder='Buscar Usuario' class="form-control"><br>
+          <input [(ngModel)]="usuarioModal" placeholder='Buscar Usuario' class="form-control"><br>
         </div>
       </div>
-    
+
     </div>
     <div class="modal-footer">
       <br><br>
       <button type="button" class="btn btn-fill btn-info " (click)="modal.dismiss('Cross click')">Close</button>
-      </div>
+    </div>
   </ng-template>
 
   <style>
-      .text{
-          
-          text-align: center;
-      }
+    .text {
+
+      text-align: center;
+    }
   </style>

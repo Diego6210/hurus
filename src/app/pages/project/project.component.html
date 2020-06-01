@@ -1,92 +1,97 @@
-
 <div class=" content">
-    <div class=" row">
-      <div class=" col-md-12">
-        <div class=" card">
-          <div class=" card-header"><h4 class=" title">Proyectos</h4><hr></div>
-            <div class=" card-body">
-                <h5>Lista de proyectos</h5>
-  
-            <button class="btn btn-fill btn-info mb-2 mr-2" style="float:left; float: right;"   (click)="openLg(content)"><i class="fa fa-project-diagram"></i> Nuevo Proyecto</button>
-  
-            <br><br>            
-              <!-- Search form -->
-              <div class="md-form mt-0">
-                <input  (keyup)="filtrar($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
-              </div>
-  
-              <div class="mat-elevation-z8 table-responsive">
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table  " matSort #tabla1>
-              
-                  <ng-container matColumnDef="proyecto">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
-                    <td mat-cell *matCellDef="let Proyecto"> {{Proyecto.name}} </td>
-                  </ng-container>
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class=" title">Proyectos</h4>
+          <hr>
+        </div>
+        <div class=" card-body">
+          <h5>Lista de proyectos</h5>
 
-                  <ng-container matColumnDef="tag">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TAGS </th>
-                    <td mat-cell *matCellDef="let Proyecto"> {{Proyecto.tag}} </td>
-                  </ng-container>
+          <button class="btn btn-fill btn-info mb-2 mr-2" style="float:left; float: right;" (click)="openLg(content)"><i
+              class="fa fa-project-diagram"></i> Nuevo Proyecto</button>
 
-                  <ng-container matColumnDef="descripcion">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> DESCRIPCIÓN </th>
-                    <td mat-cell *matCellDef="let Proyecto"> {{Proyecto.description}} </td>
-                  </ng-container>
-  
-                  <ng-container matColumnDef="acciones">
-                    <th  mat-header-cell *matHeaderCellDef> ACCIONES </th>
-                    <td mat-cell *matCellDef="let Proyecto">
-                        <button [routerLink]="[Proyecto.Path]" class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i class=" tim-icons icon-zoom-split"></i></button>
-                        <button (click)="Delet(Proyecto.id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete" type="button" aria-describedby="tooltip-143"><i class=" tim-icons icon-simple-remove"></i></button>
-                    </td>
-                  </ng-container>
-              
-                  <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnas"></tr>
-                  <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnas;"></tr>
-                </table>
-                <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
-              </div>
-  
-  
+          <br><br>
+          <!-- Search form -->
+          <div class="md-form mt-0">
+            <input (keyup)="filtrar($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
           </div>
+
+          <div class="mat-elevation-z8 table-responsive">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table  " matSort #tabla1>
+
+              <ng-container matColumnDef="proyecto">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+                <td mat-cell *matCellDef="let Proyecto"> {{Proyecto.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="tag">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> TAGS </th>
+                <td mat-cell *matCellDef="let Proyecto"> {{Proyecto.tag}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> DESCRIPCIÓN </th>
+                <td mat-cell *matCellDef="let Proyecto"> {{Proyecto.description}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+                <td mat-cell *matCellDef="let Proyecto">
+                  <button [routerLink]="[Proyecto.Path]" class=" btn btn-success btn-link btn-sm btn-icon"
+                    tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i
+                      class=" tim-icons icon-zoom-split"></i></button>
+                  <button (click)="Delet(Proyecto.id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete"
+                    type="button" aria-describedby="tooltip-143"><i class=" tim-icons icon-simple-remove"></i></button>
+                </td>
+              </ng-container>
+
+              <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnas"></tr>
+              <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnas;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+          </div>
+
+
         </div>
       </div>
-  
     </div>
+
   </div>
-  
-  
-  <ng-template #content let-modal class=" form-control-modal">
-    <div class="modal-header">
-      <h4 style="color: #ffffff;" class="modal-title">Nuevo Proyecto: <I [ngStyle]="{color: tagsModal}">{{nombreModal}} </I></h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span style="color: red;" aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      
+</div>
+
+
+<ng-template #content let-modal class=" form-control-modal">
+  <div class="modal-header">
+    <h4 style="color: #ffffff;" class="modal-title">Nuevo Proyecto: <I [ngStyle]="{color: tagsModal}">{{nombreModal}}
+      </I></h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span style="color: red;" aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+
     <div class=" row">
       <div class=" col-md-8">
         <label>Nombre</label><br>
-        <input   [(ngModel)]="nombreModal" type="text"  class="form-control"><br>
+        <input [(ngModel)]="nombreModal" type="text" class="form-control"><br>
       </div>
       <div class=" col-md-4">
         <label>Tag</label><br>
-        <input type="type" [(ngModel)]="tagsModal" maxlength="4"  class="form-control"><br>
+        <input type="type" [(ngModel)]="tagsModal" maxlength="4" class="form-control"><br>
       </div>
     </div>
-    
+
     <div class=" row">
       <div class=" col-md-12">
         <label>Descripcion</label><br>
-        <input  [(ngModel)]="descripcionModal" class="form-control"><br>
+        <input [(ngModel)]="descripcionModal" class="form-control"><br>
       </div>
     </div>
-    </div>
-    <div class="modal-footer">
-      <br><br>
-      <button type="button" class="btn btn-fill btn-info " (click)="Agregar()">Agregar</button>
-      </div>
-  </ng-template>
-  
-  
+  </div>
+  <div class="modal-footer">
+    <br><br>
+    <button type="button" class="btn btn-fill btn-info " (click)="Agregar()">Agregar</button>
+  </div>
+</ng-template>

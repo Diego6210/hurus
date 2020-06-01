@@ -14,85 +14,85 @@ const httpOptions = {
 export class ServerService {
 
   private URL: string = environment.server;
-  private token:string;
+  private token: string;
   constructor(
     private http: HttpClient,
-    private localStorange:LocalStorageService
-  ) { 
+    private localStorange: LocalStorageService
+  ) {
     this.token = this.localStorange.getStorage('token');
   }
 
-  uploadFile(archivo,user) {
+  uploadFile(archivo, user) {
     return this.http.post(`${this.URL}upload/${user}`, archivo);
   }
 
 
-  signin(email,password){
+  signin(email, password) {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('email', email);
     urlSearchParams.append('password', password);
 
-    return this.http.post(`${this.URL}login/`,urlSearchParams.toString(),httpOptions);
+    return this.http.post(`${this.URL}login/`, urlSearchParams.toString(), httpOptions);
   }
 
-  getProyect(){
+  getProyect() {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
-    return this.http.post(`${this.URL}proyect/`,urlSearchParams.toString(), httpOptions );
+    return this.http.post(`${this.URL}proyect/`, urlSearchParams.toString(), httpOptions);
   }
 
-  setProyecto(name,description,tag){
+  setProyecto(name, description, tag) {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('name', name);
     urlSearchParams.append('description', description);
     urlSearchParams.append('tag', tag);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
-    return this.http.post(`${this.URL}proyect/add/`,urlSearchParams.toString(),httpOptions);
+    return this.http.post(`${this.URL}proyect/add/`, urlSearchParams.toString(), httpOptions);
   }
 
-  setDeletProyecto(id){
+  setDeletProyecto(id) {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
-    return this.http.post(`${this.URL}proyect/add/`,urlSearchParams.toString(),httpOptions);
+    return this.http.post(`${this.URL}proyect/add/`, urlSearchParams.toString(), httpOptions);
   }
 
-  getDataProyect(id){
-    let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('id', id);
-    urlSearchParams.append('token', this.localStorange.getStorage('token'));
-    
-    return this.http.post(`${this.URL}proyect/find/`,urlSearchParams.toString(), httpOptions );
-  }
-
-  getProyectTarget(id){
-    let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('id', id);
-    urlSearchParams.append('token', this.localStorange.getStorage('token'));
-    
-    return this.http.post(`${this.URL}target/`,urlSearchParams.toString(), httpOptions );
-  }
-
-  getDataTargetFind(id){
+  getDataProyect(id) {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
-    return this.http.post(`${this.URL}target/find`,urlSearchParams.toString(), httpOptions );
+    return this.http.post(`${this.URL}proyect/find/`, urlSearchParams.toString(), httpOptions);
   }
 
-  getTarget(){
+  getProyectTarget(id) {
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/`, urlSearchParams.toString(), httpOptions);
+  }
+
+  getDataTargetFind(id) {
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/find`, urlSearchParams.toString(), httpOptions);
+  }
+
+  getTarget() {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-    
-    return this.http.post(`${this.URL}target/`,urlSearchParams.toString(), httpOptions );
+
+    return this.http.post(`${this.URL}target/`, urlSearchParams.toString(), httpOptions);
   }
 
 
-  setTargetAdd(name, date, bussines, civil_state, sex,proyect, targets, account, tags, location){
+  setTargetAdd(name, date, bussines, civil_state, sex, proyect, targets, account, tags, location) {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('name', name);
     urlSearchParams.append('date', date);
@@ -106,7 +106,7 @@ export class ServerService {
     urlSearchParams.append('location', location);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
-    return this.http.post(`${this.URL}target/add/`,urlSearchParams.toString(),httpOptions);
+    return this.http.post(`${this.URL}target/add/`, urlSearchParams.toString(), httpOptions);
   }
-  
+
 }

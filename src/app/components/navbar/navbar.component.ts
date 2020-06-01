@@ -23,17 +23,17 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     location: Location,
-    private localStorange:LocalStorageService,
+    private localStorange: LocalStorageService,
     private element: ElementRef,
     private router: Router,
     private modalService: NgbModal
   ) {
     this.location = location;
     this.sidebarVisible = false;
-  
+
   }
 
-  logOut(){
+  logOut() {
 
     this.localStorange.cleaStorage();
     this.router.navigateByUrl('login');
@@ -41,16 +41,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   // function that adds color white/transparent to the navbar on resize (this is for the collapse)
-   updateColor = () => {
-   var navbar = document.getElementsByClassName('navbar')[0];
-     if (window.innerWidth < 993 && !this.isCollapsed) {
-       navbar.classList.add('bg-white');
-       navbar.classList.remove('navbar-transparent');
-     } else {
-       navbar.classList.remove('bg-white');
-       navbar.classList.add('navbar-transparent');
-     }
-   };
+  updateColor = () => {
+    var navbar = document.getElementsByClassName('navbar')[0];
+    if (window.innerWidth < 993 && !this.isCollapsed) {
+      navbar.classList.add('bg-white');
+      navbar.classList.remove('navbar-transparent');
+    } else {
+      navbar.classList.remove('bg-white');
+      navbar.classList.add('navbar-transparent');
+    }
+  };
   ngOnInit() {
     window.addEventListener("resize", this.updateColor);
     this.listTitles = ROUTES.filter(listTitle => listTitle);
@@ -88,7 +88,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       mainPanel.style.position = "fixed";
     }
 
-    setTimeout(function() {
+    setTimeout(function () {
       toggleButton.classList.add("toggled");
     }, 500);
 
@@ -124,13 +124,13 @@ export class NavbarComponent implements OnInit, OnDestroy {
       if ($layer) {
         $layer.remove();
       }
-      setTimeout(function() {
+      setTimeout(function () {
         $toggle.classList.remove("toggled");
       }, 400);
 
       this.mobile_menu_visible = 0;
     } else {
-      setTimeout(function() {
+      setTimeout(function () {
         $toggle.classList.add("toggled");
       }, 430);
 
@@ -145,16 +145,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
           .appendChild($layer);
       }
 
-      setTimeout(function() {
+      setTimeout(function () {
         $layer.classList.add("visible");
       }, 100);
 
-      $layer.onclick = function() {
+      $layer.onclick = function () {
         //asign a function
         html.classList.remove("nav-open");
         this.mobile_menu_visible = 0;
         $layer.classList.remove("visible");
-        setTimeout(function() {
+        setTimeout(function () {
           $layer.remove();
           $toggle.classList.remove("toggled");
         }, 400);
@@ -180,7 +180,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   open(content) {
-    this.modalService.open(content, {windowClass: 'modal-search'}).result.then((result) => {
+    this.modalService.open(content, { windowClass: 'modal-search' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -193,10 +193,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
     } else {
-      return  `with: ${reason}`;
+      return `with: ${reason}`;
     }
   }
-  ngOnDestroy(){
-     window.removeEventListener("resize", this.updateColor);
+  ngOnDestroy() {
+    window.removeEventListener("resize", this.updateColor);
   }
 }

@@ -1,7 +1,9 @@
-a{
-   cursor:pointer
+a {
+  cursor: pointer
 }
 
-.dropdown-menu-right, .dropdown-navbar, .modal-header{
-   background-color : rgb(43, 45, 65);
- }
+.dropdown-menu-right,
+.dropdown-navbar,
+.modal-header {
+  background-color: rgb(43, 45, 65);
+}

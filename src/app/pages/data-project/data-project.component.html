@@ -1,184 +1,206 @@
 <div class=" content">
-    <div class=" row">
-      <div class=" col-md-12">
-        <div class=" card">
-            <div class=" card-header"><h4 class=" title">Proyecto: {{nameProject}}</h4><hr></div>
-            <div class=" card-body">
-                <h5>Descripión: {{descripcionProyecto}}</h5>
-
-                <button class="btn btn-fill btn-info btn-sm " style="float:left; float: right;" (click)="open(nuevoUsuario)"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
-                <button class="btn btn-fill btn-warning  btn-sm " style="float:left; float: right;" (click)="openModaltags(tags)" ><i class="fas fa-tags"></i> Tags</button>
-                <br><br>  <br>  
-                
-                <mat-horizontal-stepper style="width: 100%;">
-                    <ng-template matStepperIcon="edit">
-                        <mat-icon></mat-icon>
-                      </ng-template>
-                    
-                    <mat-step color="warn" label="Objetivos">
-
-                        <!-- Search form -->
-                    <div class="md-form mt-0">
-                        <input  (keyup)="filtrar($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
-                        </div>
-
-                        <div class="mat-elevation-z8 table-responsive">
-                        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table  " matSort #tabla1>
-                        
-                            <ng-container matColumnDef="Img">
-                            <th mat-header-cell *matHeaderCellDef> IMAGEN </th>
-                            <td mat-cell *matCellDef="let usuarios"><img src="{{usuarios.Img}}" height="auto" alt="user" class="rounded-circle"></td>
-                            </ng-container>
-                        
-                            <ng-container matColumnDef="Nombre">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> TARGET </th>
-                            <td mat-cell *matCellDef="let usuarios"> {{usuarios.name}} </td>
-                            </ng-container>
-                        
-                            <ng-container matColumnDef="Tags">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> PERFIL </th>
-                            <td mat-cell *matCellDef="let usuarios"> {{usuarios.tag}} </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="Acciones">
-                            <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
-                            <td mat-cell *matCellDef="let usuarios">
-                                <button [routerLink]="[usuarios.Path]" (click)="finds(usuarios.Id)" class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i class=" tim-icons icon-zoom-split"></i></button>
-                                <button (click)="Delet(usuarios.id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete" type="button" aria-describedby="tooltip-143"><i class=" tim-icons icon-trash-simple"></i></button>
-                            </td>
-                            </ng-container>
-                        
-                            <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnas"></tr>
-                            <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnas;"></tr>
-                        </table>
-                        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
-                        </div>
-
-                    </mat-step>
-
-                    <mat-step color="warn" label="Reportes">
-
-                        
-                        <div class=" row">
-
-                            <div class=" col-md-5">
-                                <label >Nombre del Reporte</label><br>
-                                <input  [(ngModel)]="NombreReporte" type="text" class="form-control"><br>
-                                <label >Descripción</label><br>
-                                <input [(ngModel)]="DescripcionReporte" type="text"  class="form-control">
-                                <br>
-                                
-
-                                <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
-                                    <input [disabled]="NombreReporte == ''" hidden type="file" accept="application/pdf" #fileInput (change)="uploadFile($event.target.files)">
-                                </div>
-                                <div  class="files-list" *ngFor="let file of files;let i= index">
-                                    <p> {{ file }} </p>
-                                    <button class="delete-file" (click)="deleteAttachment(i)">
-                                        <i style="color: red;" class="fas fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                                <br>
-                                <div class=" card-footer">
-                                    <input [disabled]="!estatus || DescripcionReporte == '' || NombreReporte == ''"  class=" btn btn-fill btn-primary" type="submit" value='Guardar Cambios'>
-                                </div>
-                            </div>
-
-                            <div class=" col-md-7">
-                                
-                                    
-                                <!-- Search form -->
-                                <div class="md-form mt-0">
-                                    <input  (keyup)="filtrarR($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
-                                    </div>
-            
-                                    <div class="mat-elevation-z8 table-responsive">
-                                    <table mat-table [dataSource]="dataSourceR" class="mat-elevation-z8 table  " matSort #tabla2>
-                                    
-                                        <ng-container matColumnDef="Nombre">
-                                        <th mat-header-cell *matHeaderCellDef> NOMBRE </th>
-                                        <td mat-cell *matCellDef="let reportes">{{reportes.Nombre}}</td>
-                                        </ng-container>
-                                    
-                                        <ng-container matColumnDef="Descripcion">
-                                        <th mat-header-cell *matHeaderCellDef> DESCRIPCION </th>
-                                        <td mat-cell *matCellDef="let reportes"> {{reportes.Descripcion}} </td>
-                                        </ng-container>
-            
-                                        <ng-container matColumnDef="Subio">
-                                        <th mat-header-cell *matHeaderCellDef> SUBIO </th>
-                                        <td mat-cell *matCellDef="let reportes"> {{reportes.Subio}} </td>
-                                        </ng-container>
-                                    
-                                        <ng-container matColumnDef="Descargas">
-                                        <th mat-header-cell *matHeaderCellDef> DESCARGAS </th>
-                                        <td mat-cell *matCellDef="let reportes"> {{reportes.Descargas}} </td>
-                                        </ng-container>
-            
-                                        <ng-container matColumnDef="Acciones">
-                                        <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
-                                        <td mat-cell *matCellDef="let reportes">
-                                            <a href="{{reportes.documento}}" download="" (click)="finds(reportes.Id)" class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i class=" tim-icons icon-cloud-download-93"></i></a>
-                                        </td>
-                                        </ng-container>
-                                        
-                                        <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnasR"></tr>
-                                        <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnasR"></tr>
-                                    </table>
-                                    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
-                                    </div>
-                                </div>
-                            </div>
-                        </mat-step>
-
-                    <mat-step color="warn" label="Involucrados">
-                        <br>
-                        <button class="btn btn-fill btn-info  btn-sm " style="float:left; float: right;" (click)="openModal(content)" > Agregar Involucrados</button>
-
-                        <br><br>
-
-                        <!-- Search form -->
-                        <div class="md-form mt-0">
-                        <input  (keyup)="filtrarIn($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
-                        </div>
-
-                        <div class="mat-elevation-z8 table-responsive">
-                        <table mat-table [dataSource]="dataSourceIn" class="mat-elevation-z8 table  " matSort #tabla1>
-                        
-                            <ng-container matColumnDef="Img">
-                            <th mat-header-cell *matHeaderCellDef> IMAGEN </th>
-                            <td mat-cell *matCellDef="let involucrados"><img src="{{involucrados.Img}}" height="auto" alt="user" class="rounded-circle"></td>
-                            </ng-container>
-                        
-                            <ng-container matColumnDef="Nombre">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
-                            <td mat-cell *matCellDef="let involucrados"> {{involucrados.Nombre}} </td>
-                            </ng-container>
-
-                            <ng-container matColumnDef="Acciones">
-                            <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
-                            <td mat-cell *matCellDef="let involucrados">
-                                <button (click)="Delet(involucrados.Id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete" type="button" aria-describedby="tooltip-143"><i class=" tim-icons icon-trash-simple"></i></button>
-                            </td>
-                            </ng-container>
-                        
-                            <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnasIn"></tr>
-                            <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnasIn;"></tr>
-                        </table>
-                        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
-                        </div>
-                    </mat-step>
-                
-                </mat-horizontal-stepper>               
-                
-
-            </div>
+  <div class=" row">
+    <div class=" col-md-12">
+      <div class=" card">
+        <div class=" card-header">
+          <h4 class=" title">Proyecto: {{nameProject}}</h4>
+          <hr>
         </div>
+        <div class=" card-body">
+          <h5>Descripión: {{descripcionProyecto}}</h5>
+
+          <button class="btn btn-fill btn-info btn-sm " style="float:left; float: right;"
+            (click)="open(nuevoUsuario)"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
+          <button class="btn btn-fill btn-warning  btn-sm " style="float:left; float: right;"
+            (click)="openModaltags(tags)"><i class="fas fa-tags"></i> Tags</button>
+          <br><br> <br>
+
+          <mat-horizontal-stepper style="width: 100%;">
+            <ng-template matStepperIcon="edit">
+              <mat-icon></mat-icon>
+            </ng-template>
+
+            <mat-step color="warn" label="Objetivos">
+
+              <!-- Search form -->
+              <div class="md-form mt-0">
+                <input (keyup)="filtrar($event)" class="form-control" type="text" placeholder="Buscar"
+                  aria-label="Search">
+              </div>
+
+              <div class="mat-elevation-z8 table-responsive">
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table  " matSort #tabla1>
+
+                  <ng-container matColumnDef="Img">
+                    <th mat-header-cell *matHeaderCellDef> IMAGEN </th>
+                    <td mat-cell *matCellDef="let usuarios"><img src="{{usuarios.Img}}" height="auto" alt="user"
+                        class="rounded-circle"></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> TARGET </th>
+                    <td mat-cell *matCellDef="let usuarios"> {{usuarios.name}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Tags">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PERFIL </th>
+                    <td mat-cell *matCellDef="let usuarios"> {{usuarios.tag}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Acciones">
+                    <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+                    <td mat-cell *matCellDef="let usuarios">
+                      <button [routerLink]="[usuarios.Path]" (click)="finds(usuarios.Id)"
+                        class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button"
+                        aria-describedby="tooltip-142"><i class=" tim-icons icon-zoom-split"></i></button>
+                      <button (click)="Delet(usuarios.id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete"
+                        type="button" aria-describedby="tooltip-143"><i
+                          class=" tim-icons icon-trash-simple"></i></button>
+                    </td>
+                  </ng-container>
+
+                  <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnas"></tr>
+                  <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnas;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+              </div>
+
+            </mat-step>
+
+            <mat-step color="warn" label="Reportes">
+
+
+              <div class=" row">
+
+                <div class=" col-md-5">
+                  <label>Nombre del Reporte</label><br>
+                  <input [(ngModel)]="NombreReporte" type="text" class="form-control"><br>
+                  <label>Descripción</label><br>
+                  <input [(ngModel)]="DescripcionReporte" type="text" class="form-control">
+                  <br>
+
+
+                  <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop
+                    (onFileDropped)="uploadFile($event)">
+                    <input [disabled]="NombreReporte == ''" hidden type="file" accept="application/pdf" #fileInput
+                      (change)="uploadFile($event.target.files)">
+                  </div>
+                  <div class="files-list" *ngFor="let file of files;let i= index">
+                    <p> {{ file }} </p>
+                    <button class="delete-file" (click)="deleteAttachment(i)">
+                      <i style="color: red;" class="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+                  <br>
+                  <div class=" card-footer">
+                    <input [disabled]="!estatus || DescripcionReporte == '' || NombreReporte == ''"
+                      class=" btn btn-fill btn-primary" type="submit" value='Guardar Cambios'>
+                  </div>
+                </div>
+
+                <div class=" col-md-7">
+
+
+                  <!-- Search form -->
+                  <div class="md-form mt-0">
+                    <input (keyup)="filtrarR($event)" class="form-control" type="text" placeholder="Buscar"
+                      aria-label="Search">
+                  </div>
+
+                  <div class="mat-elevation-z8 table-responsive">
+                    <table mat-table [dataSource]="dataSourceR" class="mat-elevation-z8 table  " matSort #tabla2>
+
+                      <ng-container matColumnDef="Nombre">
+                        <th mat-header-cell *matHeaderCellDef> NOMBRE </th>
+                        <td mat-cell *matCellDef="let reportes">{{reportes.Nombre}}</td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Descripcion">
+                        <th mat-header-cell *matHeaderCellDef> DESCRIPCION </th>
+                        <td mat-cell *matCellDef="let reportes"> {{reportes.Descripcion}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Subio">
+                        <th mat-header-cell *matHeaderCellDef> SUBIO </th>
+                        <td mat-cell *matCellDef="let reportes"> {{reportes.Subio}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Descargas">
+                        <th mat-header-cell *matHeaderCellDef> DESCARGAS </th>
+                        <td mat-cell *matCellDef="let reportes"> {{reportes.Descargas}} </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Acciones">
+                        <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+                        <td mat-cell *matCellDef="let reportes">
+                          <a href="{{reportes.documento}}" download="" (click)="finds(reportes.Id)"
+                            class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button"
+                            aria-describedby="tooltip-142"><i class=" tim-icons icon-cloud-download-93"></i></a>
+                        </td>
+                      </ng-container>
+
+                      <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnasR"></tr>
+                      <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnasR"></tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+                  </div>
+                </div>
+              </div>
+            </mat-step>
+
+            <mat-step color="warn" label="Involucrados">
+              <br>
+              <button class="btn btn-fill btn-info  btn-sm " style="float:left; float: right;"
+                (click)="openModal(content)"> Agregar Involucrados</button>
+
+              <br><br>
+
+              <!-- Search form -->
+              <div class="md-form mt-0">
+                <input (keyup)="filtrarIn($event)" class="form-control" type="text" placeholder="Buscar"
+                  aria-label="Search">
+              </div>
+
+              <div class="mat-elevation-z8 table-responsive">
+                <table mat-table [dataSource]="dataSourceIn" class="mat-elevation-z8 table  " matSort #tabla1>
+
+                  <ng-container matColumnDef="Img">
+                    <th mat-header-cell *matHeaderCellDef> IMAGEN </th>
+                    <td mat-cell *matCellDef="let involucrados"><img src="{{involucrados.Img}}" height="auto" alt="user"
+                        class="rounded-circle"></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Nombre">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
+                    <td mat-cell *matCellDef="let involucrados"> {{involucrados.Nombre}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Acciones">
+                    <th mat-header-cell *matHeaderCellDef> ACCIONES </th>
+                    <td mat-cell *matCellDef="let involucrados">
+                      <button (click)="Delet(involucrados.Id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete"
+                        type="button" aria-describedby="tooltip-143"><i
+                          class=" tim-icons icon-trash-simple"></i></button>
+                    </td>
+                  </ng-container>
+
+                  <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnasIn"></tr>
+                  <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnasIn;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+              </div>
+            </mat-step>
+
+          </mat-horizontal-stepper>
+
+
+        </div>
+      </div>
     </div>
-</div>
+  </div>
 
 
-<ng-template #content let-modal class=" form-control-modal">
+  <ng-template #content let-modal class=" form-control-modal">
     <div class="modal-header">
       <h4 style="color: #ffffff;" class="modal-title">Agregar Involucrado</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -186,45 +208,46 @@
       </button>
     </div>
     <div class="modal-body">
-        <div>
-            <label style="color: white;">Usuarios:</label>
-            <select [(ngModel)]="id" (change)="capturar()"  class="form-control" id="exampleFormControlSelect1">
-              <option value="0">Selecione un usuario</option>
-              <option *ngFor="let Usuario of Usuario" value="{{Usuario.Id}}">{{Usuario.Descripcion}}</option>
-            </select>
-          </div>
+      <div>
+        <label style="color: white;">Usuarios:</label>
+        <select [(ngModel)]="id" (change)="capturar()" class="form-control" id="exampleFormControlSelect1">
+          <option value="0">Selecione un usuario</option>
+          <option *ngFor="let Usuario of Usuario" value="{{Usuario.Id}}">{{Usuario.Descripcion}}</option>
+        </select>
+      </div>
     </div>
     <div class="modal-footer">
       <br><br>
       <button type="button" class="btn btn-fill btn-info " (click)="Agregar()">Agregar</button>
-      </div>
+    </div>
   </ng-template>
 
   <ng-template #tags let-modal class=" form-control-modal">
     <div class="modal-header">
-      <h4 style="color: #ffffff;" class="modal-title">Crear Tags: <i [ngStyle]="{color: tagsModal}">{{nombreModal}}</i></h4>
+      <h4 style="color: #ffffff;" class="modal-title">Crear Tags: <i [ngStyle]="{color: tagsModal}">{{nombreModal}}</i>
+      </h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span style="color: red;" aria-hidden="true">&times;</span>
       </button>
     </div>
     <div class="modal-body">
-        <label>Nombre</label><br>
-        <input   [(ngModel)]="nombreModal" type="text"  class="form-control"><br>
+      <label>Nombre</label><br>
+      <input [(ngModel)]="nombreModal" type="text" class="form-control"><br>
 
-        <label>Tag</label><br>
-        <input type="color" [(ngModel)]="tagsModal"  class="form-control">
+      <label>Tag</label><br>
+      <input type="color" [(ngModel)]="tagsModal" class="form-control">
     </div>
     <div class="modal-footer">
       <br><br>
       <button type="button" class="btn btn-fill btn-info " (click)="AgregarTags()">Agregar</button>
-      </div>
+    </div>
   </ng-template>
 
 
-  
-<ng-template #nuevoUsuario let-modal class=" form-control-modal">
+
+  <ng-template #nuevoUsuario let-modal class=" form-control-modal">
     <div class="modal-header">
-      <h4 style="color: #ffffff;" class="modal-title">Crar nuevo tag  </h4>
+      <h4 style="color: #ffffff;" class="modal-title">Crar nuevo tag </h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span style="color: red;" aria-hidden="true">&times;</span>
       </button>
@@ -234,53 +257,55 @@
       <div class="row">
         <div class="col-md-12">
           <label class=" justify-content-center text-center">Descripcion</label><br>
-          <a class=" justify-content-center text-center" style="color: rgb(184, 99, 245);" (click)="route()">Nuevo objetivo</a>
+          <a class=" justify-content-center text-center" style="color: rgb(184, 99, 245);" (click)="route()">Nuevo
+            objetivo</a>
         </div>
       </div>
       <div class="row">
         <div class="col-md-12">
           <label class=" justify-content-center text-center">Tomar uno Existente</label><br>
-          <input  [(ngModel)]="usuarioModal" placeholder='Buscar Usuario' class="form-control"><br>
+          <input [(ngModel)]="usuarioModal" placeholder='Buscar Usuario' class="form-control"><br>
         </div>
       </div>
-    
+
     </div>
     <div class="modal-footer">
       <br><br>
       <button type="button" class="btn btn-fill btn-info " (click)="modal.dismiss('Cross click')">Close</button>
-      </div>
+    </div>
   </ng-template>
 
-<style>
-
-    #filemanager{
-    background-color: white;
+  <style>
+    #filemanager {
+      background-color: white;
     }
 
-    .mat-step, .mat-step-icon-state-number, .mat-step-icon-selected{
-        margin-top: 16px;
-        background-color : rgb(53, 54, 77);
-        color: yellow;
+    .mat-step,
+    .mat-step-icon-state-number,
+    .mat-step-icon-selected {
+      margin-top: 16px;
+      background-color: rgb(53, 54, 77);
+      color: yellow;
     }
 
-    mat-horizontal-stepper{
-        width: 100%;
+    mat-horizontal-stepper {
+      width: 100%;
     }
-    
-    .mat-stepper-horizontal{
-        margin-top: 8px;
-        background-color : #27293D;
+
+    .mat-stepper-horizontal {
+      margin-top: 8px;
+      background-color: #27293D;
     }
 
     ::ng-deep .mat-step-header .mat-step-icon-selected {
-        background-color: red; 
+      background-color: red;
     }
 
     .btn-file {
-    position: relative;
-    overflow: hidden;
+      position: relative;
+      overflow: hidden;
     }
-  
+
     .btn-file input[type=file] {
       position: absolute;
       top: 0;
@@ -295,47 +320,45 @@
       background: white;
       cursor: inherit;
       display: block;
-  }
+    }
 
-  .uploadfilecontainer {
-    background-image: url("assets/img/upload-cloud.png");
-    background-repeat: no-repeat;
-    background-size: 100px;
-    background-position: center;
-    height: 200px;
-    width: 80%;
-    margin: 20px auto;
-    border: 2px dashed #1C8ADB;
-    border-radius: 10px;
-}
+    .uploadfilecontainer {
+      background-image: url("assets/img/upload-cloud.png");
+      background-repeat: no-repeat;
+      background-size: 100px;
+      background-position: center;
+      height: 200px;
+      width: 80%;
+      margin: 20px auto;
+      border: 2px dashed #1C8ADB;
+      border-radius: 10px;
+    }
 
-.uploadfilecontainer:hover {
-    cursor: pointer;
-    background-color: #9ecbec !important;
-    opacity: 0.8;
-}
+    .uploadfilecontainer:hover {
+      cursor: pointer;
+      background-color: #9ecbec !important;
+      opacity: 0.8;
+    }
 
-.files-list {
-    display: flex;
-    justify-content: space-between;
-    width: 80%;
-    margin: 10px auto;
-    background: rgb(53, 54, 77);
-    border: 1px dashed;
-    border-radius: 12px;
-    padding: 5px;
-    color: #1c8adb;
-}
+    .files-list {
+      display: flex;
+      justify-content: space-between;
+      width: 80%;
+      margin: 10px auto;
+      background: rgb(53, 54, 77);
+      border: 1px dashed;
+      border-radius: 12px;
+      padding: 5px;
+      color: #1c8adb;
+    }
 
-.files-list .delete-file {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
+    .files-list .delete-file {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
 
-.files-list .delete-file img {
-    width: 30px;
-}
-    
-    
-</style>
+    .files-list .delete-file img {
+      width: 30px;
+    }
+  </style>

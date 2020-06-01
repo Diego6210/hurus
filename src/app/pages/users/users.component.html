@@ -1,60 +1,66 @@
-
 <div class=" content">
   <div class=" row">
     <div class=" col-md-12">
       <div class=" card">
-        <div class=" card-header"><h5 class=" title">Usuarios</h5></div>
+        <div class=" card-header">
+          <h5 class=" title">Usuarios</h5>
+        </div>
         <div class=" card-body">
 
-          <button class="btn btn-fill btn-info mb-2 mr-2" (click)="openLg(content)"><i class="fa fa-user-plus"></i> Agregar Usuario</button>
+          <button class="btn btn-fill btn-info mb-2 mr-2" (click)="openLg(content)"><i class="fa fa-user-plus"></i>
+            Agregar Usuario</button>
 
-          <br><br>            
-            <!-- Search form -->
-            <div class="md-form mt-0">
-              <input  (keyup)="filtrar($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
-            </div>
+          <br><br>
+          <!-- Search form -->
+          <div class="md-form mt-0">
+            <input (keyup)="filtrar($event)" class="form-control" type="text" placeholder="Buscar" aria-label="Search">
+          </div>
 
-            <div class="mat-elevation-z8 table-responsive">
-              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table  " matSort #tabla1>
-            
-                <ng-container matColumnDef="img">
-                  <th mat-header-cell *matHeaderCellDef> # </th>
-                  <td mat-cell *matCellDef="let usuarios"><img src="{{usuarios.img}}" height="auto"  alt="user" class="rounded-circle"></td>
-                </ng-container>
-            
-                <ng-container matColumnDef="Usuario">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-                  <td mat-cell *matCellDef="let usuarios"> {{usuarios.Usuario}} </td>
-                </ng-container>
+          <div class="mat-elevation-z8 table-responsive">
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table  " matSort #tabla1>
 
-                <ng-container matColumnDef="Email">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-                  <td mat-cell *matCellDef="let usuarios"> {{usuarios.Email}} </td>
-                </ng-container>
-            
-                <ng-container matColumnDef="nombre">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-                  <td mat-cell *matCellDef="let usuarios"> {{usuarios.nombre}} </td>
-                </ng-container>
+              <ng-container matColumnDef="img">
+                <th mat-header-cell *matHeaderCellDef> # </th>
+                <td mat-cell *matCellDef="let usuarios"><img src="{{usuarios.img}}" height="auto" alt="user"
+                    class="rounded-circle"></td>
+              </ng-container>
 
-                <ng-container matColumnDef="apellido">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
-                  <td mat-cell *matCellDef="let usuarios"> {{usuarios.apellido}} </td>
-                </ng-container>
+              <ng-container matColumnDef="Usuario">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+                <td mat-cell *matCellDef="let usuarios"> {{usuarios.Usuario}} </td>
+              </ng-container>
 
-                <ng-container matColumnDef="acciones">
-                  <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                  <td mat-cell *matCellDef="let usuarios">
-                    <button (click)="Edits(usuarios.id,content)" class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i class=" tim-icons icon-pencil"></i></button>
-                    <button (click)="Delet(usuarios.id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete" type="button" aria-describedby="tooltip-143"><i class=" tim-icons icon-simple-remove"></i></button>
-                  </td>
-                </ng-container>
-            
-                <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnas"></tr>
-                <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnas;"></tr>
-              </table>
-              <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
-            </div>
+              <ng-container matColumnDef="Email">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                <td mat-cell *matCellDef="let usuarios"> {{usuarios.Email}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="nombre">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+                <td mat-cell *matCellDef="let usuarios"> {{usuarios.nombre}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="apellido">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
+                <td mat-cell *matCellDef="let usuarios"> {{usuarios.apellido}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let usuarios">
+                  <button (click)="Edits(usuarios.id,content)" class=" btn btn-success btn-link btn-sm btn-icon"
+                    tooltip="Refresh" type="button" aria-describedby="tooltip-142"><i
+                      class=" tim-icons icon-pencil"></i></button>
+                  <button (click)="Delet(usuarios.id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete"
+                    type="button" aria-describedby="tooltip-143"><i class=" tim-icons icon-simple-remove"></i></button>
+                </td>
+              </ng-container>
+
+              <tr style="width: 100%;" mat-header-row *matHeaderRowDef="columnas"></tr>
+              <tr style="width: 100%;" mat-row *matRowDef="let row; columns: columnas;"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+          </div>
 
 
         </div>
@@ -73,126 +79,86 @@
     </button>
   </div>
   <div class="modal-body">
-      <div class=" row">
-        <div class=" col-md-3 pr-md-1">
-          <div class=" form-group">
-            <label> Usuario: </label>
-            <input             
-              [(ngModel)]="Usuario"
-              class=" form-control"
-              placeholder="Usuario"
-              type="text"
-            />
-          </div>
-        </div>
-        <div class=" col-md-4 px-md-1">
-          <div class=" form-group">
-            <label for="exampleInputEmail1"> Email: </label>
-            <input
-              [(ngModel)]="Email"
-              class=" form-control"
-              placeholder="@email.com"
-              type="email"
-            />
-          </div>
-        </div>
-        <div class=" col-md-5 pl-md-1">
-          <div class=" form-group">
-            <label> Password:</label>
-            <input
-              [(ngModel)]="Password"
-              class=" form-control"
-              placeholder="Password"
-              type="text"
-            />
-          </div>
+    <div class=" row">
+      <div class=" col-md-3 pr-md-1">
+        <div class=" form-group">
+          <label> Usuario: </label>
+          <input [(ngModel)]="Usuario" class=" form-control" placeholder="Usuario" type="text" />
         </div>
       </div>
-      <div class=" row">
-        <div class=" col-md-4 pr-md-1">
-          <div class=" form-group">
-            <label> Nombre; </label>
-            <input
-              [(ngModel)]="Nombre"
-              class=" form-control"
-              placeholder="Nombre"
-              type="text"
-            />
-          </div>
-        </div>
-        <div class=" col-md-4 pl-md-1">
-          <div class=" form-group">
-            <label> Apellidos: </label>
-            <input
-              [(ngModel)]="Apellidos"
-              class=" form-control"
-              placeholder="Apellidos"
-              type="text"
-            />
-          </div>
-        </div>
-        <div class=" col-md-4 pl-md-1">
-          <div>
-            <label style="color: white;">Tipo de usuario:</label>
-            <select [(ngModel)]="id" (change)="capturar()"  class="form-control" id="exampleFormControlSelect1">
-              <option value="0">Selecione un tipo</option>
-              <option *ngFor="let tipoUsuario of TipoUsuario" value="{{tipoUsuario.Id}}">{{tipoUsuario.Descripcion}}</option>
-            </select>
-          </div>
+      <div class=" col-md-4 px-md-1">
+        <div class=" form-group">
+          <label for="exampleInputEmail1"> Email: </label>
+          <input [(ngModel)]="Email" class=" form-control" placeholder="@email.com" type="email" />
         </div>
       </div>
-      <div class=" row">
-        <div class=" col-md-12">
-          <div class=" form-group">
-            <label> Address </label>
-            <input
-              class=" form-control"
-              placeholder="Home Address"
-              type="text"
-            />
-          </div>
+      <div class=" col-md-5 pl-md-1">
+        <div class=" form-group">
+          <label> Password:</label>
+          <input [(ngModel)]="Password" class=" form-control" placeholder="Password" type="text" />
         </div>
       </div>
-      <div class=" row">
-        <div class=" col-md-4 pr-md-1">
-          <div class=" form-group">
-            <label> City </label>
-            <input
-              class=" form-control"
-              placeholder="City"
-              type="text"
-            />
-          </div>
-        </div>
-        <div class=" col-md-4 px-md-1">
-          <div class=" form-group">
-            <label> Country </label>
-            <input
-              class=" form-control"
-              placeholder="Country"
-              type="text"
-            />
-          </div>
-        </div>
-        <div class=" col-md-4 pl-md-1">
-          <div class=" form-group">
-            <label> Postal Code </label>
-            <input
-              class=" form-control"
-              placeholder="ZIP Code"
-              type="number"
-            />
-          </div>
+    </div>
+    <div class=" row">
+      <div class=" col-md-4 pr-md-1">
+        <div class=" form-group">
+          <label> Nombre; </label>
+          <input [(ngModel)]="Nombre" class=" form-control" placeholder="Nombre" type="text" />
         </div>
       </div>
-    
+      <div class=" col-md-4 pl-md-1">
+        <div class=" form-group">
+          <label> Apellidos: </label>
+          <input [(ngModel)]="Apellidos" class=" form-control" placeholder="Apellidos" type="text" />
+        </div>
+      </div>
+      <div class=" col-md-4 pl-md-1">
+        <div>
+          <label style="color: white;">Tipo de usuario:</label>
+          <select [(ngModel)]="id" (change)="capturar()" class="form-control" id="exampleFormControlSelect1">
+            <option value="0">Selecione un tipo</option>
+            <option *ngFor="let tipoUsuario of TipoUsuario" value="{{tipoUsuario.Id}}">{{tipoUsuario.Descripcion}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class=" row">
+      <div class=" col-md-12">
+        <div class=" form-group">
+          <label> Address </label>
+          <input class=" form-control" placeholder="Home Address" type="text" />
+        </div>
+      </div>
+    </div>
+    <div class=" row">
+      <div class=" col-md-4 pr-md-1">
+        <div class=" form-group">
+          <label> City </label>
+          <input class=" form-control" placeholder="City" type="text" />
+        </div>
+      </div>
+      <div class=" col-md-4 px-md-1">
+        <div class=" form-group">
+          <label> Country </label>
+          <input class=" form-control" placeholder="Country" type="text" />
+        </div>
+      </div>
+      <div class=" col-md-4 pl-md-1">
+        <div class=" form-group">
+          <label> Postal Code </label>
+          <input class=" form-control" placeholder="ZIP Code" type="number" />
+        </div>
+      </div>
+    </div>
+
   </div>
   <div class="modal-footer">
     <br><br>
-    <button type="button" *ngIf="TipoModal"  class="btn btn-fill btn-info " (click)="Agregar('top', 'center')">Agregar</button>
-  
-    
+    <button type="button" *ngIf="TipoModal" class="btn btn-fill btn-info "
+      (click)="Agregar('top', 'center')">Agregar</button>
+
+
     <!--<button type="button" *ngIf="!TipoModal" class="btn btn-fill btn-info " (click)="UpdateTask()">Guardar Cambios</button>-->
   </div>
 </ng-template>
-

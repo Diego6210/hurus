@@ -1,63 +1,69 @@
+.modal-body,
+.modal-header,
+.modal-footer {
+  background-color: rgb(57, 59, 88) !important;
+}
 
-  .modal-body,.modal-header,  .modal-footer{
-    background-color : rgb(57, 59, 88)  !important;  
-  }
-  label, h4{
-    color: #ffffff;
-  }
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    width: 5px;
-    background: rgb(57, 59, 80);
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    width: 1em;
-    background-color: rgb(131, 127, 127);
-    outline: 1px solid rgb(89, 94, 99);
-    border-radius: 1rem;
-  }
+label,
+h4 {
+  color: #ffffff;
+}
 
-  table {
-    width: 100%;
-    background-color : rgb(53, 54, 77);
-  }
-  
-  td{
-    padding: 10%;
-  }
+::-webkit-scrollbar {
+  width: 5px;
+}
 
-  .mat-paginator{
-    background-color : rgb(53, 54, 77);
-  }
+::-webkit-scrollbar-track {
+  width: 5px;
+  background: rgb(57, 59, 80);
+}
 
-  tr.mat-row:hover {
-    background-color : rgb(64, 64, 82);
-  }
+::-webkit-scrollbar-thumb {
+  width: 1em;
+  background-color: rgb(131, 127, 127);
+  outline: 1px solid rgb(89, 94, 99);
+  border-radius: 1rem;
+}
 
-  .mat-row {
-    height: 70px;
-  }
+table {
+  width: 100%;
+  background-color: rgb(53, 54, 77);
+}
 
-  .mat-column{
-    font-size: 35px;
-  }
-  
-  img {
-    width:60px;
-    max-width:400px;
-  }
+td {
+  padding: 10%;
+}
 
-  .search{
-    color: white;
-  }
+.mat-paginator {
+  background-color: rgb(53, 54, 77);
+}
 
-  select,input{
-    background-color : rgb(53, 54, 77)  !important;  
-  }
-  input{
-    background-color : rgb(53, 54, 77)  !important;  
-  }
+tr.mat-row:hover {
+  background-color: rgb(64, 64, 82);
+}
+
+.mat-row {
+  height: 70px;
+}
+
+.mat-column {
+  font-size: 35px;
+}
+
+img {
+  width: 60px;
+  max-width: 400px;
+}
+
+.search {
+  color: white;
+}
+
+select,
+input {
+  background-color: rgb(53, 54, 77) !important;
+}
+
+input {
+  background-color: rgb(53, 54, 77) !important;
+}

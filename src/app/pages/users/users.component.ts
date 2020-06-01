@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
-import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { ServerService } from 'src/app/service/server.service';
@@ -15,47 +15,47 @@ import { MatSort } from '@angular/material/sort';
 })
 export class UsersComponent implements OnInit {
 
-  private url: string = environment.server+'imagen/';
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  private url: string = environment.server + 'imagen/';
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   dataSource = null;
 
   Usuarios = [];
-  TipoUsuario=[];
+  TipoUsuario = [];
   id = 0;
   idTipoUsuario;
 
-  Usuario:string;
-  Apellidos:string;
-  Nombre:string;
-  Email:string;
-  Password:string;
+  Usuario: string;
+  Apellidos: string;
+  Nombre: string;
+  Email: string;
+  Password: string;
 
 
-  TituloModal:string = 'Agregar Usuario';
-  TipoModal:boolean = true;
-  columnas: string[] = ['img', 'Usuario', 'Email','nombre', 'apellido','acciones'];
+  TituloModal: string = 'Agregar Usuario';
+  TipoModal: boolean = true;
+  columnas: string[] = ['img', 'Usuario', 'Email', 'nombre', 'apellido', 'acciones'];
 
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private server:ServerService
+    private server: ServerService
   ) { }
-  
+
 
   openLg(content) {
     this.TituloModal = 'Agregar Usuario';
     this.TipoModal = true;
-    
+
     this.modalService.open(content, { size: 'lg' });
   }
 
-  Agregar(from, align){
+  Agregar(from, align) {
   }
 
 
-  Delet(idUser){
+  Delet(idUser) {
     Swal.fire({
       title: 'Desea eliminar el usuario?',
       text: "¡No podrás revertir esto!",
@@ -63,26 +63,26 @@ export class UsersComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Confirmar',
       confirmButtonColor: '#3085d6',
-      cancelButtonText:'Cancelar',
+      cancelButtonText: 'Cancelar',
       cancelButtonColor: '#d33'
     }).then((result) => {
       if (result.value) {
-        
+
       }
     })
   }
 
-  getTipoUsuarios(){
-    
+  getTipoUsuarios() {
+
   }
 
-  Edits(idUser,content){
+  Edits(idUser, content) {
     this.TituloModal = 'Editar Usuario';
     this.TipoModal = false;
     this.modalService.open(content, { size: 'lg' });
-    
+
   }
-  
+
   ngOnInit(): void {
   }
 
@@ -92,14 +92,14 @@ export class UsersComponent implements OnInit {
 
   getDataFromSource() {
 
-        this.dataSource = new MatTableDataSource(this.Usuarios);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+    this.dataSource = new MatTableDataSource(this.Usuarios);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   filtrar(event: Event) {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLowerCase();
-  } 
- 
+  }
+
 }

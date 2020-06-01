@@ -14,13 +14,13 @@ const routes: Routes = [
     redirectTo: "login",
     pathMatch: "full"
   },
-  { 
-    path: 'login', 
-    component: LoginComponent 
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
-    path: '404', 
-    component: Page404Component 
+    path: '404',
+    component: Page404Component
   },
   {
     path: "",
@@ -51,4 +51,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
