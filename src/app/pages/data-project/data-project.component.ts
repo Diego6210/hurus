@@ -44,8 +44,11 @@ export class DataProjectComponent implements OnInit {
   tagsModal: string;
   nombreModal: string;
   usuarioModal:string;
-
-
+  DescripcionReporte:string ='';
+  NombreReporte:string ='';
+  formData = new FormData();
+  archivo: string;
+  estatus = false;
   public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
   public ajaxSettings: object = {
         url: this.hostUrl + 'api/FileManager/FileOperations',
@@ -119,8 +122,8 @@ export class DataProjectComponent implements OnInit {
     this.server.getProyectTarget(this.routeActive.snapshot.params.id).subscribe((data) => {
 
       for(let i = 0; i < data['list'].length; i++){
-        console.log(data['list'][i]['targets']);
-        console.log(data['list'][i]['tags']);
+        
+        //console.log(data['list'][i]['tags']);
         this.Usuarios.push({
           Img:'assets/img/default-avatar.png',
           'name': data['list'][i]['name'],
@@ -131,8 +134,6 @@ export class DataProjectComponent implements OnInit {
 
         });
       }
-
-      //console.log(data);
 
       this.dataSource = new MatTableDataSource(this.Usuarios);
       this.dataSource.paginator = this.paginator;
@@ -224,9 +225,23 @@ export class DataProjectComponent implements OnInit {
       const element = event[index];
       this.files.push(element.name)
     }  
+
+    var estencion = event[0].name.split('.', 2)
+    this.archivo = this.NombreReporte+'.'+estencion[1];
+
+    if (event) {  
+      this.estatus =true; 
+      this.formData.delete('archivo');
+      this.formData.append('archivo', event[0]);
+    }
   }
   deleteAttachment(index) {
     this.files.splice(index, 1)
+    if(this.files.length > 0)
+      this.estatus = true;
+    else
+      this.estatus =false;
+
   }
 
 

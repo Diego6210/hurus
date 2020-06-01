@@ -64,7 +64,8 @@ export class DataObjectComponent implements OnInit {
     private modalService: NgbModal,
     private routeActive: ActivatedRoute,
     private server: ServerService
-  ) {    
+  ) { 
+       
   }
 
   ngOnInit(): void {
@@ -73,21 +74,23 @@ export class DataObjectComponent implements OnInit {
     this.locattionSice = this.locations.length;
     this.accountSice = this.accounts.length;
     this.contactSice = this.contacts.length;
-    //alert(this.routeActive.snapshot.params.id)
 
     this.server.getDataTargetFind(this.routeActive.snapshot.params.id).subscribe((data) => {
       //console.log(data);
-      if(data['data']['sex'] != false){
+      if(data['data']['sex']){
+        this.sex = 'Masculino';
+      }
+      else{
         this.sex = 'Femenino';
       }
 
-      if(data['data']['civil_state']){
+      //alert(data['data']['civil_state'])
+      if(data['data']['civil_state'])
         this.estado = 'Casado';
-        this.estado = data['data']['civil_state'];
+      else
+        this.estado = 'Soltero';
 
-      }
 
-      this.estado = data['data']['civil_state'];
       this.Empresa = data['data']['bussines'];
       this.fecha = data['data']['date'];
       this.Nombre= data['data']['name'];/*

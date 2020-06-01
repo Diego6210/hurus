@@ -63,14 +63,14 @@
 
                             <div class=" col-md-5">
                                 <label >Nombre del Reporte</label><br>
-                                <input type="text" class="form-control"><br>
+                                <input  [(ngModel)]="NombreReporte" type="text" class="form-control"><br>
                                 <label >Descripción</label><br>
-                                <input type="text"  class="form-control">
+                                <input [(ngModel)]="DescripcionReporte" type="text"  class="form-control">
                                 <br>
                                 
 
                                 <div class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
-                                    <input hidden type="file" accept="application/pdf" #fileInput (change)="uploadFile($event.target.files)">
+                                    <input [disabled]="NombreReporte == ''" hidden type="file" accept="application/pdf" #fileInput (change)="uploadFile($event.target.files)">
                                 </div>
                                 <div  class="files-list" *ngFor="let file of files;let i= index">
                                     <p> {{ file }} </p>
@@ -80,7 +80,7 @@
                                 </div>
                                 <br>
                                 <div class=" card-footer">
-                                    <input class=" btn btn-fill btn-primary" type="submit" value='Guardar Cambios'>
+                                    <input [disabled]="!estatus || DescripcionReporte == '' || NombreReporte == ''"  class=" btn btn-fill btn-primary" type="submit" value='Guardar Cambios'>
                                 </div>
                             </div>
 

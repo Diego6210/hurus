@@ -103,11 +103,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
       document.getElementsByClassName("main-panel")[0]
     );
 
-    if (window.innerWidth < 991) {
-      setTimeout(function() {
-        mainPanel.style.position = "";
-      }, 500);
-    }
     this.sidebarVisible = false;
     html.classList.remove("nav-open");
   }

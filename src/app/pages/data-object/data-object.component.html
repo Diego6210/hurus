@@ -36,7 +36,7 @@
                             <div class="md-radio-list">
                                 <div class="md-radio form-check">
                                     <label for="checkboxEstado"  class="form-check-label">
-                                        <input  [checked]="estado != 'Casado'" [(ngModel)]="estadoSelected" (change)="onItemChangeEstado(0)" type="radio" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="form-check-input md-radiobtn">
+                                        <input  [checked]="estado == 'Soltero'" [(ngModel)]="estadoSelected" (change)="onItemChangeEstado(0)" type="radio" id="checkboxEstado" name="checkboxEstado" value=" Soltero" class="form-check-input md-radiobtn">
                                         Soltero
                                     </label>
                                 </div>
@@ -56,7 +56,7 @@
                             <div class="md-radio-list">
                                 <div class="md-radio form-check">
                                     <label for="checkbox2_1" class="form-check-label">
-                                        <input type="radio" [checked]="sex != 'Femenino'"[(ngModel)]="sexSelected"(change)="onItemChangeSex(0)"  id="checkbox2_1" name="checkboxSex" value="Masculino" class="form-check-input md-radiobtn">
+                                        <input type="radio" [checked]="sex == 'Masculino'"[(ngModel)]="sexSelected"(change)="onItemChangeSex(0)"  id="checkbox2_1" name="checkboxSex" value="Masculino" class="form-check-input md-radiobtn">
                                         Masculino
                                     </label>
                                 </div>
@@ -206,28 +206,7 @@
             </div>
         </div>
     </div>
-
-    <!--<div class=" row">
-        <div class=" col-lg-6">
-            <div class=" card card-chart">
-                <div class=" card-header"><h5 class=" title">Subir Archivos</h5><hr></div>
-                <div class=" card-body">
-                    
-                </div>
-            </div>
-        </div>
-        <div class=" col-lg-6">
-            <div class=" card card-chart">
-                <div class=" card-header"><h5 class=" title">Carpetas<button class="btn btn-info btn-sm" style="float:left; float: right;" (click)="agree()" type="submit">Crear Nueva Carpeta</button></h5><hr></div>
-                <div class=" card-body">
-
-
-
-                </div>
-            </div>
-        </div>
-    </div>-->
-
+    
     <div class=" row">
         <div class=" col-lg-6">
             <div class=" card card-chart">

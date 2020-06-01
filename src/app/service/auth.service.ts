@@ -25,11 +25,13 @@ export class AuthService implements CanActivate  {
     expiraDate.setSeconds(expirafecha);
     feha.setSeconds(0);
 
-    console.log(expiraDate + ' - '+ feha);
+    //console.log(expiraDate + ' - '+ feha);
     let expira = false;  
 
-    if(expirafecha > Number(feha)){
-      expira = true;      
+    if(expirafecha < Number(feha)){
+      expira = true;
+      this.localStorange.cleaStorage();
+      this.route.navigate(['login']);
     }
 
     if(token != null || token != undefined){
