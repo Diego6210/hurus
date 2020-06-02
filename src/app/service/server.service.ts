@@ -92,7 +92,11 @@ export class ServerService {
   }
 
 
-  setTargetAdd(name, date, bussines, civil_state, sex, proyect, targets, account, tags, location) {
+  setTargetAdd(name, date, bussines, civil_state, sex, proyect, targets, account, tags, location,imagen) {
+    
+    if(imagen == "assets/img/default-avatar.png")
+      imagen = null;   
+
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('name', name);
     urlSearchParams.append('date', date);
@@ -104,6 +108,7 @@ export class ServerService {
     urlSearchParams.append('account', account);
     urlSearchParams.append('tags', tags);
     urlSearchParams.append('location', location);
+    urlSearchParams.append('archivo', imagen);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
     return this.http.post(`${this.URL}target/add/`, urlSearchParams.toString(), httpOptions);

@@ -109,9 +109,6 @@ export class NewObjectComponent implements OnInit {
 
   onChange($event, Archivo: FileList) {
 
-    var estencion = Archivo[0].name.split('.', 2)
-    this.IMG = this.Username + '.' + estencion[1];
-
     if ($event.target.files) {
       var reader = new FileReader();
 
@@ -154,7 +151,8 @@ export class NewObjectComponent implements OnInit {
 
     let tags = [{ tag: "TGP", tagcolor: "#0f0f0f" }];
     let targets = [{}];
-    this.server.setTargetAdd(this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected, this.idProyect, JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(tags), JSON.stringify(this.locations)).subscribe((data) => {
+
+    this.server.setTargetAdd(this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected, this.idProyect, JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(tags), JSON.stringify(this.locations),this.imgdefault).subscribe((data) => {
 
       if (!data['err']) {
         Swal.fire({

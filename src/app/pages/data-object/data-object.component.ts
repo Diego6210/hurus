@@ -76,25 +76,22 @@ export class DataObjectComponent implements OnInit {
     this.contactSice = this.contacts.length;
 
     this.server.getDataTargetFind(this.routeActive.snapshot.params.id).subscribe((data) => {
-      //console.log(data);
-      if (data['data']['sex']) {
-        this.sex = 'Femenino';
-      }
-      else {
-        this.sex = 'Masculino';
-      }
 
-      //alert(data['data']['civil_state'])
-      if (data['data']['civil_state'])
+      if (data['sex'])
+        this.sex = 'Femenino';
+      else
+        this.sex = 'Masculino';
+
+      if (data['civil_state'])
         this.estado = 'Casado';
       else
         this.estado = 'Soltero';
 
-
-      this.Empresa = data['data']['bussines'];
-      this.fecha = data['data']['date'];
-      this.Nombre = data['data']['name'];/*
-civil_state: true
+      this.Empresa = data['bussines'];
+      this.fecha = data['date'];
+      this.Nombre = data['name'];
+      this.imgdefault = 'data:image/jpg;base64,' + data['img'];
+/*civil_state: true
 date: "1999-04-16"sex
 location: "[object Object]"
 proyect: "5ed073a549cfa836d849c9d5"
