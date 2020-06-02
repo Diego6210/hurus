@@ -71,3 +71,16 @@ input {
 input {
   background-color: rgb(53, 54, 77) !important;
 }
+
+span.color {
+  border-radius: 1.6em;
+  -moz-border-radius: 1.6em;
+  -webkit-border-radius: 1.6em;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 2.8em;
+  margin-right: 15px;
+  text-align: center;
+  width: 4.2em;
+}

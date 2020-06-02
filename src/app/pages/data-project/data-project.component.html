@@ -44,7 +44,8 @@
 
                   <ng-container matColumnDef="Tags">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> PERFIL </th>
-                    <td mat-cell *matCellDef="let usuarios"> {{usuarios.tag}} </td>
+                    <td mat-cell *matCellDef="let usuarios"> <span [ngStyle]="{background: usuarios.tagColor}"
+                        class="color">{{usuarios.tag}}</span> </td>
                   </ng-container>
 
                   <ng-container matColumnDef="Acciones">
@@ -164,15 +165,10 @@
               <div class="mat-elevation-z8 table-responsive">
                 <table mat-table [dataSource]="dataSourceIn" class="mat-elevation-z8 table  " matSort #tabla1>
 
-                  <ng-container matColumnDef="Img">
-                    <th mat-header-cell *matHeaderCellDef> IMAGEN </th>
-                    <td mat-cell *matCellDef="let involucrados"><img src="{{involucrados.Img}}" height="auto" alt="user"
-                        class="rounded-circle"></td>
-                  </ng-container>
-
                   <ng-container matColumnDef="Nombre">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
-                    <td mat-cell *matCellDef="let involucrados"> {{involucrados.Nombre}} </td>
+                    <td mat-cell *matCellDef="let involucrados"><img src="{{involucrados.Img}}" height="auto" alt="user"
+                        class="rounded-circle"> {{involucrados.Nombre}} </td>
                   </ng-container>
 
                   <ng-container matColumnDef="Acciones">
@@ -210,10 +206,14 @@
     <div class="modal-body">
       <div>
         <label style="color: white;">Usuarios:</label>
-        <select [(ngModel)]="id" (change)="capturar()" class="form-control" id="exampleFormControlSelect1">
-          <option value="0">Selecione un usuario</option>
-          <option *ngFor="let Usuario of Usuario" value="{{Usuario.Id}}">{{Usuario.Descripcion}}</option>
-        </select>
+        <ng-template class="modaltemplate" #rt let-r="result" let-t="term">
+          <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1"
+            style="width: 16px">
+          <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+        </ng-template>
+        <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="usuariosModal"
+          [ngbTypeahead]="searchUsuario" [resultTemplate]="rt" [inputFormatter]="formatter" />
+
       </div>
     </div>
     <div class="modal-footer">
@@ -256,15 +256,27 @@
 
       <div class="row">
         <div class="col-md-12">
-          <label class=" justify-content-center text-center">Descripcion</label><br>
-          <a class=" justify-content-center text-center" style="color: rgb(184, 99, 245);" (click)="route()">Nuevo
+          <label class=" justify-content-center text-center"
+            style="position :relative !important;left: 40% !important;">Descripcion</label><br>
+          <a class=" justify-content-center text-center"
+            style="color: rgb(184, 99, 245);position :relative !important;left: 38% !important;" (click)="route()">Nuevo
             objetivo</a>
         </div>
       </div>
+      <hr>
       <div class="row">
         <div class="col-md-12">
-          <label class=" justify-content-center text-center">Tomar uno Existente</label><br>
-          <input [(ngModel)]="usuarioModal" placeholder='Buscar Usuario' class="form-control"><br>
+          <label class=" justify-content-center text-center"
+            style="position :relative !important;left: 35% !important;">Tomar uno Existente</label><br>
+
+          <ng-template class="modaltemplate" #rt let-r="result" let-t="term">
+            <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1"
+              style="width: 16px">
+            <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
+          </ng-template>
+          <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="usuarioModal"
+            [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter" />
+
         </div>
       </div>
 
@@ -304,6 +316,11 @@
     .btn-file {
       position: relative;
       overflow: hidden;
+    }
+
+    .modaltemplate {
+      background-color: #27293D;
+      color: white;
     }
 
     .btn-file input[type=file] {

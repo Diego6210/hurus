@@ -8,7 +8,12 @@ import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
-
+import { debounceTime, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+const statesWithFlags: { name: string, flag: string }[] = [
+  { 'name': 'Alabama', 'flag': '5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png' },
+  { 'name': 'Alaska', 'flag': 'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png' }
+];
 @Component({
   selector: 'app-object',
   templateUrl: './object.component.html',
@@ -32,8 +37,18 @@ export class ObjectComponent implements OnInit {
     private server: ServerService
   ) { }
 
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      map(term => term === '' ? []
+        : statesWithFlags.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+    )
+
+  formatter = (x: { name: string }) => x.name;
+
   ngOnInit(): void {
     this.getDataFromSource();
+
   }
 
   open(content) {
@@ -54,7 +69,8 @@ export class ObjectComponent implements OnInit {
           Img: 'assets/img/default-avatar.png',
           'name': data['list'][i]['name'],
           'targets': data['list'][i]['targets'],
-          'tag': data['list'][i]['tags'],
+          'tag': data['list'][i]['tags'][0]['tag'],
+          'tagColor': data['list'][i]['tags'][0]['tagcolor'],
           'id': data['list'][i]['_id'],
           'Path': '/dataObject/' + data['list'][i]['_id']
         });

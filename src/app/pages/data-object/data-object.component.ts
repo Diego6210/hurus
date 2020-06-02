@@ -78,10 +78,10 @@ export class DataObjectComponent implements OnInit {
     this.server.getDataTargetFind(this.routeActive.snapshot.params.id).subscribe((data) => {
       //console.log(data);
       if (data['data']['sex']) {
-        this.sex = 'Masculino';
+        this.sex = 'Femenino';
       }
       else {
-        this.sex = 'Femenino';
+        this.sex = 'Masculino';
       }
 
       //alert(data['data']['civil_state'])

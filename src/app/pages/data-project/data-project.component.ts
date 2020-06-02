@@ -8,7 +8,12 @@ import { MatSort } from '@angular/material/sort';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ServerService } from 'src/app/service/server.service';
-
+import { debounceTime, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+const statesWithFlags: { name: string, flag: string }[] = [
+  { 'name': 'Alabama', 'flag': '5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png' },
+  { 'name': 'Alaska', 'flag': 'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png' }
+];
 @Component({
   selector: 'app-data-project',
   templateUrl: './data-project.component.html',
@@ -31,7 +36,7 @@ export class DataProjectComponent implements OnInit {
   columnasR: string[] = ['Nombre', 'Descripcion', 'Subio', 'Descargas', 'Acciones'];
 
   Involucrados: any = [];
-  columnasIn: string[] = ['Img', 'Nombre', 'Acciones'];
+  columnasIn: string[] = ['Nombre', 'Acciones'];
 
   Usuario = [];
   id = 0;
@@ -39,7 +44,7 @@ export class DataProjectComponent implements OnInit {
 
   nameProject: string;
   descripcionProyecto: string;
-
+  usuariosModal: string;
 
   tagsModal: string;
   nombreModal: string;
@@ -75,6 +80,23 @@ export class DataProjectComponent implements OnInit {
       this.descripcionProyecto = data['data']['description'];
     });
   }
+
+  searchUsuario = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      map(term => term === '' ? []
+        : statesWithFlags.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+    )
+
+  search = (text$: Observable<string>) =>
+    text$.pipe(
+      debounceTime(200),
+      map(term => term === '' ? []
+        : statesWithFlags.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
+    )
+
+  formatter = (x: { name: string }) => x.name;
+
 
   route() {
     this.modalService.dismissAll();
@@ -121,14 +143,15 @@ export class DataProjectComponent implements OnInit {
     this.Usuarios = [];
     this.server.getProyectTarget(this.routeActive.snapshot.params.id).subscribe((data) => {
 
+      console.log(data);
       for (let i = 0; i < data['list'].length; i++) {
 
-        //console.log(data['list'][i]['tags']);
         this.Usuarios.push({
           Img: 'assets/img/default-avatar.png',
           'name': data['list'][i]['name'],
           'targets': data['list'][i]['targets'],
-          'tag': data['list'][i]['tags'],
+          'tag': data['list'][i]['tags'][0]['tag'],
+          'tagColor': data['list'][i]['tags'][0]['tagcolor'],
           'id': data['list'][i]['_id'],
           'Path': '/dataObject/' + data['list'][i]['_id']
 
