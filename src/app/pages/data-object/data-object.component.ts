@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { ServerService } from 'src/app/service/server.service';
+import { environment } from 'src/environments/environment';
 
 declare const google: any;
 interface Marker {
@@ -51,12 +52,20 @@ export class DataObjectComponent implements OnInit {
   sex: string;
   estado: string;
 
-  public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
+  /*public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
   public ajaxSettings: object = {
     url: this.hostUrl + 'api/FileManager/FileOperations',
     getImageUrl: this.hostUrl + 'api/FileManager/GetImage',
     uploadUrl: this.hostUrl + 'api/FileManager/Upload',
     downloadUrl: this.hostUrl + 'api/FileManager/Download'
+  };*/
+  private URL: string = environment.server;
+
+  public ajaxSettings: object = {
+    url: this.URL + 'fileManager/',
+    getImageUrl: this.URL + 'fileManager/GetImage',
+    uploadUrl: this.URL + 'fileManager/Upload',
+    downloadUrl: this.URL + 'api/FileManager/Download'
   };
 
   constructor(
@@ -91,18 +100,37 @@ export class DataObjectComponent implements OnInit {
       this.fecha = data['date'];
       this.Nombre = data['name'];
       this.imgdefault = 'data:image/jpg;base64,' + data['img'];
+
+      for (let i = 0; i < data['account'].length; i++) {
+        this.accounts.push({
+          Url: data['account'][i]['Url'],
+          Correo: data['account'][i]['Correo'],
+          Password: data['account'][i]['Password']
+        });
+      }
+
+      for (let i = 0; i < data['location'].length; i++) {
+        this.locations.push({
+          Long: data['location'][i]['Long'],
+          Lat: data['location'][i]['Lat'],
+          Descripcion: data['location'][i]['Descripcion']
+        });
+      }
+      
+      this.accountSice = this.accounts.length;
+      this.locattionSice = this.locations.length;
+
 /*civil_state: true
 date: "1999-04-16"sex
 location: "[object Object]"
 proyect: "5ed073a549cfa836d849c9d5"
 tags: "[object Object],[object Object]"
-targets: "[object Object]"*/
+targets: "[object Object]account"*/
     });
   }
 
   contactos(contacto) {
     this.modalService.open(contacto, { ariaLabelledBy: 'modal-basic-title' });
-
   }
 
   onItemChangeEstado(item) {
@@ -167,7 +195,7 @@ targets: "[object Object]"*/
 
     this.locations.push({
       Long: this.Longitud,
-      Latitude: this.Latitud,
+      Lat: this.Latitud,
       Descripcion: this.Descripcion
     });
 

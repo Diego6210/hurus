@@ -36,7 +36,7 @@ export class DataProjectComponent implements OnInit {
   columnasR: string[] = ['Nombre', 'Descripcion', 'Subio', 'Descargas', 'Acciones'];
 
   Involucrados: any = [];
-  columnasIn: string[] = ['Nombre', 'Acciones'];
+  columnasIn: string[] = ['Nombre', 'Conexion' ,'Movimiento', 'Acciones'];
 
   Usuario = [];
   id = 0;
@@ -227,6 +227,8 @@ export class DataProjectComponent implements OnInit {
         Id: 1,
         Img: '/assets/img/mike.jpg',
         Nombre: 'Diego',
+        Movimiento: 'subir reporte',
+        Conexion: '12/12/2012'
       }
     ];
 

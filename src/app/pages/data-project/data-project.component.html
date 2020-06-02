@@ -168,7 +168,17 @@
                   <ng-container matColumnDef="Nombre">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> NOMBRE </th>
                     <td mat-cell *matCellDef="let involucrados"><img src="{{involucrados.Img}}" height="auto" alt="user"
-                        class="rounded-circle"> {{involucrados.Nombre}} </td>
+                        class="rounded-circle"> <b>{{involucrados.Nombre}}</b></td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Conexion">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ULTIMA CONECCIÓN </th>
+                    <td mat-cell *matCellDef="let involucrados"> {{involucrados.Conexion}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="Movimiento">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ÚLTIMO MOVIMIENTO </th>
+                    <td mat-cell *matCellDef="let involucrados">{{involucrados.Movimiento}}</td>
                   </ng-container>
 
                   <ng-container matColumnDef="Acciones">
@@ -269,11 +279,13 @@
           <label class=" justify-content-center text-center"
             style="position :relative !important;left: 35% !important;">Tomar uno Existente</label><br>
 
-          <ng-template class="modaltemplate" #rt let-r="result" let-t="term">
-            <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1"
-              style="width: 16px">
-            <ngb-highlight [result]="r.name" [term]="t"></ngb-highlight>
-          </ng-template>
+          <ng-template  class="highlight"  #rt let-r="result" let-t="term">
+            <div style="background: #35364D;">
+              <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/' + r['flag']" class="mr-1"
+                style="width: 16px">
+              <ngb-highlight class="highlight" style="color:white" [result]="r.name" [term]="t"></ngb-highlight>
+            </div>
+            </ng-template>
           <input id="typeahead-template" type="text" class="form-control" [(ngModel)]="usuarioModal"
             [ngbTypeahead]="search" [resultTemplate]="rt" [inputFormatter]="formatter" />
 
@@ -377,5 +389,13 @@
 
     .files-list .delete-file img {
       width: 30px;
+    }
+
+    b {
+      padding: 20px;
+    }
+
+    ngbTypeahead,.highlight:hover{
+      background-color: rgb(74, 76, 97);
     }
   </style>
