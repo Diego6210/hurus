@@ -65,20 +65,31 @@ export class ObjectComponent implements OnInit {
     this.server.getTarget().subscribe((data) => {
 
       for (let i = 0; i < data['list'].length; i++) {
-        this.Usuarios.push({
-          Img: 'assets/img/default-avatar.png',
-          'name': data['list'][i]['name'],
-          'targets': data['list'][i]['targets'],
-          'tag': data['list'][i]['tags'][0]['tag'],
-          'tagColor': data['list'][i]['tags'][0]['tagcolor'],
-          'id': data['list'][i]['_id'],
-          'Path': '/dataObject/' + data['list'][i]['_id']
-        });
-      }
 
-      this.dataSource = new MatTableDataSource(this.Usuarios);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+        var foto = 'assets/img/default-avatar.png';
+
+        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          console.log(res['data']);
+          if(res['data'] != null)
+            foto = 'data:image/jpg;base64,' + res['data'];
+
+          this.Usuarios.push({
+            'Img': foto,
+            'name': data['list'][i]['name'],
+            'targets': data['list'][i]['targets'],
+            'tag': data['list'][i]['tags'][0]['tag'],
+            'tagColor': data['list'][i]['tags'][0]['tagcolor'],
+            'id': data['list'][i]['_id'],
+            'Path': '/dataObject/' + data['list'][i]['_id']
+          });
+          
+          this.dataSource = new MatTableDataSource(this.Usuarios);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+
+        //if()'data:image/jpg;base64,' + 
+      }
     });
   }
 

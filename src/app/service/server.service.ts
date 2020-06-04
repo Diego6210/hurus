@@ -26,6 +26,18 @@ export class ServerService {
     return this.http.post(`${this.URL}upload/${user}`, archivo);
   }
 
+  uploadReport(archivo, descripcion, nombre, proyect) {
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('archivo', archivo);
+    urlSearchParams.append('name', nombre);
+    urlSearchParams.append('descripcion', descripcion);
+    urlSearchParams.append('proyect', proyect);
+    urlSearchParams.append('reporter', '0');
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}report/add`, urlSearchParams.toString(), httpOptions);
+  }
 
   signin(email, password) {
     let urlSearchParams = new URLSearchParams();
@@ -92,10 +104,10 @@ export class ServerService {
   }
 
 
-  setTargetAdd(name, date, bussines, civil_state, sex, proyect, targets, account, tags, location,imagen) {
-    
-    if(imagen == "assets/img/default-avatar.png")
-      imagen = null;   
+  setTargetAdd(name, date, bussines, civil_state, sex, proyect, targets, account, tags, location, imagen) {
+
+    if (imagen == "assets/img/default-avatar.png")
+      imagen = null;
 
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('name', name);
@@ -113,5 +125,62 @@ export class ServerService {
 
     return this.http.post(`${this.URL}target/add/`, urlSearchParams.toString(), httpOptions);
   }
+
+  setTargetAccounts(id, data) {
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('data', JSON.stringify({ account: data }));
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
+  }
+
+  setTargetLocation(id, data) {
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('data', JSON.stringify({ location: data }));
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
+  }
+
+  setTargetData(id, name, date, bussines, civil_state, sex) {
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('data', JSON.stringify({ name: name, date: date, bussines: bussines, civil_state: civil_state, sex: sex }));
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
+  }
+
+  setTargetperfil(id, foto) {
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('archivo', foto);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/profile/update/`, urlSearchParams.toString(), httpOptions);
+  }
+
+  getTargetFoto(id) {
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/profile/`, urlSearchParams.toString(), httpOptions);
+  }
+
+  getReport(id) {
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}report/`, urlSearchParams.toString(), httpOptions);
+  }
+
 
 }

@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { ServerService } from 'src/app/service/server.service';
 import { environment } from 'src/environments/environment';
+import { LocalStorageService } from '../../service/local-storage.service';
+import Swal from 'sweetalert2'
 
 declare const google: any;
 interface Marker {
@@ -51,35 +53,28 @@ export class DataObjectComponent implements OnInit {
   usuarioModal: string;
   sex: string;
   estado: string;
+  token: string = this.localStorange.getStorage('token');
 
-  /*public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
-  public ajaxSettings: object = {
-    url: this.hostUrl + 'api/FileManager/FileOperations',
-    getImageUrl: this.hostUrl + 'api/FileManager/GetImage',
-    uploadUrl: this.hostUrl + 'api/FileManager/Upload',
-    downloadUrl: this.hostUrl + 'api/FileManager/Download'
-  };*/
   private URL: string = environment.server;
 
   public ajaxSettings: object = {
-    url: this.URL + 'fileManager/',
-    getImageUrl: this.URL + 'fileManager/GetImage',
-    uploadUrl: this.URL + 'fileManager/Upload',
-    downloadUrl: this.URL + 'api/FileManager/Download'
+    url: `${this.URL}fileManager/${this.routeActive.snapshot.params.id}/`,
+    getImageUrl: `${this.URL}fileManager/GetImage/${this.routeActive.snapshot.params.id}/`,
+    uploadUrl: `${this.URL}fileManager/Upload/${this.routeActive.snapshot.params.id}/`,
+    downloadUrl: `${this.URL}FileManager/Download/${this.routeActive.snapshot.params.id}/`
   };
 
   constructor(
     public dialog: MatDialog,
     private modalService: NgbModal,
     private routeActive: ActivatedRoute,
-    private server: ServerService
+    private server: ServerService,
+    private localStorange: LocalStorageService
   ) {
 
   }
 
   ngOnInit(): void {
-    this.map();
-
     this.locattionSice = this.locations.length;
     this.accountSice = this.accounts.length;
     this.contactSice = this.contacts.length;
@@ -116,16 +111,16 @@ export class DataObjectComponent implements OnInit {
           Descripcion: data['location'][i]['Descripcion']
         });
       }
-      
+      this.map();
       this.accountSice = this.accounts.length;
       this.locattionSice = this.locations.length;
 
-/*civil_state: true
-date: "1999-04-16"sex
-location: "[object Object]"
-proyect: "5ed073a549cfa836d849c9d5"
-tags: "[object Object],[object Object]"
-targets: "[object Object]account"*/
+      /*civil_state: true
+      date: "1999-04-16"sex
+      location: "[object Object]"
+      proyect: "5ed073a549cfa836d849c9d5"
+      tags: "[object Object],[object Object]"
+      targets: "[object Object]account"*/
     });
   }
 
@@ -148,12 +143,27 @@ targets: "[object Object]account"*/
       Correo: this.dialogCorreo,
       Password: this.dialogPassword
     });
+
+    this.server.setTargetAccounts(this.routeActive.snapshot.params.id, this.accounts).subscribe((data) => {
+      console.log(data['msg']);
+    })
+
     this.dialogUrl = '';
     this.dialogCorreo = '';
     this.dialogPassword = '';
 
     this.accountSice = this.accounts.length;
     this.modalService.dismissAll();
+  }
+
+  guardarData() {
+    this.server.setTargetData(this.routeActive.snapshot.params.id, this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected).subscribe((data) => {
+      console.log(data['msg']);
+      Swal.fire({
+        icon: 'success',
+        text: 'Actualizado'
+      });
+    })
   }
 
   opendAccount(modalCuenta) {
@@ -171,13 +181,17 @@ targets: "[object Object]account"*/
 
       reader.onload = ($event: any) => {
         this.imgdefault = $event.target.result;
+        this.server.setTargetperfil(this.routeActive.snapshot.params.id, $event.target.result).subscribe((data) => {
+          console.log(data)
+          Swal.fire({
+            icon: 'success',
+            text: 'Actualizado'
+          });
+        });
       }
       this.cheange = true;
       reader.readAsDataURL($event.target.files[0]);
 
-
-      this.formData.delete('archivo');
-      this.formData.append('archivo', Archivo[0]);
 
     }
   }
@@ -199,6 +213,14 @@ targets: "[object Object]account"*/
       Descripcion: this.Descripcion
     });
 
+    this.server.setTargetLocation(this.routeActive.snapshot.params.id, this.locations).subscribe((data) => {
+      //console.log(data['msg']);
+      Swal.fire({
+        icon: 'success',
+        text: 'Actualizado'
+      });
+    });
+
 
     this.Longitud = '';
     this.Latitud = '';
@@ -208,7 +230,16 @@ targets: "[object Object]account"*/
 
 
   map() {
-    var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
+    console.log(this.locations)
+    var lng = 0;
+    var lat = 0;
+    if (this.locations.length > 0) {
+      lat = this.locations[this.locations.length - 1]['Lat'];
+      lng = this.locations[this.locations.length - 1]['Long'];
+    }
+
+
+    var myLatlng = new google.maps.LatLng(lat, lng);
     var mapOptions = {
       zoom: 13,
       center: myLatlng,
@@ -401,15 +432,52 @@ targets: "[object Object]account"*/
       }
       ]
     };
+
+
+
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    var title = 'Sin ubicación';
+    if (this.locations.length > 0)
+      title = 'Ultima ubicación';
 
     var marker = new google.maps.Marker({
       position: myLatlng,
-      title: "Hello World!"
+      title: title
     });
 
-    // To add the marker to the map, call setMap();
+    //this.setMarkers(map,this.locations);
+
     marker.setMap(map);
+  }
+
+  setMarkers(map, locations) {
+
+    var marker, i
+    for (i = 0; i < locations.length; i++) {
+
+      var loan = locations[i][0]
+      var lat = locations[i][1]
+      var long = locations[i][2]
+      var add = locations[i][3]
+
+      var latlngset = new google.maps.LatLng(lat, long);
+
+      var marker = new google.maps.Marker({
+        map: map, title: loan, position: latlngset
+      });
+
+      map.setCenter(marker.getPosition())
+
+      var content = "Loan Number: " + loan + '</h3>' + "Address: " + add
+
+      var infowindow = new google.maps.InfoWindow()
+
+      google.maps.AddListener(marker, 'click', function (map, marker) {
+        infowindow.setContent(content)
+        infowindow.open(map, marker)
+      });
+    }
   }
 
 }

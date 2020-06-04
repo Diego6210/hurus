@@ -42,7 +42,7 @@
                                         <label for="checkboxEstado" class="form-check-label">
                                             <input [checked]="estado == 'Soltero'" [(ngModel)]="estadoSelected"
                                                 (change)="onItemChangeEstado(0)" type="radio" id="checkboxEstado"
-                                                name="checkboxEstado" value=" Soltero"
+                                                name="checkboxEstado" value="false"
                                                 class="form-check-input md-radiobtn">
                                             Soltero
                                         </label>
@@ -51,8 +51,7 @@
                                         <label for="checkboxEstado1" class="form-check-label">
                                             <input [checked]="estado == 'Casado'" [(ngModel)]="estadoSelected"
                                                 (change)="onItemChangeEstado(1)" type="radio" id="checkboxEstado1"
-                                                name="checkboxEstado" value=" Casado"
-                                                class="form-check-input md-radiobtn">
+                                                name="checkboxEstado" value="true" class="form-check-input md-radiobtn">
                                             Casado
                                         </label>
                                     </div>
@@ -68,7 +67,7 @@
                                         <label for="checkbox2_1" class="form-check-label">
                                             <input type="radio" [checked]="sex == 'Masculino'" [(ngModel)]="sexSelected"
                                                 (change)="onItemChangeSex(0)" id="checkbox2_1" name="checkboxSex"
-                                                value="Masculino" class="form-check-input md-radiobtn">
+                                                value="false" class="form-check-input md-radiobtn">
                                             Masculino
                                         </label>
                                     </div>
@@ -76,7 +75,7 @@
                                         <label for="checkbox2_2" class="form-check-label">
                                             <input type="radio" [checked]="sex == 'Femenino'" [(ngModel)]="sexSelected"
                                                 (change)="onItemChangeSex(1)" id="checkbox2_2" name="checkboxSex"
-                                                value="Femenino" class="form-check-input md-radiobtn">
+                                                value="true" class="form-check-input md-radiobtn">
                                             Femenino
                                         </label>
                                     </div>
@@ -88,7 +87,7 @@
 
 
                     <input type="hidden" id="idUG" name="id" value="Id">
-                    <input type="submit" class="btn btn-success" value="Guardar">
+                    <input type="submit" class="btn btn-success" (click)="guardarData()" value="Guardar">
 
                 </div>
             </div>

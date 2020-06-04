@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ServerService } from 'src/app/service/server.service';
 import { debounceTime, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { LocalStorageService } from 'src/app/service/local-storage.service';
 const statesWithFlags: { name: string, flag: string }[] = [
   { 'name': 'Alabama', 'flag': '5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png' },
   { 'name': 'Alaska', 'flag': 'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png' }
@@ -36,7 +37,7 @@ export class DataProjectComponent implements OnInit {
   columnasR: string[] = ['Nombre', 'Descripcion', 'Subio', 'Descargas', 'Acciones'];
 
   Involucrados: any = [];
-  columnasIn: string[] = ['Nombre', 'Conexion' ,'Movimiento', 'Acciones'];
+  columnasIn: string[] = ['Nombre', 'Conexion', 'Movimiento', 'Acciones'];
 
   Usuario = [];
   id = 0;
@@ -52,21 +53,15 @@ export class DataProjectComponent implements OnInit {
   DescripcionReporte: string = '';
   NombreReporte: string = '';
   formData = new FormData();
-  archivo: string;
+  archivo;
   estatus = false;
-  public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
-  public ajaxSettings: object = {
-    url: this.hostUrl + 'api/FileManager/FileOperations',
-    getImageUrl: this.hostUrl + 'api/FileManager/GetImage',
-    uploadUrl: this.hostUrl + 'api/FileManager/Upload',
-    downloadUrl: this.hostUrl + 'api/FileManager/Download'
-  };
 
   constructor(
     private routeActive: ActivatedRoute,
     private modalService: NgbModal,
     private router: Router,
-    private server: ServerService
+    private server: ServerService,
+    private localStorange: LocalStorageService
   ) { }
 
   ngOnInit(): void {
@@ -145,22 +140,27 @@ export class DataProjectComponent implements OnInit {
 
       console.log(data);
       for (let i = 0; i < data['list'].length; i++) {
+        var foto = 'assets/img/default-avatar.png';
 
-        this.Usuarios.push({
-          Img: 'assets/img/default-avatar.png',
-          'name': data['list'][i]['name'],
-          'targets': data['list'][i]['targets'],
-          'tag': data['list'][i]['tags'][0]['tag'],
-          'tagColor': data['list'][i]['tags'][0]['tagcolor'],
-          'id': data['list'][i]['_id'],
-          'Path': '/dataObject/' + data['list'][i]['_id']
+        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          console.log(res['data']);
+          if (res['data'] != null)
+            foto = 'data:image/jpg;base64,' + res['data'];
+          this.Usuarios.push({
+            'Img': foto,
+            'name': data['list'][i]['name'],
+            'targets': data['list'][i]['targets'],
+            'tag': data['list'][i]['tags'][0]['tag'],
+            'tagColor': data['list'][i]['tags'][0]['tagcolor'],
+            'id': data['list'][i]['_id'],
+            'Path': '/dataObject/' + data['list'][i]['_id']
 
+          });
+          this.dataSource = new MatTableDataSource(this.Usuarios);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         });
       }
-
-      this.dataSource = new MatTableDataSource(this.Usuarios);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
     });
 
 
@@ -177,35 +177,28 @@ export class DataProjectComponent implements OnInit {
 
   getDataFromSourceR() {
 
-    this.Reportes = [
-      {
-        Id: 1,
-        Nombre: 'reporte 1',
-        Descripcion: 'descripcion 1',
-        Subio: 'benito',
-        Descargas: 1,
-        'documento': 'assets/img/videoframe.png'
-      }, {
-        Id: 2,
-        Nombre: 'reporte 2',
-        Descripcion: 'descripcion 2',
-        Subio: 'benito',
-        Descargas: 2,
-        'documento': 'assets/img/videoframe.png'
-      },
-      {
-        Id: 3,
-        Nombre: 'reporte 3',
-        Descripcion: 'descripcion 3',
-        Subio: 'jose',
-        Descargas: 3,
-        'documento': 'assets/img/videoframe.png'
-      },
-    ];
+    let url = environment.server;
 
-    this.dataSourceR = new MatTableDataSource(this.Reportes);
-    this.dataSourceR.paginator = this.paginator;
-    this.dataSourceR.sort = this.sort;
+    this.Reportes = [];
+
+    this.server.getReport(this.routeActive.snapshot.params.id).subscribe((data) => {
+
+      console.log(data)
+      for (let i = 0; i < data['list'].length; i++) {
+        this.Reportes.push({
+          'Id': data['list'][i]['_id'],
+          'Nombre': data['list'][i]['name'],
+          'Descripcion': data['list'][i]['descripcion'],
+          'Subio': 'beni',//data['list'][i]['_id'],
+          'Descargas': data['list'][i]['reporter'],
+          'documento': `${url}report/file/${data['list'][i]['_id']}/?=${this.localStorange.getStorage('token')}`
+        });
+      }
+
+      this.dataSourceR = new MatTableDataSource(this.Reportes);
+      this.dataSourceR.paginator = this.paginator;
+      this.dataSourceR.sort = this.sort;
+    });
   }
 
   filtrarR(event: Event) {
@@ -251,15 +244,31 @@ export class DataProjectComponent implements OnInit {
       this.files.push(element.name)
     }
 
-    var estencion = event[0].name.split('.', 2)
-    this.archivo = this.NombreReporte + '.' + estencion[1];
-
     if (event) {
       this.estatus = true;
-      this.formData.delete('archivo');
-      this.formData.append('archivo', event[0]);
+      var reader = new FileReader();
+      reader.onload = ($event: any) => {
+        this.archivo = $event.target.result;
+      }
     }
   }
+
+  subirReporte() {
+    this.server.uploadReport(this.archivo, this.DescripcionReporte, this.NombreReporte, this.routeActive.snapshot.params.id).subscribe((data) => {
+      this.files = [];
+      this.estatus = false;
+      this.DescripcionReporte = '';
+      this.NombreReporte = '';
+      this.getDataFromSourceR();
+      if (!data['err']) {
+        Swal.fire({
+          icon: 'success',
+          text: data['message']
+        });
+      }
+    });
+  }
+
   deleteAttachment(index) {
     this.files.splice(index, 1)
     if (this.files.length > 0)
