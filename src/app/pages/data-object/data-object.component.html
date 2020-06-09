@@ -341,7 +341,27 @@
 
 
         <label class=" justify-content-center text-center">Buscar cuenta</label><br>
-        <input [(ngModel)]="usuarioModal" placeholder='Buscar Usuario' class="form-control"><br>
+        <div class="row">
+            <div class="col-md-12">
+              <div class="ng-autocomplete">
+                <ng-autocomplete style="background-color: rgb(74, 76, 97);"
+                  [data]="data"
+                  [searchKeyword]="keyword"
+                  (selected)='selectEvent($event)'
+                  [itemTemplate]="itemTemplate"
+                  [notFoundTemplate]="notFoundTemplate">                                 
+                </ng-autocomplete>
+                
+                <ng-template #itemTemplate let-item>
+                  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/'+item.img" height="50" alt="user" class="rounded-circle"> <b [innerHTML]="item.name"></b>
+                </ng-template>
+                
+                <ng-template #notFoundTemplate let-notFound>
+                  <div [innerHTML]="notFound"></div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
 
     </div>
     <div class="modal-footer">
@@ -357,6 +377,16 @@
     select,
     input {
         background-color: rgb(53, 54, 77) !important;
+    }
+
+    .ng-autocomplete{
+      background-color: rgb(74, 76, 97);
+      width: 100%;
+    }
+
+    b {
+        padding: 10px;
+        color: black;
     }
 
     .btn-file {

@@ -73,6 +73,7 @@
     "@syncfusion/ej2": "^18.1.53",
     "@syncfusion/ej2-angular-filemanager": "^18.1.53",
     "angular-datatables": "^9.0.1",
+    "angular-ng-autocomplete": "^2.0.1",
     "angular-typeahead": "^1.0.2",
     "body-parser": "^1.19.0",
     "chart.js": "2.8.0",

@@ -8,83 +8,22 @@
                 </div>
                 <div class=" card-body">
 
-                    <h4>Datos personales</h4>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Nombre:</label>
-                                <input [(ngModel)]="Nombre" type="text" class="form-control"
-                                    placeholder="Ingresar Nombre" value="">
+                                <label for="">Web:</label>
+                                <input [(ngModel)]="web" type="text" class="form-control"
+                                    placeholder="Ingresar Web" value="">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Fecha de nacimiento:</label>
-                                <input [(ngModel)]="fecha" type="date" class="form-control" value="">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="">Empresa:</label>
-                                <input [(ngModel)]="Empresa" type="text" class="form-control"
-                                    placeholder="Ingresar Nombre" value="">
+                                <label for="">URL:</label>
+                                <input [(ngModel)]="urlweb" type="text" class="form-control"
+                                    placeholder="Ingresar URL" value="">
                             </div>
                         </div>
                     </div>
-                    <br>
-                    <p>
-
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Estado Civil:</label>
-                                <div class="md-radio-list">
-                                    <div class="md-radio form-check">
-                                        <label for="checkboxEstado" class="form-check-label">
-                                            <input type="radio" [(ngModel)]="estadoSelected"
-                                                (change)="onItemChangeEstado(0)" id="checkboxEstado"
-                                                name="checkboxEstado" value="false"
-                                                class="form-check-input md-radiobtn">
-                                            Soltero
-                                        </label>
-                                    </div>
-                                    <div class="md-radio form-check">
-                                        <label for="checkboxEstado1" class="form-check-label">
-                                            <input type="radio" [(ngModel)]="estadoSelected"
-                                                (change)="onItemChangeEstado(1)" id="checkboxEstado1"
-                                                name="checkboxEstado" value="true" class="form-check-input md-radiobtn">
-                                            Casado
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Genero:</label>
-                                <div class="md-radio-list">
-                                    <div class="md-radio form-check">
-                                        <label for="checkbox2_1" class="form-check-label">
-                                            <input type="radio" [(ngModel)]="sexSelected" (change)="onItemChangeSex(0)"
-                                                id="checkbox2_1" name="checkboxSex" value="false"
-                                                class="form-check-input md-radiobtn">
-                                            Masculino
-                                        </label>
-                                    </div>
-                                    <div class="md-radio form-check">
-                                        <label for="checkbox2_2" class="form-check-label">
-                                            <input type="radio" [(ngModel)]="sexSelected" (change)="onItemChangeSex(1)"
-                                                id="checkbox2_2" name="checkboxSex" value="true"
-                                                class="form-check-input md-radiobtn">
-                                            Femenino
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div><br>
                 </div>
             </div>
         </div>
@@ -353,7 +292,7 @@
         position: relative;
         overflow: hidden;
     }
-
+    
     .ng-autocomplete{
       background-color: rgb(74, 76, 97);
       width: 100%;

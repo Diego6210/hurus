@@ -15,11 +15,11 @@ interface Marker {
   draggable?: boolean;
 }
 @Component({
-  selector: 'app-data-object',
-  templateUrl: './data-object.component.html',
-  styleUrls: ['./data-object.component.scss']
+  selector: 'app-data-object-web',
+  templateUrl: './data-object-web.component.html',
+  styleUrls: ['./data-object-web.component.scss']
 })
-export class DataObjectComponent implements OnInit {
+export class DataObjectWebComponent implements OnInit {
   locattionSice: number = 0;
   locations: any = [];
 
@@ -29,11 +29,8 @@ export class DataObjectComponent implements OnInit {
   contactSice: number = 0;
   contacts: any = [];
 
-  Nombre: string;
-  fecha: Date;
-  Empresa: string;
-  sexSelected;
-  estadoSelected;
+  web: string;
+  urlWeb: string;
 
   Username: string;
   imgdefault: string = 'assets/img/default-avatar.png';
@@ -81,19 +78,6 @@ export class DataObjectComponent implements OnInit {
 
     this.server.getDataTargetFind(this.routeActive.snapshot.params.id).subscribe((data) => {
 
-      if (data['sex'])
-        this.sex = 'Femenino';
-      else
-        this.sex = 'Masculino';
-
-      if (data['civil_state'])
-        this.estado = 'Casado';
-      else
-        this.estado = 'Soltero';
-
-      this.Empresa = data['bussines'];
-      this.fecha = data['date'];
-      this.Nombre = data['name'];
       this.imgdefault = 'data:image/jpg;base64,' + data['img'];
 
       for (let i = 0; i < data['account'].length; i++) {
@@ -117,18 +101,23 @@ export class DataObjectComponent implements OnInit {
     });
   }
 
+  keyword = 'name';
+  data = [
+    {
+      id: 1,
+      name: 'Alabama',
+      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
+    }
+  ];
+
+  selectEvent(item) {
+    alert(item)
+  }
+
   contactos(contacto) {
     this.modalService.open(contacto, { ariaLabelledBy: 'modal-basic-title' });
   }
-
-  onItemChangeEstado(item) {
-
-  }
-
-  onItemChangeSex(item) {
-
-  }
-
+  
   addAccount() {
 
     this.accounts.push({
@@ -150,7 +139,7 @@ export class DataObjectComponent implements OnInit {
   }
 
   guardarData() {
-    this.server.setTargetData(this.routeActive.snapshot.params.id, this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected).subscribe((data) => {
+    this.server.setTargetDataWeb(this.routeActive.snapshot.params.id, null, null, null, null, null).subscribe((data) => {
       //console.log(data['msg']);
       Swal.fire({
         icon: 'success',
@@ -220,20 +209,6 @@ export class DataObjectComponent implements OnInit {
     this.Latitud = '';
     this.Descripcion = '';
     this.locattionSice = this.locations.length;
-  }
-
-  
-  keyword = 'name';
-  data = [
-    {
-      id: 1,
-      name: 'Alabama',
-      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
-    }
-  ];
-
-  selectEvent(item) {
-    alert(item)
   }
 
 

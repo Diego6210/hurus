@@ -36,6 +36,9 @@ import { DataProjectComponent } from './pages/data-project/data-project.componen
 import { MatStepperModule } from '@angular/material/stepper';
 import {MatIconModule} from '@angular/material/icon';
 import { PruebasComponent } from './pages/pruebas/pruebas.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { NewObjectWebComponent } from './pages/new-object-web/new-object-web.component';
+import { DataObjectWebComponent } from './pages/data-object-web/data-object-web.component';
 
 @NgModule({
 
@@ -59,9 +62,10 @@ import { PruebasComponent } from './pages/pruebas/pruebas.component';
     WebcamModule,
     DataTablesModule,
     FileManagerAllModule,
+    AutocompleteLibModule,
     ToastrModule.forRoot()
   ],
-  declarations: [AppComponent, AdminLayoutComponent, LoginComponent, UsersComponent, Page404Component, ManifestComponent, ObjectComponent, ProjectComponent, DataObjectComponent, NewObjectComponent, DataProjectComponent, PruebasComponent],
+  declarations: [AppComponent, AdminLayoutComponent, LoginComponent, UsersComponent, Page404Component, ManifestComponent, ObjectComponent, ProjectComponent, DataObjectComponent, NewObjectComponent, DataProjectComponent, PruebasComponent, NewObjectWebComponent, DataObjectWebComponent],
   providers: [ServerService],
   bootstrap: [AppComponent]
 })

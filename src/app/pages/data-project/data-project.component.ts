@@ -11,10 +11,7 @@ import { ServerService } from 'src/app/service/server.service';
 import { debounceTime, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
-const statesWithFlags: { name: string, flag: string }[] = [
-  { 'name': 'Alabama', 'flag': '5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png' },
-  { 'name': 'Alaska', 'flag': 'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png' }
-];
+
 @Component({
   selector: 'app-data-project',
   templateUrl: './data-project.component.html',
@@ -76,26 +73,12 @@ export class DataProjectComponent implements OnInit {
     });
   }
 
-  searchUsuario = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      map(term => term === '' ? []
-        : statesWithFlags.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-    )
-
-  search = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      map(term => term === '' ? []
-        : statesWithFlags.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-    )
-
-  formatter = (x: { name: string }) => x.name;
-
-
-  route() {
+  route(tipo) {
     this.modalService.dismissAll();
-    this.router.navigateByUrl('newObject/' + this.routeActive.snapshot.params.id);
+    if(tipo == 'web')
+      this.router.navigateByUrl('newObjectWeb/' + this.routeActive.snapshot.params.id);
+    else
+      this.router.navigateByUrl('newObject/' + this.routeActive.snapshot.params.id);
   }
 
   capturar() {
@@ -138,12 +121,12 @@ export class DataProjectComponent implements OnInit {
     this.Usuarios = [];
     this.server.getProyectTarget(this.routeActive.snapshot.params.id).subscribe((data) => {
 
-      console.log(data);
+      //console.log(data);
       for (let i = 0; i < data['list'].length; i++) {
         var foto = 'assets/img/default-avatar.png';
 
         this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          console.log(res['data']);
+          //console.log(res['data']);
           if (res['data'] != null)
             foto = 'data:image/jpg;base64,' + res['data'];
           this.Usuarios.push({
@@ -183,7 +166,6 @@ export class DataProjectComponent implements OnInit {
 
     this.server.getReport(this.routeActive.snapshot.params.id).subscribe((data) => {
 
-      console.log(data)
       for (let i = 0; i < data['list'].length; i++) {
         this.Reportes.push({
           'Id': data['list'][i]['_id'],
@@ -237,7 +219,7 @@ export class DataProjectComponent implements OnInit {
 
 
   files: any = [];
-
+  uploadedFiles: Array < File > ;
   uploadFile(event) {
     for (let index = 0; index < event.length; index++) {
       const element = event[index];
@@ -246,11 +228,9 @@ export class DataProjectComponent implements OnInit {
 
     if (event) {
       this.estatus = true;
-      var reader = new FileReader();
-      reader.onload = ($event: any) => {
-        this.archivo = $event.target.result;
-      }
+      this.archivo = event;
     }
+
   }
 
   subirReporte() {
@@ -310,5 +290,30 @@ export class DataProjectComponent implements OnInit {
     if (files.length > 0) {
       this.onFileDropped.emit(files)
     }
+  }
+  
+  keyword = 'name';
+  data = [
+    {
+      id: 1,
+      name: 'Alabama',
+      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
+    }
+  ];
+
+  selectEvent(item) {
+    alert(item)
+  }
+
+  dataInvolucrado = [
+    {
+      id: 1,
+      name: 'Alabama',
+      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
+    }
+  ];
+
+  selectEventInvolucrado(item) {
+    alert(item)
   }
 }

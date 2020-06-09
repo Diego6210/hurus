@@ -156,6 +156,16 @@ export class ServerService {
     return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
   }
 
+  setTargetDataWeb(id, name, date, bussines, civil_state, sex) {
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('data', JSON.stringify({ name: name, date: date, bussines: bussines, civil_state: civil_state, sex: sex }));
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
+  }
+
   setTargetperfil(id, foto) {
 
     let urlSearchParams = new URLSearchParams();
@@ -181,6 +191,4 @@ export class ServerService {
 
     return this.http.post(`${this.URL}report/`, urlSearchParams.toString(), httpOptions);
   }
-
-
 }

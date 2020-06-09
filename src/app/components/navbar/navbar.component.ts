@@ -4,6 +4,7 @@ import { Location } from "@angular/common";
 import { Router } from "@angular/router";
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
+import { ServerService } from 'src/app/service/server.service';
 
 @Component({
   selector: "app-navbar",
@@ -21,16 +22,21 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   closeResult: string;
 
+  imgUser:string;
   constructor(
     location: Location,
     private localStorange: LocalStorageService,
     private element: ElementRef,
     private router: Router,
+    private server: ServerService,
     private modalService: NgbModal
   ) {
     this.location = location;
     this.sidebarVisible = false;
 
+    //this.server.getTargetFoto(null)'data:image/jpg;base64,';
+
+    this.imgUser = '/assets/img/mike.jpg'
   }
 
   logOut() {

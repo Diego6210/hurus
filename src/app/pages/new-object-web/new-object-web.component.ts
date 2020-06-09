@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { ServerService } from 'src/app/service/server.service';
 import Swal from 'sweetalert2'
 
 @Component({
-  selector: 'app-new-object',
-  templateUrl: './new-object.component.html',
-  styleUrls: ['./new-object.component.scss']
+  selector: 'app-new-object-web',
+  templateUrl: './new-object-web.component.html',
+  styleUrls: ['./new-object-web.component.scss']
 })
-export class NewObjectComponent implements OnInit {
+export class NewObjectWebComponent implements OnInit {
 
+  web:string;
+  urlweb:string;
   locattionSice: number = 0;
   locations: any = [];
 
@@ -20,12 +22,6 @@ export class NewObjectComponent implements OnInit {
 
   contactSice: number = 0;
   contacts: any = [];
-
-  Nombre: string;
-  fecha: Date;
-  Empresa: string;
-  sexSelected;
-  estadoSelected;
 
   Username: string;
   imgdefault: string = 'assets/img/default-avatar.png';
@@ -73,18 +69,6 @@ export class NewObjectComponent implements OnInit {
     }
   }
 
-  keyword = 'name';
-  data = [
-    {
-      id: 1,
-      name: 'Alabama',
-      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
-    }
-  ];
-
-  selectEvent(item) {
-    alert(item)
-  }
 
   contactos(contacto) {
     this.modalService.open(contacto, { ariaLabelledBy: 'modal-basic-title' });
@@ -164,7 +148,7 @@ export class NewObjectComponent implements OnInit {
     let tags = [{ tag: "TGP", tagcolor: "#0f0f0f" }];
     let targets = [{}];
 
-    this.server.setTargetAdd(this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected, this.idProyect, JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(tags), JSON.stringify(this.locations),this.imgdefault).subscribe((data) => {
+    this.server.setTargetAdd(null, null, null, null, null, null, JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(tags), JSON.stringify(this.locations),this.imgdefault).subscribe((data) => {
 
       if (!data['err']) {
         Swal.fire({
@@ -181,6 +165,17 @@ export class NewObjectComponent implements OnInit {
 
   }
 
+  keyword = 'name';
+  data = [
+    {
+      id: 1,
+      name: 'Alabama',
+      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
+    }
+  ];
 
+  selectEvent(item) {
+    alert(item)
+  }
 
 }

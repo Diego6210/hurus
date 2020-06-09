@@ -10,10 +10,7 @@ import { Router } from '@angular/router';
 
 import { debounceTime, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-const statesWithFlags: { name: string, flag: string }[] = [
-  { 'name': 'Alabama', 'flag': '5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png' },
-  { 'name': 'Alaska', 'flag': 'e/e6/Flag_of_Alaska.svg/43px-Flag_of_Alaska.svg.png' }
-];
+
 @Component({
   selector: 'app-object',
   templateUrl: './object.component.html',
@@ -24,7 +21,6 @@ export class ObjectComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   dataSource = null;
-  private url: string = environment.server + 'imagen/';
 
   Usuarios: any = [];
   columnas: string[] = ['Img', 'Nombre', 'Tags', 'Acciones'];
@@ -36,28 +32,22 @@ export class ObjectComponent implements OnInit {
     private router: Router,
     private server: ServerService
   ) { }
-
-  search = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      map(term => term === '' ? []
-        : statesWithFlags.filter(v => v.name.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10))
-    )
-
-  formatter = (x: { name: string }) => x.name;
-
+  
   ngOnInit(): void {
     this.getDataFromSource();
-
   }
 
   open(content) {
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  route() {
+  route(tipo) {
+    
     this.modalService.dismissAll();
-    this.router.navigateByUrl('newObject/');
+    if(tipo == 'web')
+      this.router.navigateByUrl('newObjectWeb/');
+    else
+      this.router.navigateByUrl('newObject/');
   }
 
   getDataFromSource() {
@@ -69,11 +59,12 @@ export class ObjectComponent implements OnInit {
         var foto = 'assets/img/default-avatar.png';
 
         this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          console.log(res['data']);
           if(res['data'] != null)
             foto = 'data:image/jpg;base64,' + res['data'];
 
           this.Usuarios.push({
+            
+            'tipo': false,
             'Img': foto,
             'name': data['list'][i]['name'],
             'targets': data['list'][i]['targets'],
@@ -87,8 +78,6 @@ export class ObjectComponent implements OnInit {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         });
-
-        //if()'data:image/jpg;base64,' + 
       }
     });
   }
@@ -98,4 +87,16 @@ export class ObjectComponent implements OnInit {
     this.dataSource.filter = filtro.trim().toLowerCase();
   }
 
+  keyword = 'name';
+  data = [
+    {
+      id: 1,
+      name: 'Alabama',
+      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
+    }
+  ];
+
+  selectEvent(item) {
+    alert(item)
+  }
 }

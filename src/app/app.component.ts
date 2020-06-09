@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { environment } from 'src/environments/environment';
+import { ServerSocketService } from './service/server-socket.service';
 
 @Component({
   selector: "app-root",
@@ -9,7 +10,9 @@ import { environment } from 'src/environments/environment';
 export class AppComponent implements OnInit{
   title = environment.nombreAplicacion;
 
-  constructor( ){
+  constructor(
+    private serverSocket: ServerSocketService
+  ){
 
   }
 
