@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { ServerService } from 'src/app/service/server.service';
@@ -59,7 +59,8 @@ export class NewObjectComponent implements OnInit {
     public dialog: MatDialog,
     private modalService: NgbModal,
     private routeActive: ActivatedRoute,
-    private server: ServerService
+    private server: ServerService,
+    private router:Router
   ) {
 
   }
@@ -75,12 +76,13 @@ export class NewObjectComponent implements OnInit {
     if (this.routeActive.snapshot.params.id != undefined) {
       this.idProyect = this.routeActive.snapshot.params.id;
       this.server.getDataProyect(this.routeActive.snapshot.params.id).subscribe((data) => {
-        this.tags = [];
-        this.tags = [{
+        this.tags.push({
           tag: data['data']['tag'],
           tagcolor: "#0f0f0f"
-        }];
+        });
       });
+
+      console.log(this.tags)
     }
 
     this.server.getTarget().subscribe((data) => {
@@ -181,8 +183,8 @@ export class NewObjectComponent implements OnInit {
 
 
   GuardarDatos() {
-    if (this.routeActive.snapshot.params.id != undefined)
-      this.tags = [{ tag: "", tagcolor: "" }];
+    if (this.routeActive.snapshot.params.id == undefined)
+      this.tags.push({ tag: "", tagcolor: "" });
     let targets = [{}];
 
     this.server.setTargetAdd(this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected, [this.idProyect], JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(this.tags), JSON.stringify(this.locations), this.imgdefault, false).subscribe((data) => {
@@ -192,6 +194,10 @@ export class NewObjectComponent implements OnInit {
           icon: 'success',
           text: data['message']
         });
+        if(this.idProyect != undefined)
+          this.router.navigateByUrl('project/' + this.idProyect);
+        else
+          this.router.navigateByUrl('object/');
       } else {
         Swal.fire({
           icon: 'error',

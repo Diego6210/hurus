@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServerService } from 'src/app/service/server.service';
 import Swal from 'sweetalert2'
+import { Route } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-new-object-web',
@@ -57,7 +58,8 @@ export class NewObjectWebComponent implements OnInit {
     public dialog: MatDialog,
     private modalService: NgbModal,
     private routeActive: ActivatedRoute,
-    private server: ServerService
+    private server: ServerService,
+    private router:Router
   ) {
 
   }
@@ -69,11 +71,10 @@ export class NewObjectWebComponent implements OnInit {
     if (this.routeActive.snapshot.params.id != undefined) {
       this.idProyect = this.routeActive.snapshot.params.id;
       this.server.getDataProyect(this.routeActive.snapshot.params.id).subscribe((data) => {
-        this.tags = [];
-        this.tags = [{
+        this.tags.push({
           tag: data['data']['tag'],
           tagcolor: "#0f0f0f"
-        }];
+        });
       });
     }
 
@@ -173,8 +174,8 @@ export class NewObjectWebComponent implements OnInit {
 
   GuardarDatos() {
 
-    if (this.routeActive.snapshot.params.id != undefined)
-      this.tags = [{ tag: "", tagcolor: "" }];
+    if (this.routeActive.snapshot.params.id == undefined)
+      this.tags.push({ tag: "", tagcolor: "" });
 
     let targets = [{}];
 
@@ -185,6 +186,11 @@ export class NewObjectWebComponent implements OnInit {
           icon: 'success',
           text: data['message']
         });
+        if(this.idProyect != undefined)
+          this.router.navigateByUrl('project/' + this.idProyect);
+        else
+          this.router.navigateByUrl('object/');
+
       } else {
         Swal.fire({
           icon: 'error',

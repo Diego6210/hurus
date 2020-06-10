@@ -21,6 +21,10 @@ export class DataProjectComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild('object', { static: true }) paginatorObject: MatPaginator;
+  @ViewChild('report', { static: true }) paginatorReport: MatPaginator;
+  @ViewChild('involucrado', { static: true }) paginatorInvolucrado: MatPaginator;
+  
   dataSource = null;
   dataSourceR = null;
   dataSourceIn = null;
@@ -165,7 +169,7 @@ export class DataProjectComponent implements OnInit {
 
           });
           this.dataSource = new MatTableDataSource(this.Usuarios);
-          this.dataSource.paginator = this.paginator;
+          this.dataSource.paginator = this.paginatorObject;
           this.dataSource.sort = this.sort;
         });
       }
@@ -203,7 +207,7 @@ export class DataProjectComponent implements OnInit {
       }
 
       this.dataSourceR = new MatTableDataSource(this.Reportes);
-      this.dataSourceR.paginator = this.paginator;
+      this.dataSourceR.paginator = this.paginatorReport;
       this.dataSourceR.sort = this.sort;
     });
   }
@@ -233,7 +237,7 @@ export class DataProjectComponent implements OnInit {
     ];
 
     this.dataSourceIn = new MatTableDataSource(this.Involucrados);
-    this.dataSourceIn.paginator = this.paginator;
+    this.dataSourceIn.paginator = this.paginatorInvolucrado;
     this.dataSourceIn.sort = this.sort;
   }
 
