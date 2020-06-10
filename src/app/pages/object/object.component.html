@@ -23,8 +23,9 @@
 
               <ng-container matColumnDef="Img">
                 <th mat-header-cell *matHeaderCellDef> IMAGEN </th>
-                <td mat-cell *matCellDef="let usuarios"><i *ngIf="usuarios.tipo" class="fa fa-globe"> </i> <img src="{{usuarios.Img}}" height="60" alt="user"
-                    class="rounded-circle"></td>
+                <td mat-cell *matCellDef="let usuarios"><img src="{{usuarios.Img}}" height="60" alt="user"
+                    class="rounded-circle"> <i *ngIf="usuarios.tipo" style="padding: 5px;" class="fa fa-globe"> </i>
+                </td>
               </ng-container>
 
               <ng-container matColumnDef="Nombre">
@@ -71,16 +72,16 @@
           <div class="clearfix center-block">
             <label class=" justify-content-center text-center"
               style="position :relative !important;left: 40% !important;">Crear</label><br>
-              <div class="row">
-                <div class="col-md-6">
-                  <button class="btn btn-fill btn-info btn-sm"
-                  (click)="route('objetivo')"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
-                </div>
-                <div class="col-md-6">
-                  <button class="btn btn-fill btn-info btn-sm"
-                  (click)="route('web')"><i class="fa fa-globe"></i> Nuevo Objetivo Web</button>
-                </div>
+            <div class="row">
+              <div class="col-md-6">
+                <button class="btn btn-fill btn-info btn-sm" (click)="route('objetivo')"><i
+                    class="fa fa-user-circle"></i> Nuevo Objetivo</button>
               </div>
+              <div class="col-md-6">
+                <button class="btn btn-fill btn-info btn-sm" (click)="route('web')"><i class="fa fa-globe"></i> Nuevo
+                  Objetivo Red Social</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -90,28 +91,26 @@
           <div class="center-block">
             <label class=" justify-content-center text-center"
               style="position :relative !important;left: 35% !important;">Tomar uno Existente</label><br>
-              
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="ng-autocomplete">
-                    <ng-autocomplete style="background-color: rgb(74, 76, 97);"
-                      [data]="data"
-                      [searchKeyword]="keyword"
-                      (selected)='selectEvent($event)'
-                      [itemTemplate]="itemTemplate"
-                      [notFoundTemplate]="notFoundTemplate">                                 
-                    </ng-autocomplete>
-                    
-                    <ng-template #itemTemplate let-item>
-                      <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/'+item.img" height="50" alt="user" class="rounded-circle"> <b [innerHTML]="item.name"></b>
-                    </ng-template>
-                    
-                    <ng-template #notFoundTemplate let-notFound>
-                      <div [innerHTML]="notFound"></div>
-                    </ng-template>
-                  </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="ng-autocomplete">
+                  <ng-autocomplete style="background-color: rgb(74, 76, 97);" [data]="data" [searchKeyword]="keyword"
+                    (selected)='selectEvent($event)' [itemTemplate]="itemTemplate"
+                    [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplate let-item>
+                    <img src="{{item.Img}}" style="padding: 5px;" height="50" width="50" alt="user"
+                      class="rounded-circle"> <b [innerHTML]="item.name"></b>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </div>
@@ -124,12 +123,12 @@
   </ng-template>
 
   <style>
-    .ng-autocomplete{
+    .ng-autocomplete {
       background-color: rgb(74, 76, 97);
       width: 100%;
     }
 
-    .ng-autocomplete:hover{
+    .ng-autocomplete:hover {
       background-color: rgb(74, 76, 97);
       width: 100%;
     }

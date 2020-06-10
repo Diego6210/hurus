@@ -26,7 +26,8 @@ export class DataProjectComponent implements OnInit {
   dataSourceIn = null;
 
   private url: string = environment.server + 'imagen/';
-
+  keyword = 'name';
+  data = [];
   Usuarios: any = [];
   columnas: string[] = ['Img', 'Nombre', 'Tags', 'Acciones'];
 
@@ -71,11 +72,31 @@ export class DataProjectComponent implements OnInit {
       this.nameProject = data['data']['name'];
       this.descripcionProyecto = data['data']['description'];
     });
+
+    this.server.getTarget().subscribe((data) => {
+
+      for (let i = 0; i < data['list'].length; i++) {
+
+        var foto = 'assets/img/default-avatar.png';
+
+        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          if (res['data'] != null)
+            foto = 'data:image/jpg;base64,' + res['data'];
+          else
+            foto = 'assets/img/default-avatar.png';
+          this.data.push({
+            'id': data['list'][i]['_id'],
+            'Img': foto,
+            'name': data['list'][i]['name']
+          });
+        });
+      }
+    });
   }
 
   route(tipo) {
     this.modalService.dismissAll();
-    if(tipo == 'web')
+    if (tipo == 'web')
       this.router.navigateByUrl('newObjectWeb/' + this.routeActive.snapshot.params.id);
     else
       this.router.navigateByUrl('newObject/' + this.routeActive.snapshot.params.id);
@@ -121,22 +142,26 @@ export class DataProjectComponent implements OnInit {
     this.Usuarios = [];
     this.server.getProyectTarget(this.routeActive.snapshot.params.id).subscribe((data) => {
 
-      //console.log(data);
+      console.log(data);
       for (let i = 0; i < data['list'].length; i++) {
         var foto = 'assets/img/default-avatar.png';
 
         this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          //console.log(res['data']);
+          let router = '/dataObject/';
+          if (data['list'][i]['web'])
+            router = '/dataObjectWeb/'
+
           if (res['data'] != null)
             foto = 'data:image/jpg;base64,' + res['data'];
           this.Usuarios.push({
+            'tipo': data['list'][i]['web'],
             'Img': foto,
             'name': data['list'][i]['name'],
             'targets': data['list'][i]['targets'],
             'tag': data['list'][i]['tags'][0]['tag'],
             'tagColor': data['list'][i]['tags'][0]['tagcolor'],
             'id': data['list'][i]['_id'],
-            'Path': '/dataObject/' + data['list'][i]['_id']
+            'Path': router + data['list'][i]['_id']
 
           });
           this.dataSource = new MatTableDataSource(this.Usuarios);
@@ -219,7 +244,7 @@ export class DataProjectComponent implements OnInit {
 
 
   files: any = [];
-  uploadedFiles: Array < File > ;
+  uploadedFiles: Array<File>;
   uploadFile(event) {
     for (let index = 0; index < event.length; index++) {
       const element = event[index];
@@ -291,15 +316,6 @@ export class DataProjectComponent implements OnInit {
       this.onFileDropped.emit(files)
     }
   }
-  
-  keyword = 'name';
-  data = [
-    {
-      id: 1,
-      name: 'Alabama',
-      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
-    }
-  ];
 
   selectEvent(item) {
     alert(item)
@@ -309,7 +325,7 @@ export class DataProjectComponent implements OnInit {
     {
       id: 1,
       name: 'Alabama',
-      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
+      img: '5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
     }
   ];
 

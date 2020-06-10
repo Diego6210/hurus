@@ -12,8 +12,8 @@ import Swal from 'sweetalert2'
 })
 export class NewObjectWebComponent implements OnInit {
 
-  web:string;
-  urlweb:string;
+  web: string;
+  urlweb: string;
   locattionSice: number = 0;
   locations: any = [];
 
@@ -40,7 +40,7 @@ export class NewObjectWebComponent implements OnInit {
   dialogUrl: string;
 
   idProyect: string;
-
+  tags = [];
   usuarioModal: string;
 
   public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
@@ -50,7 +50,9 @@ export class NewObjectWebComponent implements OnInit {
     uploadUrl: this.hostUrl + 'api/FileManager/Upload',
     downloadUrl: this.hostUrl + 'api/FileManager/Download'
   };
+  data = [];
 
+  keyword = 'name';
   constructor(
     public dialog: MatDialog,
     private modalService: NgbModal,
@@ -66,7 +68,33 @@ export class NewObjectWebComponent implements OnInit {
     this.contactSice = this.contacts.length;
     if (this.routeActive.snapshot.params.id != undefined) {
       this.idProyect = this.routeActive.snapshot.params.id;
+      this.server.getDataProyect(this.routeActive.snapshot.params.id).subscribe((data) => {
+        this.tags = [];
+        this.tags = [{
+          tag: data['data']['tag'],
+          tagcolor: "#0f0f0f"
+        }];
+      });
     }
+
+    this.server.getTarget().subscribe((data) => {
+
+      for (let i = 0; i < data['list'].length; i++) {
+
+        var foto = 'assets/img/default-avatar.png';
+
+        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          if (res['data'] != null)
+            foto = 'data:image/jpg;base64,' + res['data'];
+
+          this.data.push({
+            'id': data['list'][i]['_id'],
+            'Img': foto,
+            'name': data['list'][i]['name']
+          });
+        });
+      }
+    });
   }
 
 
@@ -145,10 +173,12 @@ export class NewObjectWebComponent implements OnInit {
 
   GuardarDatos() {
 
-    let tags = [{ tag: "TGP", tagcolor: "#0f0f0f" }];
+    if (this.routeActive.snapshot.params.id != undefined)
+      this.tags = [{ tag: "", tagcolor: "" }];
+
     let targets = [{}];
 
-    this.server.setTargetAdd(null, null, null, null, null, null, JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(tags), JSON.stringify(this.locations),this.imgdefault).subscribe((data) => {
+    this.server.setTargetAddWeb(this.web, [this.idProyect], JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(this.tags), JSON.stringify(this.locations), this.imgdefault, true, this.urlweb).subscribe((data) => {
 
       if (!data['err']) {
         Swal.fire({
@@ -164,15 +194,6 @@ export class NewObjectWebComponent implements OnInit {
     });
 
   }
-
-  keyword = 'name';
-  data = [
-    {
-      id: 1,
-      name: 'Alabama',
-      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
-    }
-  ];
 
   selectEvent(item) {
     alert(item)

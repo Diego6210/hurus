@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  //server: 'http://dc9a4717857c.ngrok.io/',
   server: 'http://localhost/',
   nombreEmpresa: 'Nombre de la empresa',
   nombreAplicacion: 'Horus'

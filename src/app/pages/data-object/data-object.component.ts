@@ -54,7 +54,8 @@ export class DataObjectComponent implements OnInit {
   sex: string;
   estado: string;
   token: string = this.localStorange.getStorage('token');
-
+  keyword = 'name';
+  data = [];
   private URL: string = environment.server;
 
   public ajaxSettings: object = {
@@ -114,6 +115,25 @@ export class DataObjectComponent implements OnInit {
       this.map();
       this.accountSice = this.accounts.length;
       this.locattionSice = this.locations.length;
+    });
+
+    this.server.getTarget().subscribe((data) => {
+
+      for (let i = 0; i < data['list'].length; i++) {
+
+        var foto = 'assets/img/default-avatar.png';
+
+        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          if (res['data'] != null)
+            foto = 'data:image/jpg;base64,' + res['data'];
+
+          this.data.push({
+            'id': data['list'][i]['_id'],
+            'Img': foto,
+            'name': data['list'][i]['name']
+          });
+        });
+      }
     });
   }
 
@@ -212,7 +232,7 @@ export class DataObjectComponent implements OnInit {
         icon: 'success',
         text: 'Actualizado'
       });
-      this.map(); 
+      this.map();
     });
 
 
@@ -221,16 +241,6 @@ export class DataObjectComponent implements OnInit {
     this.Descripcion = '';
     this.locattionSice = this.locations.length;
   }
-
-  
-  keyword = 'name';
-  data = [
-    {
-      id: 1,
-      name: 'Alabama',
-      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
-    }
-  ];
 
   selectEvent(item) {
     alert(item)

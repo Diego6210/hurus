@@ -26,13 +26,15 @@ export class ObjectComponent implements OnInit {
   columnas: string[] = ['Img', 'Nombre', 'Tags', 'Acciones'];
 
   usuarioModal: string;
+  keyword = 'name';
+  data = [];
 
   constructor(
     private modalService: NgbModal,
     private router: Router,
     private server: ServerService
   ) { }
-  
+
   ngOnInit(): void {
     this.getDataFromSource();
   }
@@ -42,9 +44,9 @@ export class ObjectComponent implements OnInit {
   }
 
   route(tipo) {
-    
+
     this.modalService.dismissAll();
-    if(tipo == 'web')
+    if (tipo == 'web')
       this.router.navigateByUrl('newObjectWeb/');
     else
       this.router.navigateByUrl('newObject/');
@@ -59,21 +61,40 @@ export class ObjectComponent implements OnInit {
         var foto = 'assets/img/default-avatar.png';
 
         this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          if(res['data'] != null)
+          if (res['data'] != null)
             foto = 'data:image/jpg;base64,' + res['data'];
+          else
+            foto = 'assets/img/default-avatar.png';
+          let router = '/dataObject/';
+          if (data['list'][i]['web'])
+            router = '/dataObjectWeb/'
+
+          var tags = '';
+          var tagColor = '';
+          if (data['list'][i]['tags'][0]['tag'] != undefined) {
+            tags = data['list'][i]['tags'][0]['tag'];
+            tagColor = data['list'][i]['tags'][0]['tagcolor'];
+          }
+
 
           this.Usuarios.push({
-            
-            'tipo': false,
+
+            'tipo': data['list'][i]['web'],
             'Img': foto,
             'name': data['list'][i]['name'],
             'targets': data['list'][i]['targets'],
-            'tag': data['list'][i]['tags'][0]['tag'],
-            'tagColor': data['list'][i]['tags'][0]['tagcolor'],
+            'tag': tags,
+            'tagColor': tagColor,
             'id': data['list'][i]['_id'],
-            'Path': '/dataObject/' + data['list'][i]['_id']
+            'Path': router + data['list'][i]['_id']
           });
-          
+
+          this.data.push({
+            'id': data['list'][i]['_id'],
+            'Img': foto,
+            'name': data['list'][i]['name']
+          });
+
           this.dataSource = new MatTableDataSource(this.Usuarios);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -86,15 +107,6 @@ export class ObjectComponent implements OnInit {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLowerCase();
   }
-
-  keyword = 'name';
-  data = [
-    {
-      id: 1,
-      name: 'Alabama',
-      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
-    }
-  ];
 
   selectEvent(item) {
     alert(item)

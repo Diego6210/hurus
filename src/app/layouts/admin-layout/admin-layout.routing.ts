@@ -11,6 +11,7 @@ import { ProjectComponent } from 'src/app/pages/project/project.component';
 import { DataProjectComponent } from 'src/app/pages/data-project/data-project.component';
 import { AuthService } from 'src/app/service/auth.service';
 import { NewObjectWebComponent } from 'src/app/pages/new-object-web/new-object-web.component';
+import { DataObjectWebComponent } from 'src/app/pages/data-object-web/data-object-web.component';
 
 export const AdminLayoutRoutes: Routes = [
   { path: "dashboard", component: DashboardComponent, canActivate : [AuthService] },
@@ -23,6 +24,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "newObject/:id", component: NewObjectComponent, canActivate : [AuthService]  },
   { path: "newObjectWeb/:id", component: NewObjectWebComponent, canActivate : [AuthService]  },
   { path: "dataObject/:id", component: DataObjectComponent, canActivate : [AuthService]  },
+  { path: "dataObjectWeb/:id", component: DataObjectWebComponent, canActivate : [AuthService]  },
   { path: "project/:id", component: DataProjectComponent, canActivate : [AuthService]  },
   { path: "project", component: ProjectComponent, canActivate : [AuthService]  },
 ];

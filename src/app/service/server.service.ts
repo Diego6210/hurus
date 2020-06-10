@@ -14,13 +14,11 @@ const httpOptions = {
 export class ServerService {
 
   private URL: string = environment.server;
-  private token: string;
+  
   constructor(
     private http: HttpClient,
     private localStorange: LocalStorageService
-  ) {
-    this.token = this.localStorange.getStorage('token');
-  }
+  ) {  }
 
   uploadFile(archivo, user) {
     return this.http.post(`${this.URL}upload/${user}`, archivo);
@@ -104,7 +102,7 @@ export class ServerService {
   }
 
 
-  setTargetAdd(name, date, bussines, civil_state, sex, proyect, targets, account, tags, location, imagen) {
+  setTargetAdd(name, date, bussines, civil_state, sex, proyect, targets, account, tags, location, imagen, tipo) {
 
     if (imagen == "assets/img/default-avatar.png")
       imagen = null;
@@ -121,6 +119,28 @@ export class ServerService {
     urlSearchParams.append('tags', tags);
     urlSearchParams.append('location', location);
     urlSearchParams.append('archivo', imagen);
+    urlSearchParams.append('web', tipo);
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/add/`, urlSearchParams.toString(), httpOptions);
+  }
+
+  
+  setTargetAddWeb(name, proyect, targets, account, tags, location, imagen, tipo, url) {
+
+    if (imagen == "assets/img/default-avatar.png")
+      imagen = null;
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('name', name);
+    urlSearchParams.append('proyect', proyect);
+    urlSearchParams.append('targets', targets);
+    urlSearchParams.append('account', account);
+    urlSearchParams.append('tags', tags);
+    urlSearchParams.append('location', location);
+    urlSearchParams.append('archivo', imagen);
+    urlSearchParams.append('url', url);
+    urlSearchParams.append('web', tipo);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
     return this.http.post(`${this.URL}target/add/`, urlSearchParams.toString(), httpOptions);
@@ -156,11 +176,11 @@ export class ServerService {
     return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
   }
 
-  setTargetDataWeb(id, name, date, bussines, civil_state, sex) {
+  setTargetDataWeb(id, name, url) {
 
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);
-    urlSearchParams.append('data', JSON.stringify({ name: name, date: date, bussines: bussines, civil_state: civil_state, sex: sex }));
+    urlSearchParams.append('data', JSON.stringify({ name: name, url: url}));
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
     return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
@@ -182,6 +202,13 @@ export class ServerService {
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
     return this.http.post(`${this.URL}target/profile/`, urlSearchParams.toString(), httpOptions);
+  }
+
+  getTargetObjetivos(id) {
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/list/`, urlSearchParams.toString(), httpOptions);
   }
 
   getReport(id) {

@@ -7,26 +7,26 @@
                     <hr>
                 </div>
                 <div class=" card-body">
-                    
+
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Web:</label>
-                                <input [(ngModel)]="web" type="text" class="form-control"
-                                    placeholder="Ingresar Web" value="">
+                                <input [(ngModel)]="web" type="text" class="form-control" placeholder="Ingresar Web"
+                                    value="">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">URL:</label>
-                                <input [(ngModel)]="urlWeb" type="text" class="form-control"
-                                    placeholder="Ingresar URL" value="">
+                                <input [(ngModel)]="urlWeb" type="text" class="form-control" placeholder="Ingresar URL"
+                                    value="">
                             </div>
                         </div>
                     </div>
                     <br>
 
-                    
+
                     <input type="hidden" id="idUG" name="id" value="Id">
                     <input type="submit" class="btn btn-success" (click)="guardarData()" value="Guardar">
 
@@ -284,23 +284,21 @@
         <label class=" justify-content-center text-center">Buscar cuenta</label><br>
         <div class="row">
             <div class="col-md-12">
-              <div class="ng-autocomplete">
-                <ng-autocomplete style="background-color: rgb(74, 76, 97);"
-                  [data]="data"
-                  [searchKeyword]="keyword"
-                  (selected)='selectEvent($event)'
-                  [itemTemplate]="itemTemplate"
-                  [notFoundTemplate]="notFoundTemplate">                                 
-                </ng-autocomplete>
-                
-                <ng-template #itemTemplate let-item>
-                  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/thumb/'+item.img" height="50" alt="user" class="rounded-circle"> <b [innerHTML]="item.name"></b>
-                </ng-template>
-                
-                <ng-template #notFoundTemplate let-notFound>
-                  <div [innerHTML]="notFound"></div>
-                </ng-template>
-              </div>
+                <div class="ng-autocomplete">
+                    <ng-autocomplete style="background-color: rgb(74, 76, 97);" [data]="data" [searchKeyword]="keyword"
+                        (selected)='selectEvent($event)' [itemTemplate]="itemTemplate"
+                        [notFoundTemplate]="notFoundTemplate">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplate let-item>
+                        <img src="{{item.Img}}" style="padding: 5px;" height="50" width="50" alt="user"
+                            class="rounded-circle"> <b [innerHTML]="item.name"></b>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                </div>
             </div>
         </div>
     </div>
@@ -323,10 +321,10 @@
         position: relative;
         overflow: hidden;
     }
-    
-    .ng-autocomplete{
-      background-color: rgb(74, 76, 97);
-      width: 100%;
+
+    .ng-autocomplete {
+        background-color: rgb(74, 76, 97);
+        width: 100%;
     }
 
     b {

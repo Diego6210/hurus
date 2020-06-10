@@ -42,7 +42,7 @@ export class NewObjectComponent implements OnInit {
   dialogCorreo: string;
   dialogPassword: string;
   dialogUrl: string;
-
+  tags = [];
   idProyect: string;
 
   usuarioModal: string;
@@ -64,23 +64,44 @@ export class NewObjectComponent implements OnInit {
 
   }
 
+  keyword = 'name';
+
+  data = [];
+
   ngOnInit(): void {
     this.locattionSice = this.locations.length;
     this.accountSice = this.accounts.length;
     this.contactSice = this.contacts.length;
     if (this.routeActive.snapshot.params.id != undefined) {
       this.idProyect = this.routeActive.snapshot.params.id;
+      this.server.getDataProyect(this.routeActive.snapshot.params.id).subscribe((data) => {
+        this.tags = [];
+        this.tags = [{
+          tag: data['data']['tag'],
+          tagcolor: "#0f0f0f"
+        }];
+      });
     }
-  }
 
-  keyword = 'name';
-  data = [
-    {
-      id: 1,
-      name: 'Alabama',
-      img:'5/5c/Flag_of_Alabama.svg/45px-Flag_of_Alabama.svg.png'
-    }
-  ];
+    this.server.getTarget().subscribe((data) => {
+
+      for (let i = 0; i < data['list'].length; i++) {
+
+        var foto = 'assets/img/default-avatar.png';
+
+        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          if (res['data'] != null)
+            foto = 'data:image/jpg;base64,' + res['data'];
+
+          this.data.push({
+            'id': data['list'][i]['_id'],
+            'Img': foto,
+            'name': data['list'][i]['name']
+          });
+        });
+      }
+    });
+  }
 
   selectEvent(item) {
     alert(item)
@@ -160,11 +181,11 @@ export class NewObjectComponent implements OnInit {
 
 
   GuardarDatos() {
-
-    let tags = [{ tag: "TGP", tagcolor: "#0f0f0f" }];
+    if (this.routeActive.snapshot.params.id != undefined)
+      this.tags = [{ tag: "", tagcolor: "" }];
     let targets = [{}];
 
-    this.server.setTargetAdd(this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected, this.idProyect, JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(tags), JSON.stringify(this.locations),this.imgdefault).subscribe((data) => {
+    this.server.setTargetAdd(this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected, [this.idProyect], JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(this.tags), JSON.stringify(this.locations), this.imgdefault, false).subscribe((data) => {
 
       if (!data['err']) {
         Swal.fire({
@@ -178,9 +199,5 @@ export class NewObjectComponent implements OnInit {
         });
       }
     });
-
   }
-
-
-
 }
