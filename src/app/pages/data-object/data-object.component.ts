@@ -171,7 +171,7 @@ export class DataObjectComponent implements OnInit {
 
   guardarData() {
     this.server.setTargetData(this.routeActive.snapshot.params.id, this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected).subscribe((data) => {
-      //console.log(data['msg']);
+
       Swal.fire({
         icon: 'success',
         text: 'Actualizado'
@@ -195,7 +195,7 @@ export class DataObjectComponent implements OnInit {
       reader.onload = ($event: any) => {
         this.imgdefault = $event.target.result;
         this.server.setTargetperfil(this.routeActive.snapshot.params.id, $event.target.result).subscribe((data) => {
-          //console.log(data)
+
           Swal.fire({
             icon: 'success',
             text: 'Actualizado'
@@ -227,7 +227,7 @@ export class DataObjectComponent implements OnInit {
     });
 
     this.server.setTargetLocation(this.routeActive.snapshot.params.id, this.locations).subscribe((data) => {
-      //console.log(data['msg']);
+      
       Swal.fire({
         icon: 'success',
         text: 'Actualizado'
@@ -461,13 +461,72 @@ export class DataObjectComponent implements OnInit {
 
     var marker = new google.maps.Marker({
       position: myLatlng,
-      title: title
+      title: title,
+      id:this.locations.length - 1
     });
 
     this.setMarkers(map);
 
     marker.setMap(map);
+
+    google.maps.event.addListener(marker, 'click', () => {
+
+      const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+      })
+      
+      swalWithBootstrapButtons.fire({
+        title: `Ubicación: ${this.locations[marker.id]['Descripcion']}`,
+        icon: 'info',
+        showCancelButton: true,
+        cancelButtonText: 'Cancelar',
+        confirmButtonText: 'Modificar',
+        reverseButtons: true
+      }).then((result) => {
+        if (result.value) {
+          Swal.mixin({
+            input: 'text',
+            confirmButtonText: 'Siguiente &rarr;',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            progressSteps: ['1', '2', '3']
+          }).queue([
+            'Latitud',
+            'Longitud',
+            'Descripción'
+          ]).then((result) => {
+            if (result.value) {
+
+              this.locations[marker.id]['Descripcion'] = result.value[2];
+              this.locations[marker.id]['Long'] = result.value[1];
+              this.locations[marker.id]['Lat'] = result.value[0];
+
+              const answers = JSON.stringify(result.value);
+              Swal.fire({
+                title: 'Locacion',
+                html: `<pre><code style='color:black;'>${answers}</code></pre>`,
+                confirmButtonText: 'Confirmar '
+              })
+
+              this.server.setTargetLocation(this.routeActive.snapshot.params.id, this.locations).subscribe((data) => {
+      
+                Swal.fire({
+                  icon: 'success',
+                  text: 'Actualizado'
+                });
+                this.map();
+              });
+            }
+          });
+        } 
+      })
+    });
   }
+
 
   setMarkers(map) {
 
@@ -477,7 +536,7 @@ export class DataObjectComponent implements OnInit {
       var latlngset = new google.maps.LatLng(this.locations[i]['Lat'], this.locations[i]['Long']);
 
       var marker = new google.maps.Marker({
-        map: map, title: this.locations[i]['Descripcion'], position: latlngset
+        map: map, title: this.locations[i]['Descripcion'], position: latlngset, id:i
       });
 
       map.setCenter(marker.getPosition())
@@ -485,6 +544,62 @@ export class DataObjectComponent implements OnInit {
       var content = "Loan Number: " + this.locations[i]['Descripcion'] + '</h3>'
 
       var infowindow = new google.maps.InfoWindow()
+
+      google.maps.event.addListener(marker, 'click', () => {
+        const swalWithBootstrapButtons = Swal.mixin({
+          customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+          },
+          buttonsStyling: false
+        })
+        
+        swalWithBootstrapButtons.fire({
+          title: `Ubicación: ${this.locations[marker.id]['Descripcion']}`,
+          icon: 'info',
+          showCancelButton: true,
+          cancelButtonText: 'Cancelar',
+          confirmButtonText: 'Modificar',
+          reverseButtons: true
+        }).then((result) => {
+          if (result.value) {
+            Swal.mixin({
+              input: 'text',
+              confirmButtonText: 'Siguiente &rarr;',
+              showCancelButton: true,
+              cancelButtonText: 'Cancelar',
+              progressSteps: ['1', '2', '3']
+            }).queue([
+              'Latitud',
+              'Longitud',
+              'Descripción'
+            ]).then((result) => {
+              if (result.value) {
+                
+                this.locations[marker.id]['Descripcion'] = result.value[2];
+                this.locations[marker.id]['Long'] = result.value[1];
+                this.locations[marker.id]['Lat'] = result.value[0];
+
+                const answers = JSON.stringify(result.value);
+                Swal.fire({
+                  title: 'Locacion',
+                  html: `<pre><code style='color:black;'>${answers}</code></pre>`,
+                  confirmButtonText: 'Confirmar '
+                })
+
+                this.server.setTargetLocation(this.routeActive.snapshot.params.id, this.locations).subscribe((data) => {
+        
+                  Swal.fire({
+                    icon: 'success',
+                    text: 'Actualizado'
+                  });
+                  this.map();
+                });
+              }
+            });
+          } 
+        })
+      });
 
       google.maps.event.addDomListener(marker, 'click', function (map, marker) {
         infowindow.setContent(content)

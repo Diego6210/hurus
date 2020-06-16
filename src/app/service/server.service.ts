@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from './local-storage.service';
+import { formatDate } from '@angular/common';
 
 
 const httpOptions = {
@@ -26,15 +27,15 @@ export class ServerService {
 
   uploadReport(archivo, descripcion, nombre, proyect) {
 
-    let urlSearchParams = new URLSearchParams();
-    urlSearchParams.append('archivo', archivo);
-    urlSearchParams.append('name', nombre);
-    urlSearchParams.append('descripcion', descripcion);
-    urlSearchParams.append('proyect', proyect);
-    urlSearchParams.append('reporter', '0');
-    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+    const formData = new FormData();
+    formData.append('archivo', archivo);
+    formData.append('name', nombre);
+    formData.append('descripcion', descripcion);
+    formData.append('proyect', proyect);
+    formData.append('reporter', '0');
+    formData.append('token', this.localStorange.getStorage('token'));
 
-    return this.http.post(`${this.URL}report/add`, urlSearchParams.toString(), httpOptions);
+    return this.http.post(`${this.URL}upload/report`, formData, httpOptions);
   }
 
   signin(email, password) {

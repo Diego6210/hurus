@@ -11,6 +11,7 @@ import { ServerService } from 'src/app/service/server.service';
 import { debounceTime, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-data-project',
@@ -57,8 +58,11 @@ export class DataProjectComponent implements OnInit {
   formData = new FormData();
   archivo;
   estatus = false;
+  proyect:string;
+  urlServer:string = environment.server;
 
   constructor(
+    private http: HttpClient,
     private routeActive: ActivatedRoute,
     private modalService: NgbModal,
     private router: Router,
@@ -96,6 +100,8 @@ export class DataProjectComponent implements OnInit {
         });
       }
     });
+
+    this.proyect = this.routeActive.snapshot.params.id;
   }
 
   route(tipo) {
@@ -146,7 +152,7 @@ export class DataProjectComponent implements OnInit {
     this.Usuarios = [];
     this.server.getProyectTarget(this.routeActive.snapshot.params.id).subscribe((data) => {
 
-      console.log(data);
+      //console.log(data);
       for (let i = 0; i < data['list'].length; i++) {
         var foto = 'assets/img/default-avatar.png';
 
@@ -255,27 +261,49 @@ export class DataProjectComponent implements OnInit {
       this.files.push(element.name)
     }
 
+    //this.uploadedFiles = event;
     if (event) {
       this.estatus = true;
-      this.archivo = event;
+      this.uploadedFiles = event;
     }
-
   }
 
   subirReporte() {
-    this.server.uploadReport(this.archivo, this.DescripcionReporte, this.NombreReporte, this.routeActive.snapshot.params.id).subscribe((data) => {
-      this.files = [];
-      this.estatus = false;
-      this.DescripcionReporte = '';
-      this.NombreReporte = '';
-      this.getDataFromSourceR();
-      if (!data['err']) {
-        Swal.fire({
-          icon: 'success',
-          text: data['message']
-        });
+    
+      const httpOptions = {
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.localStorange.getStorage('token') })
+      };
+      let formData = new FormData();
+      for (var i = 0; i < this.uploadedFiles.length; i++) {
+        formData.append("archivo", this.uploadedFiles[i], this.uploadedFiles[i].name);
+        formData.append("descripcion",this.DescripcionReporte );
+        formData.append("name", this.NombreReporte);
+        formData.append("reporter", '0');
+        formData.append("proyect", this.routeActive.snapshot.params.id);
+        formData.append("token", this.localStorange.getStorage('token'));
       }
-    });
+
+      Swal.fire({
+        allowOutsideClick: false,
+        icon: 'info',
+        text:'Espere por favor...'
+      });Swal.showLoading();
+
+      this.http.post(`${this.urlServer}report/add`, formData, httpOptions)
+          .subscribe((response) => {
+            Swal.close();
+            this.getDataFromSourceR();
+          },
+          error => {
+            Swal.close();
+/*
+            Swal.fire({
+              icon: 'error',
+              text: 'Algo ocurrio'
+            });*/
+          });
   }
 
   deleteAttachment(index) {

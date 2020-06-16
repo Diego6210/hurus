@@ -7,7 +7,7 @@
           <hr>
         </div>
         <div class=" card-body">
-          <h5>Descripión: {{descripcionProyecto}}</h5>
+          <h5>{{descripcionProyecto}}</h5>
 
           <button class="btn btn-fill btn-info btn-sm " style="float:left; float: right;"
             (click)="open(nuevoUsuario)"><i class="fa fa-user-circle"></i> Nuevo Objetivo</button>
@@ -75,10 +75,12 @@
               <div class=" row">
 
                 <div class=" col-md-5">
+                  <!--<form action="{{urlServer}}upload/report" method="post" enctype="multipart/form-data">
+                  -->
                   <label>Nombre del Reporte</label><br>
-                  <input [(ngModel)]="NombreReporte" type="text" class="form-control"><br>
+                  <input [(ngModel)]="NombreReporte"  id="name" type="text" class="form-control"><br>
                   <label>Descripción</label><br>
-                  <input [(ngModel)]="DescripcionReporte" type="text" class="form-control">
+                  <input [(ngModel)]="DescripcionReporte"  id="descripcion"  type="text" class="form-control">
                   <br>
 
 
@@ -98,8 +100,9 @@
                     <input [disabled]="!estatus || DescripcionReporte == '' || NombreReporte == ''"
                       class=" btn btn-fill btn-primary" type="submit" (click)="subirReporte()" value='Guardar Cambios'>
                   </div>
-                </div>
-
+              <!--</form>-->
+            </div>
+                  
                 <div class=" col-md-7">
 
 
