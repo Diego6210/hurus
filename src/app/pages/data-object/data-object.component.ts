@@ -75,6 +75,13 @@ export class DataObjectComponent implements OnInit {
 
   }
 
+  
+  beforeSend(args: any){
+    args.ajaxSettings.beforeSend = function (args) { 
+      args.httpRequest.setRequestHeader("Authorization", "Bearer " + this.localStorange.getStorage('token')) 
+    }
+  }
+
   ngOnInit(): void {
     this.locattionSice = this.locations.length;
     this.accountSice = this.accounts.length;

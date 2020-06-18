@@ -183,8 +183,8 @@ export class NewObjectComponent implements OnInit {
 
 
   GuardarDatos() {
-    if (this.routeActive.snapshot.params.id == undefined)
-      this.tags.push({ tag: "", tagcolor: "" });
+    if (this.routeActive.snapshot.params.id == undefined || this.routeActive.snapshot.params.id == 'undefined' || this.routeActive.snapshot.params.id == '' || this.routeActive.snapshot.params.id == null)
+      this.tags = [{ tag: "", tagcolor: "" }];
     let targets = [{}];
 
     this.server.setTargetAdd(this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected, [this.idProyect], JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(this.tags), JSON.stringify(this.locations), this.imgdefault, false).subscribe((data) => {
@@ -194,10 +194,10 @@ export class NewObjectComponent implements OnInit {
           icon: 'success',
           text: data['message']
         });
-        if(this.idProyect != undefined)
-          this.router.navigateByUrl('project/' + this.idProyect);
+        if (this.routeActive.snapshot.params.id == undefined || this.routeActive.snapshot.params.id == 'undefined' || this.routeActive.snapshot.params.id == '' || this.routeActive.snapshot.params.id == null)
+          this.router.navigateByUrl('object');
         else
-          this.router.navigateByUrl('object/');
+          this.router.navigateByUrl('project/' + this.idProyect);
       } else {
         Swal.fire({
           icon: 'error',

@@ -81,6 +81,7 @@
     "datatables.net": "^1.10.20",
     "datatables.net-dt": "^1.10.20",
     "dropify": "^0.2.2",
+    "file-saver": "^2.0.2",
     "jquery": "^3.5.1",
     "ngx-toastr": "10.0.4",
     "ngx-webcam": "^0.3.0",

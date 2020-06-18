@@ -12,6 +12,7 @@ import { debounceTime, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { LocalStorageService } from 'src/app/service/local-storage.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-data-project',
@@ -141,6 +142,13 @@ export class DataProjectComponent implements OnInit {
 
   finds(id) {
 
+    this.server.getReportFile(id).subscribe(
+      (response) => { 
+       var mediaType = 'application/pdf'; 
+       var blob = new Blob([Object.assign(response)], {type: mediaType}); 
+       var filename = 'test.pdf'; 
+       saveAs(blob, filename); 
+      }); 
   }
 
   Delet(id) {
@@ -206,9 +214,9 @@ export class DataProjectComponent implements OnInit {
           'Id': data['list'][i]['_id'],
           'Nombre': data['list'][i]['name'],
           'Descripcion': data['list'][i]['descripcion'],
-          'Subio': 'beni',//data['list'][i]['_id'],
-          'Descargas': data['list'][i]['reporter'],
-          'documento': `${url}report/file/${data['list'][i]['_id']}/?=${this.localStorange.getStorage('token')}`
+          'Subio': data['list'][i]['reporter'],
+          'Descargas': 0,
+          'documento': data['list'][i]['_id']
         });
       }
 
@@ -272,9 +280,11 @@ export class DataProjectComponent implements OnInit {
     
       const httpOptions = {
         headers: new HttpHeaders({ 
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + this.localStorange.getStorage('token') })
+          'Authorization': `Bearer ${this.localStorange.getStorage('token')}`,
+          'Accept': 'application/json'
+        })
       };
+
       let formData = new FormData();
       for (var i = 0; i < this.uploadedFiles.length; i++) {
         formData.append("archivo", this.uploadedFiles[i], this.uploadedFiles[i].name);

@@ -219,4 +219,19 @@ export class ServerService {
 
     return this.http.post(`${this.URL}report/`, urlSearchParams.toString(), httpOptions);
   }
+
+  getReportFile(id) {
+    const Options = {
+      headers: new HttpHeaders({ 
+        'Authorization': `Bearer ${this.localStorange.getStorage('token')}`,
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded'
+
+      })
+    };
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+
+    return this.http.post(`${this.URL}report/file`, urlSearchParams.toString(), Options);
+  }
 }

@@ -174,9 +174,9 @@ export class NewObjectWebComponent implements OnInit {
 
   GuardarDatos() {
 
-    if (this.routeActive.snapshot.params.id == undefined)
-      this.tags.push({ tag: "", tagcolor: "" });
-
+    if (this.routeActive.snapshot.params.id == undefined || this.routeActive.snapshot.params.id == 'undefined' || this.routeActive.snapshot.params.id == '' || this.routeActive.snapshot.params.id == null)
+      this.tags = [{ tag: "", tagcolor: "" }];
+    
     let targets = [{}];
 
     this.server.setTargetAddWeb(this.web, [this.idProyect], JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(this.tags), JSON.stringify(this.locations), this.imgdefault, true, this.urlweb).subscribe((data) => {
@@ -186,10 +186,10 @@ export class NewObjectWebComponent implements OnInit {
           icon: 'success',
           text: data['message']
         });
-        if(this.idProyect != undefined)
-          this.router.navigateByUrl('project/' + this.idProyect);
+        if(this.idProyect == undefined || this.routeActive.snapshot.params.id == 'undefined' || this.routeActive.snapshot.params.id == '' || this.routeActive.snapshot.params.id == null )
+          this.router.navigateByUrl('object');
         else
-          this.router.navigateByUrl('object/');
+          this.router.navigateByUrl('project/' + this.idProyect);
 
       } else {
         Swal.fire({
