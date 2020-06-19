@@ -31,7 +31,7 @@ export class DataProjectComponent implements OnInit {
   dataSourceR = null;
   dataSourceIn = null;
 
-  private url: string = environment.server + 'imagen/';
+  private url: string = environment.server;
   keyword = 'name';
   data = [];
   Usuarios: any = [];
@@ -142,14 +142,36 @@ export class DataProjectComponent implements OnInit {
 
   finds(id) {
 
-    this.server.getReportFile(id).subscribe(
+    const Options = {
+        headers: new HttpHeaders({ 
+          'Authorization': `Bearer ${this.localStorange.getStorage('token')}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'responseType': 'arrybuffer'
+        })
+      };
+      let urlSearchParams = new URLSearchParams();
+      urlSearchParams.append('id', id);
+  
+      this.http.post(`${this.url}report/file`, urlSearchParams.toString(), Options).subscribe(
+        response => { 
+         
+          const blob = new Blob([Object.assign(response)], {type: 'application/pdf'});
+          const filename = 'report.pdf';
+          saveAs(blob,filename);
+  
+        });
+    }
+
+    /*this.server.getReportFile(id).subscribe(
       (response) => { 
-       var mediaType = 'application/pdf'; 
-       var blob = new Blob([Object.assign(response)], {type: mediaType}); 
-       var filename = 'test.pdf'; 
-       saveAs(blob, filename); 
+       
+        const blob = new Blob([Object.assign(response)], {type: 'application/pdf'});
+        const filename = 'report.pdf';
+        saveAs(blob,filename);
+
       }); 
-  }
+  }*/
 
   Delet(id) {
 

@@ -9,6 +9,9 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
 };
 
+/*const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+};*/
 @Injectable({
   providedIn: 'root'
 })
@@ -167,6 +170,16 @@ export class ServerService {
     return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
   }
 
+  setTargetContacts(id, data) {
+
+    let urlSearchParams = new URLSearchParams();
+    urlSearchParams.append('id', id);
+    urlSearchParams.append('data', JSON.stringify({ targets: data }));
+    urlSearchParams.append('token', this.localStorange.getStorage('token'));
+
+    return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
+  }
+
   setTargetData(id, name, date, bussines, civil_state, sex) {
 
     let urlSearchParams = new URLSearchParams();
@@ -225,8 +238,8 @@ export class ServerService {
       headers: new HttpHeaders({ 
         'Authorization': `Bearer ${this.localStorange.getStorage('token')}`,
         'Accept': 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded'
-
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'responseType': 'arrybuffer'
       })
     };
     let urlSearchParams = new URLSearchParams();

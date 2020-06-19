@@ -39,6 +39,7 @@ export class DataObjectComponent implements OnInit {
   imgdefault: string = 'assets/img/default-avatar.png';
   cheange = false;
 
+  item = [];
   IMG: string;
   formData = new FormData();
   id = 0;
@@ -77,9 +78,9 @@ export class DataObjectComponent implements OnInit {
 
   
   beforeSend(args: any){
-    args.ajaxSettings.beforeSend = function (args) { 
-      args.httpRequest.setRequestHeader("Authorization", "Bearer " + this.localStorange.getStorage('token')) 
-    }
+    //args.ajaxSettings.beforeSend = function (args) { 
+      //args.httpRequest.setRequestHeader("Authorization", "Bearer " + this.localStorange.getStorage('token')) 
+    //}
   }
 
   ngOnInit(): void {
@@ -112,6 +113,14 @@ export class DataObjectComponent implements OnInit {
         });
       }
 
+      for(let i = 0; i < data['targets'].length; i++){
+        this.contacts.push({
+          img: data['targets'][i]['img'],
+          nombre:data['targets'][i]['nombre'],
+          url: data['targets'][i]['perfile']
+        });  
+      }
+
       for (let i = 0; i < data['location'].length; i++) {
         this.locations.push({
           Long: data['location'][i]['Long'],
@@ -122,6 +131,7 @@ export class DataObjectComponent implements OnInit {
       this.map();
       this.accountSice = this.accounts.length;
       this.locattionSice = this.locations.length;
+      this.contactSice = this.contacts.length;
     });
 
     this.server.getTarget().subscribe((data) => {
@@ -137,11 +147,16 @@ export class DataObjectComponent implements OnInit {
           this.data.push({
             'id': data['list'][i]['_id'],
             'Img': foto,
-            'name': data['list'][i]['name']
+            'name': data['list'][i]['name'],
+            'web': data['list'][i]['web']
           });
         });
       }
     });
+  }
+
+  addcontacto(){
+    this.modalService.dismissAll();
   }
 
   contactos(contacto) {
@@ -250,7 +265,26 @@ export class DataObjectComponent implements OnInit {
   }
 
   selectEvent(item) {
-    alert(item)
+
+    let perfile = '#/dataObject/'+item['id'];
+    if(item['web'])
+      perfile = '#/dataObjectWeb/'+item['id'];
+      
+    this.contacts.push({
+      img: item['Img'],
+      nombre: item['name'],
+      url: perfile
+    });
+
+    this.server.setTargetContacts(this.routeActive.snapshot.params.id, this.contacts).subscribe((data) => {
+      /*Swal.fire({
+        icon: 'success',
+        text: 'Agregado'
+      });*/
+    })
+
+    this.contactSice = this.contacts.length;
+
   }
 
 

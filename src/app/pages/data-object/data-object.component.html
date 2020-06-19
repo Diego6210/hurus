@@ -168,11 +168,11 @@
                                     <th>Nombre</th>
                                     <th>Ver Perfil</th>
                                 </tr>
-                            </thead>
+                            </thead> 
                             <tbody class=" text-primary" *ngIf="contactSice > 0">
                                 <tr *ngFor="let contact of contacts">
                                     <td class="text-left">
-                                        <div class="image-table"><img src="{{contact.img}}" alt=""></div>
+                                        <div class="image-table"><img src="{{contact.img}}" height="60" width="60"></div>
                                     </td>
                                     <td>{{contact.nombre}}</td>
                                     <td class="text-center">
@@ -363,7 +363,7 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-info " (click)="addAccount()">Crear</button>
+        <button type="button" class="btn btn-info " (click)="addcontacto()">Crear</button>
     </div>
 </ng-template>
 

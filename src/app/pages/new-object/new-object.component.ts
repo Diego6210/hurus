@@ -35,7 +35,7 @@ export class NewObjectComponent implements OnInit {
   formData = new FormData();
   id = 0;
   idTipoUsuario;
-
+  item = [];
   Descripcion: string;
   Latitud: string;
   Longitud: string;
@@ -98,15 +98,34 @@ export class NewObjectComponent implements OnInit {
           this.data.push({
             'id': data['list'][i]['_id'],
             'Img': foto,
-            'name': data['list'][i]['name']
+            'name': data['list'][i]['name'],
+            'web': data['list'][i]['web']
           });
         });
       }
     });
   }
 
+  addcontacto(){
+    //this.contacts.push(this.item);
+    this.modalService.dismissAll();
+
+    //this.contactSice = this.contacts.length;
+  }
+
   selectEvent(item) {
-    alert(item)
+    let perfile = '#/dataObject/'+item['id'];
+    if(item['web'])
+      perfile = '#/dataObjectWeb/'+item['id'];
+      
+    this.contacts.push({
+      img: item['Img'],
+      nombre: item['name'],
+      url: perfile
+    });
+
+    this.modalService.dismissAll();
+    this.contactSice = this.contacts.length;
   }
 
   contactos(contacto) {
@@ -185,9 +204,8 @@ export class NewObjectComponent implements OnInit {
   GuardarDatos() {
     if (this.routeActive.snapshot.params.id == undefined || this.routeActive.snapshot.params.id == 'undefined' || this.routeActive.snapshot.params.id == '' || this.routeActive.snapshot.params.id == null)
       this.tags = [{ tag: "", tagcolor: "" }];
-    let targets = [{}];
 
-    this.server.setTargetAdd(this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected, [this.idProyect], JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(this.tags), JSON.stringify(this.locations), this.imgdefault, false).subscribe((data) => {
+    this.server.setTargetAdd(this.Nombre, this.fecha, this.Empresa, this.estadoSelected, this.sexSelected, [this.idProyect], JSON.stringify(this.contacts), JSON.stringify(this.accounts), JSON.stringify(this.tags), JSON.stringify(this.locations), this.imgdefault, false).subscribe((data) => {
 
       if (!data['err']) {
         Swal.fire({

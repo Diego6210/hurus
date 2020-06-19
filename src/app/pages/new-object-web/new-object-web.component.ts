@@ -21,6 +21,7 @@ export class NewObjectWebComponent implements OnInit {
   accountSice: number = 0;
   accounts: any = [];
 
+  item = [];
   contactSice: number = 0;
   contacts: any = [];
 
@@ -91,11 +92,19 @@ export class NewObjectWebComponent implements OnInit {
           this.data.push({
             'id': data['list'][i]['_id'],
             'Img': foto,
-            'name': data['list'][i]['name']
+            'name': data['list'][i]['name'],
+            'web': data['list'][i]['web']
           });
         });
       }
     });
+  }
+
+  addcontacto(){    
+    //this.contacts.push(this.item);
+    this.modalService.dismissAll();
+
+    //this.contactSice = this.contacts.length;
   }
 
 
@@ -177,9 +186,7 @@ export class NewObjectWebComponent implements OnInit {
     if (this.routeActive.snapshot.params.id == undefined || this.routeActive.snapshot.params.id == 'undefined' || this.routeActive.snapshot.params.id == '' || this.routeActive.snapshot.params.id == null)
       this.tags = [{ tag: "", tagcolor: "" }];
     
-    let targets = [{}];
-
-    this.server.setTargetAddWeb(this.web, [this.idProyect], JSON.stringify(targets), JSON.stringify(this.accounts), JSON.stringify(this.tags), JSON.stringify(this.locations), this.imgdefault, true, this.urlweb).subscribe((data) => {
+    this.server.setTargetAddWeb(this.web, [this.idProyect], JSON.stringify(this.contacts), JSON.stringify(this.accounts), JSON.stringify(this.tags), JSON.stringify(this.locations), this.imgdefault, true, this.urlweb).subscribe((data) => {
 
       if (!data['err']) {
         Swal.fire({
@@ -202,7 +209,17 @@ export class NewObjectWebComponent implements OnInit {
   }
 
   selectEvent(item) {
-    alert(item)
+    let perfile = '#/dataObject/'+item['id'];
+    if(item['web'])
+      perfile = '#/dataObjectWeb/'+item['id'];
+      
+    this.contacts.push({
+      img: item['Img'],
+      nombre: item['name'],
+      url: perfile
+    });
+    
+    this.contactSice = this.contacts.length;
   }
 
 }

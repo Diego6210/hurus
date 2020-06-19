@@ -29,6 +29,7 @@ export class DataObjectWebComponent implements OnInit {
   contactSice: number = 0;
   contacts: any = [];
 
+  item = [];
   web: string;
   urlWeb: string;
 
@@ -91,6 +92,14 @@ export class DataObjectWebComponent implements OnInit {
         });
       }
 
+      for(let i = 0; i < data['targets'].length; i++){
+        this.contacts.push({
+          img: data['targets'][i]['img'],
+          nombre:data['targets'][i]['nombre'],
+          url: data['targets'][i]['perfile']
+        });  
+      }
+
       for (let i = 0; i < data['location'].length; i++) {
         this.locations.push({
           Long: data['location'][i]['Long'],
@@ -101,6 +110,7 @@ export class DataObjectWebComponent implements OnInit {
       this.map();
       this.accountSice = this.accounts.length;
       this.locattionSice = this.locations.length;
+      this.contactSice = this.contacts.length;
     });
 
     this.server.getTarget().subscribe((data) => {
@@ -116,15 +126,37 @@ export class DataObjectWebComponent implements OnInit {
           this.data.push({
             'id': data['list'][i]['_id'],
             'Img': foto,
-            'name': data['list'][i]['name']
+            'name': data['list'][i]['name'],
+            'web': data['list'][i]['web']
           });
         });
       }
     });
   }
 
+  addcontacto(){
+    this.modalService.dismissAll();
+  }
+
   selectEvent(item) {
-    alert(item)
+    let perfile = '#/dataObject/'+item['id'];
+    if(item['web'])
+      perfile = '#/dataObjectWeb/'+item['id'];
+      
+      
+    this.contacts.push({
+      img: item['Img'],
+      nombre: item['name'],
+      url: perfile
+    });
+
+    this.server.setTargetContacts(this.routeActive.snapshot.params.id, this.contacts).subscribe((data) => {
+      /*Swal.fire({
+        icon: 'success',
+        text: 'Agregado'
+      });*/
+    })
+    this.contactSice = this.contacts.length;
   }
 
   contactos(contacto) {
