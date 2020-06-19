@@ -237,10 +237,10 @@ export class ServerService {
     const Options = {
       headers: new HttpHeaders({ 
         'Authorization': `Bearer ${this.localStorange.getStorage('token')}`,
-        'Accept': 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
-        'responseType': 'arrybuffer'
-      })
+        'Accept':'application/pdf'
+      }),
+      'responseType': 'blob' as 'json'
     };
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);

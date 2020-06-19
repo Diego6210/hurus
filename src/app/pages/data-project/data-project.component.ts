@@ -142,7 +142,7 @@ export class DataProjectComponent implements OnInit {
 
   finds(id) {
 
-    const Options = {
+    /*const Options = {
         headers: new HttpHeaders({ 
           'Authorization': `Bearer ${this.localStorange.getStorage('token')}`,
           'Accept': 'application/json',
@@ -154,24 +154,26 @@ export class DataProjectComponent implements OnInit {
       urlSearchParams.append('id', id);
   
       this.http.post(`${this.url}report/file`, urlSearchParams.toString(), Options).subscribe(
-        response => { 
+        (response: Blob) => { 
          
-          const blob = new Blob([Object.assign(response)], {type: 'application/pdf'});
+          const blob = new Blob([response], {type: 'application/pdf'});
           const filename = 'report.pdf';
+          //saveAs(response,filename);
           saveAs(blob,filename);
   
         });
-    }
+    }*/
+    
+    this.server.getReportFile(id).subscribe(
+      (response: Blob) => {        
 
-    /*this.server.getReportFile(id).subscribe(
-      (response) => { 
-       
-        const blob = new Blob([Object.assign(response)], {type: 'application/pdf'});
+        console.log(response);
+        const blob = new Blob([response], {type: 'application/pdf'});
         const filename = 'report.pdf';
         saveAs(blob,filename);
 
       }); 
-  }*/
+  }
 
   Delet(id) {
 
@@ -224,9 +226,6 @@ export class DataProjectComponent implements OnInit {
 
 
   getDataFromSourceR() {
-
-    let url = environment.server;
-
     this.Reportes = [];
 
     this.server.getReport(this.routeActive.snapshot.params.id).subscribe((data) => {
@@ -330,6 +329,7 @@ export class DataProjectComponent implements OnInit {
           },
           error => {
             Swal.close();
+            this.getDataFromSourceR()
 /*
             Swal.fire({
               icon: 'error',
