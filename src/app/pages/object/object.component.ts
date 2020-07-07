@@ -60,11 +60,11 @@ export class ObjectComponent implements OnInit {
 
         var foto = 'assets/img/default-avatar.png';
 
-        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          if (res['data'] != null)
-            foto = 'data:image/jpg;base64,' + res['data'];
-          else
-            foto = 'assets/img/default-avatar.png';
+        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          //if (res['data'] != null)
+            //foto = 'data:image/jpg;base64,' + res['data']; 
+          //else
+            //foto = 'assets/img/default-avatar.png';
           let router = '/dataObject/';
           if (data['list'][i]['web'])
             router = '/dataObjectWeb/'
@@ -98,7 +98,7 @@ export class ObjectComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.Usuarios);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-        });
+        //});
       }
     });
   }

@@ -88,17 +88,17 @@ export class DataProjectComponent implements OnInit {
 
         var foto = 'assets/img/default-avatar.png';
 
-        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          if (res['data'] != null)
-            foto = 'data:image/jpg;base64,' + res['data'];
-          else
-            foto = 'assets/img/default-avatar.png';
+        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          //if (res['data'] != null)
+            //foto = 'data:image/jpg;base64,' + res['data']; 
+          //else
+            //foto = 'assets/img/default-avatar.png';
           this.data.push({
             'id': data['list'][i]['_id'],
             'Img': foto,
             'name': data['list'][i]['name']
           });
-        });
+        //});
       }
     });
 
@@ -141,33 +141,11 @@ export class DataProjectComponent implements OnInit {
   }
 
   finds(id) {
-
-    /*const Options = {
-        headers: new HttpHeaders({ 
-          'Authorization': `Bearer ${this.localStorange.getStorage('token')}`,
-          'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'responseType': 'arrybuffer'
-        })
-      };
-      let urlSearchParams = new URLSearchParams();
-      urlSearchParams.append('id', id);
-  
-      this.http.post(`${this.url}report/file`, urlSearchParams.toString(), Options).subscribe(
-        (response: Blob) => { 
-         
-          const blob = new Blob([response], {type: 'application/pdf'});
-          const filename = 'report.pdf';
-          //saveAs(response,filename);
-          saveAs(blob,filename);
-  
-        });
-    }*/
-    
+        
     this.server.getReportFile(id).subscribe(
       (response: Blob) => {        
 
-        console.log(response);
+        //console.log(response);
         const blob = new Blob([response], {type: 'application/pdf'});
         const filename = 'report.pdf';
         saveAs(blob,filename);
@@ -188,13 +166,13 @@ export class DataProjectComponent implements OnInit {
       for (let i = 0; i < data['list'].length; i++) {
         var foto = 'assets/img/default-avatar.png';
 
-        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
           let router = '/dataObject/';
           if (data['list'][i]['web'])
             router = '/dataObjectWeb/'
 
-          if (res['data'] != null)
-            foto = 'data:image/jpg;base64,' + res['data'];
+          //if (res['data'] != null)
+            //foto = 'data:image/jpg;base64,' + res['data']; 
           this.Usuarios.push({
             'tipo': data['list'][i]['web'],
             'Img': foto,
@@ -209,7 +187,7 @@ export class DataProjectComponent implements OnInit {
           this.dataSource = new MatTableDataSource(this.Usuarios);
           this.dataSource.paginator = this.paginatorObject;
           this.dataSource.sort = this.sort;
-        });
+        //});
       }
     });
 

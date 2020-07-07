@@ -91,9 +91,9 @@ export class NewObjectComponent implements OnInit {
 
         var foto = 'assets/img/default-avatar.png';
 
-        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          if (res['data'] != null)
-            foto = 'data:image/jpg;base64,' + res['data'];
+        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          //if (res['data'] != null)
+            //foto = 'data:image/jpg;base64,' + res['data']; 
 
           this.data.push({
             'id': data['list'][i]['_id'],
@@ -101,7 +101,7 @@ export class NewObjectComponent implements OnInit {
             'name': data['list'][i]['name'],
             'web': data['list'][i]['web']
           });
-        });
+        //});
       }
     });
   }

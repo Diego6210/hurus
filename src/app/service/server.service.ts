@@ -5,11 +5,11 @@ import { LocalStorageService } from './local-storage.service';
 import { formatDate } from '@angular/common';
 
 
-const httpOptions = {
+/*const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
 };
 
-/*const httpOptions = {
+const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
 };*/
 @Injectable({
@@ -29,7 +29,9 @@ export class ServerService {
   }
 
   uploadReport(archivo, descripcion, nombre, proyect) {
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     const formData = new FormData();
     formData.append('archivo', archivo);
     formData.append('name', nombre);
@@ -42,6 +44,9 @@ export class ServerService {
   }
 
   signin(email, password) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('email', email);
     urlSearchParams.append('password', password);
@@ -50,6 +55,9 @@ export class ServerService {
   }
 
   getProyect() {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
 
@@ -62,7 +70,9 @@ export class ServerService {
     urlSearchParams.append('description', description);
     urlSearchParams.append('tag', tag);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}proyect/add/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -70,7 +80,9 @@ export class ServerService {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}proyect/add/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -78,7 +90,9 @@ export class ServerService {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}proyect/find/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -86,7 +100,9 @@ export class ServerService {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -94,14 +110,18 @@ export class ServerService {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/find`, urlSearchParams.toString(), httpOptions);
   }
 
   getTarget() {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -125,7 +145,9 @@ export class ServerService {
     urlSearchParams.append('archivo', imagen);
     urlSearchParams.append('web', tipo);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/add/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -146,7 +168,9 @@ export class ServerService {
     urlSearchParams.append('url', url);
     urlSearchParams.append('web', tipo);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/add/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -156,7 +180,9 @@ export class ServerService {
     urlSearchParams.append('id', id);
     urlSearchParams.append('data', JSON.stringify({ account: data }));
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -166,7 +192,9 @@ export class ServerService {
     urlSearchParams.append('id', id);
     urlSearchParams.append('data', JSON.stringify({ location: data }));
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -176,7 +204,9 @@ export class ServerService {
     urlSearchParams.append('id', id);
     urlSearchParams.append('data', JSON.stringify({ targets: data }));
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -186,7 +216,9 @@ export class ServerService {
     urlSearchParams.append('id', id);
     urlSearchParams.append('data', JSON.stringify({ name: name, date: date, bussines: bussines, civil_state: civil_state, sex: sex }));
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -196,7 +228,9 @@ export class ServerService {
     urlSearchParams.append('id', id);
     urlSearchParams.append('data', JSON.stringify({ name: name, url: url}));
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/update/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -206,7 +240,9 @@ export class ServerService {
     urlSearchParams.append('id', id);
     urlSearchParams.append('archivo', foto);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/profile/update/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -214,14 +250,18 @@ export class ServerService {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/profile/`, urlSearchParams.toString(), httpOptions);
   }
 
   getTargetObjetivos(id) {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}target/list/`, urlSearchParams.toString(), httpOptions);
   }
 
@@ -229,7 +269,9 @@ export class ServerService {
     let urlSearchParams = new URLSearchParams();
     urlSearchParams.append('id', id);
     urlSearchParams.append('token', this.localStorange.getStorage('token'));
-
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded','Authorization': `Bearer ${this.localStorange.getStorage('token')}` })
+    }
     return this.http.post(`${this.URL}report/`, urlSearchParams.toString(), httpOptions);
   }
 

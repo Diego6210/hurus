@@ -80,7 +80,9 @@ export class DataObjectWebComponent implements OnInit {
 
     this.server.getDataTargetFind(this.routeActive.snapshot.params.id).subscribe((data) => {
 
-      this.imgdefault = 'data:image/jpg;base64,' + data['img'];
+      //this.imgdefault = 'data:image/jpg;base64,' + data['img']; 
+      this.imgdefault = `${this.URL}img/profile/${data['_id']}.jpg`; 
+      //this.imgdefault = `${this.URL}img/profile/${data['_id']}`;
       this.web = data['name'];
       this.urlWeb = data['url'];
 
@@ -119,9 +121,9 @@ export class DataObjectWebComponent implements OnInit {
 
         var foto = 'assets/img/default-avatar.png';
 
-        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          if (res['data'] != null)
-            foto = 'data:image/jpg;base64,' + res['data'];
+        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          //if (res['data'] != null)
+            //foto = 'data:image/jpg;base64,' + res['data']; 
 
           this.data.push({
             'id': data['list'][i]['_id'],
@@ -129,7 +131,7 @@ export class DataObjectWebComponent implements OnInit {
             'name': data['list'][i]['name'],
             'web': data['list'][i]['web']
           });
-        });
+        //});
       }
     });
   }

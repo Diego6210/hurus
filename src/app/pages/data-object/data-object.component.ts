@@ -103,8 +103,9 @@ export class DataObjectComponent implements OnInit {
       this.Empresa = data['bussines'];
       this.fecha = data['date'];
       this.Nombre = data['name'];
-      this.imgdefault = 'data:image/jpg;base64,' + data['img'];
-
+//      this.imgdefault = 'data:image/jpg;base64,' + data['img']; 
+      this.imgdefault = `${this.URL}img/profile/${data['_id']}.jpg`; 
+      //this.imgdefault = `${this.URL}img/profile/${data['_id']}`;
       for (let i = 0; i < data['account'].length; i++) {
         this.accounts.push({
           Url: data['account'][i]['Url'],
@@ -140,9 +141,9 @@ export class DataObjectComponent implements OnInit {
 
         var foto = 'assets/img/default-avatar.png';
 
-        this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          if (res['data'] != null)
-            foto = 'data:image/jpg;base64,' + res['data'];
+        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
+          //if (res['data'] != null)
+            //foto = 'data:image/jpg;base64,' + res['data']; 
 
           this.data.push({
             'id': data['list'][i]['_id'],
@@ -150,7 +151,7 @@ export class DataObjectComponent implements OnInit {
             'name': data['list'][i]['name'],
             'web': data['list'][i]['web']
           });
-        });
+       // });
       }
     });
   }
