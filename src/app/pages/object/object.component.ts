@@ -8,9 +8,6 @@ import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
-import { debounceTime, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-
 @Component({
   selector: 'app-object',
   templateUrl: './object.component.html',
@@ -28,6 +25,7 @@ export class ObjectComponent implements OnInit {
   usuarioModal: string;
   keyword = 'name';
   data = [];
+  private URL: string = environment.server;
 
   constructor(
     private modalService: NgbModal,
@@ -64,7 +62,9 @@ export class ObjectComponent implements OnInit {
           //if (res['data'] != null)
             //foto = 'data:image/jpg;base64,' + res['data']; 
           //else
-            //foto = 'assets/img/default-avatar.png';
+            //foto = 'assets/img/default-avatar.png';  
+            foto = `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`; 
+
           let router = '/dataObject/';
           if (data['list'][i]['web'])
             router = '/dataObjectWeb/'

@@ -82,7 +82,7 @@ export class DataObjectWebComponent implements OnInit {
 
       //this.imgdefault = 'data:image/jpg;base64,' + data['img']; 
       this.imgdefault = `${this.URL}img/profile/${data['_id']}.jpg`; 
-      //this.imgdefault = `${this.URL}img/profile/${data['_id']}`;
+      //this.imgdefault = `${this.URL}img/profile/${data['_id']}`; 
       this.web = data['name'];
       this.urlWeb = data['url'];
 
@@ -119,11 +119,12 @@ export class DataObjectWebComponent implements OnInit {
 
       for (let i = 0; i < data['list'].length; i++) {
 
-        var foto = 'assets/img/default-avatar.png';
+        //var foto = 'assets/img/default-avatar.png';
 
         //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
           //if (res['data'] != null)
             //foto = 'data:image/jpg;base64,' + res['data']; 
+          let  foto = `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`; 
 
           this.data.push({
             'id': data['list'][i]['_id'],
@@ -141,9 +142,9 @@ export class DataObjectWebComponent implements OnInit {
   }
 
   selectEvent(item) {
-    let perfile = '#/dataObject/'+item['id'];
+    let perfile = this.URL+'#/dataObject/'+item['id'];
     if(item['web'])
-      perfile = '#/dataObjectWeb/'+item['id'];
+      perfile = this.URL+'#/dataObjectWeb/'+item['id'];
       
       
     this.contacts.push({

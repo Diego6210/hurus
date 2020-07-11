@@ -61,6 +61,7 @@ export class DataProjectComponent implements OnInit {
   estatus = false;
   proyect:string;
   urlServer:string = environment.server;
+  private URL: string = environment.server;
 
   constructor(
     private http: HttpClient,
@@ -86,16 +87,18 @@ export class DataProjectComponent implements OnInit {
 
       for (let i = 0; i < data['list'].length; i++) {
 
-        var foto = 'assets/img/default-avatar.png';
+        //var foto = 'assets/img/default-avatar.png';
+        let  foto = `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`; 
 
         //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
           //if (res['data'] != null)
             //foto = 'data:image/jpg;base64,' + res['data']; 
           //else
             //foto = 'assets/img/default-avatar.png';
+            
           this.data.push({
             'id': data['list'][i]['_id'],
-            'Img': foto,
+            'Img': `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`,
             'name': data['list'][i]['name']
           });
         //});
@@ -165,7 +168,7 @@ export class DataProjectComponent implements OnInit {
       //console.log(data);
       for (let i = 0; i < data['list'].length; i++) {
         var foto = 'assets/img/default-avatar.png';
-
+        foto = `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`;
         //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
           let router = '/dataObject/';
           if (data['list'][i]['web'])
@@ -307,12 +310,11 @@ export class DataProjectComponent implements OnInit {
           },
           error => {
             Swal.close();
-            this.getDataFromSourceR()
-/*
             Swal.fire({
               icon: 'error',
               text: 'Algo ocurrio'
-            });*/
+            });
+            this.getDataFromSourceR()
           });
   }
 

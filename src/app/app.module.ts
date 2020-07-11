@@ -39,6 +39,8 @@ import { PruebasComponent } from './pages/pruebas/pruebas.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { NewObjectWebComponent } from './pages/new-object-web/new-object-web.component';
 import { DataObjectWebComponent } from './pages/data-object-web/data-object-web.component';
+import { TareasComponent } from './pages/tareas/tareas.component';
+import { AsignarTareasComponent } from './pages/asignar-tareas/asignar-tareas.component';
 
 @NgModule({
 
@@ -65,7 +67,7 @@ import { DataObjectWebComponent } from './pages/data-object-web/data-object-web.
     AutocompleteLibModule,
     ToastrModule.forRoot()
   ],
-  declarations: [AppComponent, AdminLayoutComponent, LoginComponent, UsersComponent, Page404Component, ManifestComponent, ObjectComponent, ProjectComponent, DataObjectComponent, NewObjectComponent, DataProjectComponent, PruebasComponent, NewObjectWebComponent, DataObjectWebComponent],
+  declarations: [AppComponent, AdminLayoutComponent, LoginComponent, UsersComponent, Page404Component, ManifestComponent, ObjectComponent, ProjectComponent, DataObjectComponent, NewObjectComponent, DataProjectComponent, PruebasComponent, NewObjectWebComponent, DataObjectWebComponent, TareasComponent, AsignarTareasComponent],
   providers: [ServerService],
   bootstrap: [AppComponent]
 })

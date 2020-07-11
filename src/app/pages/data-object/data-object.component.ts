@@ -103,7 +103,7 @@ export class DataObjectComponent implements OnInit {
       this.Empresa = data['bussines'];
       this.fecha = data['date'];
       this.Nombre = data['name'];
-//      this.imgdefault = 'data:image/jpg;base64,' + data['img']; 
+//      this.imgdefault = 'data:image/jpg;base64,' + data['img'];  
       this.imgdefault = `${this.URL}img/profile/${data['_id']}.jpg`; 
       //this.imgdefault = `${this.URL}img/profile/${data['_id']}`;
       for (let i = 0; i < data['account'].length; i++) {
@@ -267,9 +267,9 @@ export class DataObjectComponent implements OnInit {
 
   selectEvent(item) {
 
-    let perfile = '#/dataObject/'+item['id'];
+    let perfile = this.URL+'#/dataObject/'+item['id'];
     if(item['web'])
-      perfile = '#/dataObjectWeb/'+item['id'];
+      perfile = this.URL+'#/dataObjectWeb/'+item['id'];
       
     this.contacts.push({
       img: item['Img'],

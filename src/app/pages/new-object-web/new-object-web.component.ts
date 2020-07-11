@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ServerService } from 'src/app/service/server.service';
 import Swal from 'sweetalert2'
 import { Route } from '@angular/compiler/src/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-new-object-web',
@@ -12,6 +13,7 @@ import { Route } from '@angular/compiler/src/core';
   styleUrls: ['./new-object-web.component.scss']
 })
 export class NewObjectWebComponent implements OnInit {
+  private URL: string = environment.server;
 
   web: string;
   urlweb: string;
@@ -83,11 +85,13 @@ export class NewObjectWebComponent implements OnInit {
 
       for (let i = 0; i < data['list'].length; i++) {
 
+        //var foto = 'assets/img/default-avatar.png';
         var foto = 'assets/img/default-avatar.png';
+        foto = `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`;
 
         //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
           //if (res['data'] != null)
-            //foto = 'data:image/jpg;base64,' + res['data']; 
+            //foto = 'data:image/jpg;base64,' + res['data'];  
 
           this.data.push({
             'id': data['list'][i]['_id'],
@@ -204,14 +208,21 @@ export class NewObjectWebComponent implements OnInit {
           text: data['message']
         });
       }
+    },
+    error => {
+      console.log(error)
+      Swal.fire({
+        icon: 'error',
+        text: error['statusText']
+      });
     });
 
   }
 
   selectEvent(item) {
-    let perfile = '#/dataObject/'+item['id'];
+    let perfile = this.URL+'#/dataObject/'+item['id'];
     if(item['web'])
-      perfile = '#/dataObjectWeb/'+item['id'];
+      perfile = this.URL+'#/dataObjectWeb/'+item['id'];
       
     this.contacts.push({
       img: item['Img'],
