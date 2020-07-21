@@ -103,9 +103,9 @@ export class DataObjectComponent implements OnInit {
       this.Empresa = data['bussines'];
       this.fecha = data['date'];
       this.Nombre = data['name'];
-//      this.imgdefault = 'data:image/jpg;base64,' + data['img'];  
+      
       this.imgdefault = `${this.URL}img/profile/${data['_id']}.jpg`; 
-      //this.imgdefault = `${this.URL}img/profile/${data['_id']}`;
+      
       for (let i = 0; i < data['account'].length; i++) {
         this.accounts.push({
           Url: data['account'][i]['Url'],
@@ -139,19 +139,12 @@ export class DataObjectComponent implements OnInit {
 
       for (let i = 0; i < data['list'].length; i++) {
 
-        var foto = 'assets/img/default-avatar.png';
-
-        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          //if (res['data'] != null)
-            //foto = 'data:image/jpg;base64,' + res['data']; 
-
           this.data.push({
             'id': data['list'][i]['_id'],
-            'Img': foto,
+            'Img':`${this.URL}img/profile/${data['list'][i]['_id']}.jpg`,
             'name': data['list'][i]['name'],
             'web': data['list'][i]['web']
           });
-       // });
       }
     });
   }
@@ -267,9 +260,9 @@ export class DataObjectComponent implements OnInit {
 
   selectEvent(item) {
 
-    let perfile = this.URL+'#/dataObject/'+item['id'];
+    let perfile = '#/dataObject/'+item['id'];
     if(item['web'])
-      perfile = this.URL+'#/dataObjectWeb/'+item['id'];
+      perfile = '#/dataObjectWeb/'+item['id'];
       
     this.contacts.push({
       img: item['Img'],

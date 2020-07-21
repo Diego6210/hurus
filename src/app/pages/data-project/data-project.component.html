@@ -55,6 +55,9 @@
                       <button [routerLink]="[usuarios.Path]"
                         class=" btn btn-success btn-link btn-sm btn-icon" tooltip="Refresh" type="button"
                         aria-describedby="tooltip-142"><i class=" tim-icons icon-zoom-split"></i></button>
+                      <button (click)="mostrarRazon()" class=" btn btn-info btn-link btn-sm btn-icon" tooltip="Refresh"
+                        type="button" aria-describedby="tooltip-142"><i class="fa fa-info-circle fa-lg"
+                          style="width:10; height:10;" aria-hidden="true"></i></button>
                       <button (click)="Delet(usuarios.id)" class=" btn btn-danger btn-link btn-sm" tooltip="Delete"
                         type="button" aria-describedby="tooltip-143"><i
                           class=" tim-icons icon-trash-simple"></i></button>
@@ -75,8 +78,7 @@
               <div class=" row">
 
                 <div class=" col-md-5">
-                  <!--<form action="{{urlServer}}upload/report" method="post" enctype="multipart/form-data">
-                  -->
+
                   <label>Nombre del Reporte</label><br>
                   <input [(ngModel)]="NombreReporte"  id="name" type="text" class="form-control"><br>
                   <label>Descripción</label><br>
@@ -100,7 +102,6 @@
                     <input [disabled]="!estatus || DescripcionReporte == '' || NombreReporte == ''"
                       class=" btn btn-fill btn-primary" type="submit" (click)="subirReporte()" value='Guardar Cambios'>
                   </div>
-              <!--</form>-->
             </div>
                   
                 <div class=" col-md-7">

@@ -10,7 +10,7 @@
           <div class=" card-body">
               
             <div class=" row">
-                <div class=" col-6">
+                <div class=" col-md-6">
                   <div class=" form-group">
                     <label style="color: white;"> Titulo:</label>
                     <input [(ngModel)]="Titulo" class=" form-control  ng-untouched ng-pristine ng-invalid" placeholder="Titulo" type="text"/>
@@ -20,13 +20,14 @@
                     <input [(ngModel)]="Fecha" class=" form-control"  type="date" name="Fecha" id="Fecha">
                   </div>   
                 </div>      
-                <div class=" col-6">
+                <div class=" col-md-6">
                   <label style="color: white;"> Tarea:</label>
                   <textarea [(ngModel)]="Tarea" name="Tarea" id="Tarea" 
                   class="form-control h-100" name="desc" rows="15"
                   cols="180"></textarea>   
                 </div>
-                <div class=" col-6">
+                <br><br>
+                <div class=" col-md-6">
                     <label style="color: white;">Tarea para el usuario:</label>
                     <select [(ngModel)]="id" (change)="capturar()"  class="form-control" id="exampleFormControlSelect1">
                       <option value="0">Selecione un usuario</option>

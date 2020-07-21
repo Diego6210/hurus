@@ -47,13 +47,6 @@ export class NewObjectWebComponent implements OnInit {
   tags = [];
   usuarioModal: string;
 
-  public hostUrl: string = 'https://ej2services.syncfusion.com/production/web-services/';
-  public ajaxSettings: object = {
-    url: this.hostUrl + 'api/FileManager/FileOperations',
-    getImageUrl: this.hostUrl + 'api/FileManager/GetImage',
-    uploadUrl: this.hostUrl + 'api/FileManager/Upload',
-    downloadUrl: this.hostUrl + 'api/FileManager/Download'
-  };
   data = [];
 
   keyword = 'name';
@@ -85,21 +78,15 @@ export class NewObjectWebComponent implements OnInit {
 
       for (let i = 0; i < data['list'].length; i++) {
 
-        //var foto = 'assets/img/default-avatar.png';
         var foto = 'assets/img/default-avatar.png';
         foto = `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`;
 
-        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          //if (res['data'] != null)
-            //foto = 'data:image/jpg;base64,' + res['data'];  
-
           this.data.push({
             'id': data['list'][i]['_id'],
-            'Img': foto,
+            'Img': `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`,
             'name': data['list'][i]['name'],
             'web': data['list'][i]['web']
           });
-        //});
       }
     });
   }

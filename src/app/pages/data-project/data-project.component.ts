@@ -87,21 +87,13 @@ export class DataProjectComponent implements OnInit {
 
       for (let i = 0; i < data['list'].length; i++) {
 
-        //var foto = 'assets/img/default-avatar.png';
         let  foto = `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`; 
-
-        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          //if (res['data'] != null)
-            //foto = 'data:image/jpg;base64,' + res['data']; 
-          //else
-            //foto = 'assets/img/default-avatar.png';
             
           this.data.push({
             'id': data['list'][i]['_id'],
             'Img': `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`,
             'name': data['list'][i]['name']
           });
-        //});
       }
     });
 
@@ -148,7 +140,6 @@ export class DataProjectComponent implements OnInit {
     this.server.getReportFile(id).subscribe(
       (response: Blob) => {        
 
-        //console.log(response);
         const blob = new Blob([response], {type: 'application/pdf'});
         const filename = 'report.pdf';
         saveAs(blob,filename);
@@ -165,32 +156,27 @@ export class DataProjectComponent implements OnInit {
     this.Usuarios = [];
     this.server.getProyectTarget(this.routeActive.snapshot.params.id).subscribe((data) => {
 
-      //console.log(data);
       for (let i = 0; i < data['list'].length; i++) {
         var foto = 'assets/img/default-avatar.png';
         foto = `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`;
-        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          let router = '/dataObject/';
-          if (data['list'][i]['web'])
-            router = '/dataObjectWeb/'
+        let router = '/dataObject/';
+        if (data['list'][i]['web'])
+          router = '/dataObjectWeb/';
+          
+        this.Usuarios.push({
+          'tipo': data['list'][i]['web'],
+          'Img': `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`,
+          'name': data['list'][i]['name'],
+          'targets': data['list'][i]['targets'],
+          'tag': data['list'][i]['tags'][0]['tag'],
+          'tagColor': data['list'][i]['tags'][0]['tagcolor'],
+          'id': data['list'][i]['_id'],
+          'Path': router + data['list'][i]['_id']
 
-          //if (res['data'] != null)
-            //foto = 'data:image/jpg;base64,' + res['data']; 
-          this.Usuarios.push({
-            'tipo': data['list'][i]['web'],
-            'Img': foto,
-            'name': data['list'][i]['name'],
-            'targets': data['list'][i]['targets'],
-            'tag': data['list'][i]['tags'][0]['tag'],
-            'tagColor': data['list'][i]['tags'][0]['tagcolor'],
-            'id': data['list'][i]['_id'],
-            'Path': router + data['list'][i]['_id']
-
-          });
-          this.dataSource = new MatTableDataSource(this.Usuarios);
-          this.dataSource.paginator = this.paginatorObject;
-          this.dataSource.sort = this.sort;
-        //});
+        });
+        this.dataSource = new MatTableDataSource(this.Usuarios);
+        this.dataSource.paginator = this.paginatorObject;
+        this.dataSource.sort = this.sort;
       }
     });
 
@@ -233,7 +219,37 @@ export class DataProjectComponent implements OnInit {
     this.dataSourceR.filter = filtro.trim().toLowerCase();
   }
 
-
+  mostrarRazon(){
+    Swal.fire({
+      text: "informacion",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Modificar',
+      cancelButtonText: 'Cerrar'
+    }).then((result) => {
+      if (result.value) {
+        Swal.mixin({
+          input: 'text',
+          confirmButtonText: 'Guardar',
+          showCancelButton: true,
+        }).queue([
+          {
+            title: 'Cambiar la razón del objetivo de por que esta aqui'
+          }
+        ]).then((result) => {
+          const answers = JSON.stringify(result.value)
+          if (result.value) {
+            Swal.fire({
+              icon: 'success',
+              text: 'Información guardada'
+            });            
+          }
+        });
+      }
+    });
+  }
 
 
 

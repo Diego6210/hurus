@@ -80,9 +80,8 @@ export class DataObjectWebComponent implements OnInit {
 
     this.server.getDataTargetFind(this.routeActive.snapshot.params.id).subscribe((data) => {
 
-      //this.imgdefault = 'data:image/jpg;base64,' + data['img']; 
       this.imgdefault = `${this.URL}img/profile/${data['_id']}.jpg`; 
-      //this.imgdefault = `${this.URL}img/profile/${data['_id']}`; 
+
       this.web = data['name'];
       this.urlWeb = data['url'];
 
@@ -119,20 +118,12 @@ export class DataObjectWebComponent implements OnInit {
 
       for (let i = 0; i < data['list'].length; i++) {
 
-        //var foto = 'assets/img/default-avatar.png';
-
-        //this.server.getTargetFoto(data['list'][i]['_id']).subscribe((res) => {
-          //if (res['data'] != null)
-            //foto = 'data:image/jpg;base64,' + res['data']; 
-          let  foto = `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`; 
-
-          this.data.push({
+        this.data.push({
             'id': data['list'][i]['_id'],
-            'Img': foto,
+            'Img': `${this.URL}img/profile/${data['list'][i]['_id']}.jpg`,
             'name': data['list'][i]['name'],
             'web': data['list'][i]['web']
-          });
-        //});
+        });
       }
     });
   }
@@ -142,9 +133,9 @@ export class DataObjectWebComponent implements OnInit {
   }
 
   selectEvent(item) {
-    let perfile = this.URL+'#/dataObject/'+item['id'];
+    let perfile = '#/dataObject/'+item['id'];
     if(item['web'])
-      perfile = this.URL+'#/dataObjectWeb/'+item['id'];
+      perfile = '#/dataObjectWeb/'+item['id'];
       
       
     this.contacts.push({
@@ -211,7 +202,6 @@ export class DataObjectWebComponent implements OnInit {
       reader.onload = ($event: any) => {
         this.imgdefault = $event.target.result;
         this.server.setTargetperfil(this.routeActive.snapshot.params.id, $event.target.result).subscribe((data) => {
-          //console.log(data)
           Swal.fire({
             icon: 'success',
             text: 'Actualizado'
@@ -243,7 +233,6 @@ export class DataObjectWebComponent implements OnInit {
     });
 
     this.server.setTargetLocation(this.routeActive.snapshot.params.id, this.locations).subscribe((data) => {
-      //console.log(data['msg']);
       Swal.fire({
         icon: 'success',
         text: 'Actualizado'
@@ -260,7 +249,6 @@ export class DataObjectWebComponent implements OnInit {
 
 
   map() {
-    //console.log(this.locations)
     var lng = 0;
     var lat = 0;
     if (this.locations.length > 0) {

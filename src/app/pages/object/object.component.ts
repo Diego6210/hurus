@@ -103,6 +103,38 @@ export class ObjectComponent implements OnInit {
     });
   }
 
+  mostrarRazon(){
+    Swal.fire({
+      text: "informacion",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Modificar',
+      cancelButtonText: 'Cerrar'
+    }).then((result) => {
+      if (result.value) {
+        Swal.mixin({
+          input: 'text',
+          confirmButtonText: 'Guardar',
+          showCancelButton: true,
+        }).queue([
+          {
+            title: 'Cambiar la razón del objetivo de por que esta aqui'
+          }
+        ]).then((result) => {
+          const answers = JSON.stringify(result.value)
+          if (result.value) {
+            Swal.fire({
+              icon: 'success',
+              text: 'Información guardada'
+            });            
+          }
+        });
+      }
+    });
+  }
+
   filtrar(event: Event) {
     const filtro = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filtro.trim().toLowerCase();
