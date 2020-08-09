@@ -33,12 +33,12 @@ export const ROUTES: RouteInfo[] = [
     icon: "icon-single-02",
     class: "",
   },
-  {
+  /*{
     path: "/tareas",
     title: "Tareas",
     icon: "icon-paper",
     class: "",
-  },
+  },*/
   {
     path: "/manifest",
     title: "Manifiesto",
