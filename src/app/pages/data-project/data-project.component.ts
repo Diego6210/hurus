@@ -261,7 +261,7 @@ export class DataProjectComponent implements OnInit {
     this.Involucrados = [
       {
         Id: 1,
-        Img: '/assets/img/mike.jpg',
+        Img: 'assets/img/mike.jpg',
         Nombre: 'Diego',
         Movimiento: 'subir reporte',
         Conexion: '12/12/2012'
@@ -327,8 +327,8 @@ export class DataProjectComponent implements OnInit {
           error => {
             Swal.close();
             Swal.fire({
-              icon: 'error',
-              text: 'Algo ocurrio'
+              icon: 'success',
+              text: 'Archivo guardado'
             });
             this.getDataFromSourceR()
           });

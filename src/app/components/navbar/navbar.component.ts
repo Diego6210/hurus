@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     //this.server.getTargetFoto(null)'data:image/jpg;base64,';
 
-    this.imgUser = '/assets/img/mike.jpg'
+    this.imgUser = 'assets/img/mike.jpg'
   }
 
   logOut() {
