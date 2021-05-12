@@ -76,7 +76,7 @@
     "angular-ng-autocomplete": "^2.0.1",
     "angular-typeahead": "^1.0.2",
     "body-parser": "^1.19.0",
-    "chart.js": "2.8.0",
+    "chart.js": "2.9.4",
     "core-js": "3.6.4",
     "datatables.net": "^1.10.20",
     "datatables.net-dt": "^1.10.20",
